@@ -21,7 +21,7 @@ rm -fr config/*
 rm -fr crypto-config/*
 
 # generate crypto material
-cryptogen generate --config=./cryptogen.yaml
+bin/cryptogen generate --config=./cryptogen.yaml
 if [ "$?" -ne 0 ]; then
   echo "Failed to generate crypto material..."
   exit 1
