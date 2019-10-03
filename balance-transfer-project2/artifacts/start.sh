@@ -6,7 +6,7 @@
 #
 # Exit on first error, print all commands.
 set -ev
-CHANNEL_NAME=mychannel
+CHANNEL_NAME=channel
 CHANNEL_NO1=1
 CHANNEL_NAME1=${CHANNEL_NAME}${CHANNEL_NO1}
 CHANNEL_NO2=2
@@ -35,7 +35,7 @@ sleep ${FABRIC_START_TIMEOUT}
 # CH1 
 #===============================================================================
 # Create the channel
-docker exec -e "CORE_PEER_LOCALMSPID=GovernmentOrgMSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/crypto/peer/msp" peer0.GovernmentOrg.example.com peer channel create -o orderer.example.com:7050 -c "$CHANNEL_NAME1" -f /channel/channel"$CHANNEL_NO1".tx 
+docker exec -e "CORE_PEER_LOCALMSPID=GovernmentOrgMSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/crypto/peer/msp" peer0.GovernmentOrg.example.com peer channel create -o orderer.example.com:7050 -c "$CHANNEL_NAME1" -f ./channel/channel"$CHANNEL_NO1".tx
 # GovernmentOrg
 # Join peer0.GovernmentOrg.example.com to the channel.
 docker exec -e "CORE_PEER_LOCALMSPID=GovernmentOrgMSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@GovernmentOrg.example.com/msp" peer0.GovernmentOrg.example.com peer channel join -b "$CHANNEL_NAME1".block
