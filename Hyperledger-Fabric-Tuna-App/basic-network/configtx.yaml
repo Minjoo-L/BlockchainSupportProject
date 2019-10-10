@@ -6,32 +6,6 @@
 ---
 ################################################################################
 #
-#   Profile
-#
-#   - Different configuration profiles may be encoded here to be specified
-#   as parameters to the configtxgen tool
-#
-################################################################################
-Profiles:
-
-    OneOrgOrdererGenesis:
-        Orderer:
-            <<: *OrdererDefaults
-            Organizations:
-                - *OrdererOrg
-        Consortiums:
-            SampleConsortium:
-                Organizations:
-                    - *Org1
-    OneOrgChannel:
-        Consortium: SampleConsortium
-        Application:
-            <<: *ApplicationDefaults
-            Organizations:
-                - *Org1
-
-################################################################################
-#
 #   Section: Organizations
 #
 #   - This section defines the different organizational identities which will
@@ -53,22 +27,86 @@ Organizations:
         # MSPDir is the filesystem path which contains the MSP configuration
         MSPDir: crypto-config/ordererOrganizations/example.com/msp
 
-    - &Org1
+    - &GovernmentOrg
         # DefaultOrg defines the organization which is used in the sampleconfig
         # of the fabric.git development environment
-        Name: Org1MSP
+        Name: GovernmentOrgMSP
 
         # ID to load the MSP definition as
-        ID: Org1MSP
+        ID: GovernmentOrgMSP
 
-        MSPDir: crypto-config/peerOrganizations/org1.example.com/msp
+        MSPDir: crypto-config/peerOrganizations/GovernmentOrg.example.com/msp
 
         AnchorPeers:
             # AnchorPeers defines the location of peers which can be used
             # for cross org gossip communication.  Note, this value is only
             # encoded in the genesis block in the Application section context
-            - Host: peer0.org1.example.com
-              Port: 7051
+            - Host: peer0.GovernmentOrg.example.com
+              Port: 17051
+
+    - &SupportingEnterpriseOrg
+        # DefaultOrg defines the organization which is used in the sampleconfig
+        # of the fabric.git development environment
+        Name: SupportingEnterpriseOrgMSP
+
+        # ID to load the MSP definition as
+        ID: SupportingEnterpriseOrgMSP
+
+        MSPDir: crypto-config/peerOrganizations/SupportingEnterpriseOrg.example.com/msp
+
+        AnchorPeers:
+            # AnchorPeers defines the location of peers which can be used
+            # for cross org gossip communication.  Note, this value is only
+            # encoded in the genesis block in the Application section context
+            - Host: peer0.SupportingEnterpriseOrg.example.com
+              Port: 27051
+
+    - &RecipientOrg
+        # DefaultOrg defines the organization which is used in the sampleconfig
+        # of the fabric.git development environment
+        Name: RecipientOrgMSP
+
+        # ID to load the MSP definition as
+        ID: RecipientOrgMSP
+
+        MSPDir: crypto-config/peerOrganizations/RecipientOrg.example.com/msp
+
+        AnchorPeers:
+            # AnchorPeers defines the location of peers which can be used
+            # for cross org gossip communication.  Note, this value is only
+            # encoded in the genesis block in the Application section context
+            - Host: peer0.RecipientOrg.example.com
+              Port: 37051
+
+    - &SupporterOrg
+        # DefaultOrg defines the organization which is used in the sampleconfig
+        # of the fabric.git development environment
+        Name: SupporterOrgMSP
+
+        # ID to load the MSP definition as
+        ID: SupporterOrgMSP
+
+        MSPDir: crypto-config/peerOrganizations/SupporterOrg.example.com/msp
+
+        AnchorPeers:
+            # AnchorPeers defines the location of peers which can be used
+            # for cross org gossip communication.  Note, this value is only
+            # encoded in the genesis block in the Application section context
+            - Host: peer0.SupporterOrg.example.com
+              Port: 47051
+################################################################################
+#
+#   SECTION: Application
+#
+#   - This section defines the values to encode into a config transaction or
+#   genesis block for application related parameters
+#
+################################################################################
+Application: &ApplicationDefaults
+
+    # Organizations is the list of orgs which are defined as participants on
+    # the application side of the network
+    Organizations:
 
 ################################################################################
 #
@@ -117,14 +155,57 @@ Orderer: &OrdererDefaults
 
 ################################################################################
 #
-#   SECTION: Application
+#   Profile
 #
-#   - This section defines the values to encode into a config transaction or
-#   genesis block for application related parameters
+#   - Different configuration profiles may be encoded here to be specified
+#   as parameters to the configtxgen tool
 #
 ################################################################################
-Application: &ApplicationDefaults
+Profiles:
 
-    # Organizations is the list of orgs which are defined as participants on
-    # the application side of the network
-    Organizations:
+    FourOrgOrdererGenesis:
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                    - *GovernmentOrg
+                    - *SupportingEnterpriseOrg
+                    - *RecipientOrg
+                    - *SupporterOrg                    
+    FourOrgChannel:
+        Consortium: SampleConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *GovernmentOrg
+                - *SupportingEnterpriseOrg
+                - *RecipientOrg
+                - *SupporterOrg
+    GovernmentSupporterOrgChannel:
+        Consortium: SampleConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *GovernmentOrg
+                - *SupporterOrg
+    GovernmentRecipientOrgChannel:
+        Consortium: SampleConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *GovernmentOrg
+                - *RecipientOrg
+    GovernmentSupportingEnterpriseOrgChannel:
+        Consortium: SampleConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *GovernmentOrg
+                - *SupportingEnterpriseOrg
+
+
+
+

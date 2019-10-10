@@ -22,10 +22,10 @@ OrdererOrgs:
 # ---------------------------------------------------------------------------
 PeerOrgs:
   # ---------------------------------------------------------------------------
-  # Org1
+  # GovernmentOrg
   # ---------------------------------------------------------------------------
-  - Name: Org1
-    Domain: org1.example.com
+  - Name: GovernmentOrg
+    Domain: GovernmentOrg.example.com
     # ---------------------------------------------------------------------------
     # "Specs"
     # ---------------------------------------------------------------------------
@@ -43,7 +43,7 @@ PeerOrgs:
     #                 Org.Domain, respectively.
     # ---------------------------------------------------------------------------
     # Specs:
-    #   - Hostname: foo # implicitly "foo.org1.example.com"
+    #   - Hostname: foo # implicitly "foo.GovernmentOrg.example.com"
     #     CommonName: foo27.org5.example.com # overrides Hostname-based FQDN set above
     #   - Hostname: bar
     #   - Hostname: baz
@@ -60,7 +60,7 @@ PeerOrgs:
     # name collisions
     # ---------------------------------------------------------------------------
     Template:
-      Count: 1
+      Count: 2
       # Start: 5
       # Hostname: {{.Prefix}}{{.Index}} # default
     # ---------------------------------------------------------------------------
@@ -70,3 +70,33 @@ PeerOrgs:
     # ---------------------------------------------------------------------------
     Users:
       Count: 1
+  # ---------------------------------------------------------------------------
+  # SupportingEnterpriseOrg
+  # ---------------------------------------------------------------------------
+  - Name: SupportingEnterpriseOrg
+    Domain: SupportingEnterpriseOrg.example.com
+    Template:
+      Count: 2
+      # Start: 5
+    Users:
+      Count: 1     
+  # ---------------------------------------------------------------------------
+  # RecipientOrg
+  # ---------------------------------------------------------------------------
+  - Name: RecipientOrg
+    Domain: RecipientOrg.example.com
+    Template:
+      Count: 2
+      # Start: 5
+    Users:
+      Count: 1   
+  # ---------------------------------------------------------------------------
+  # SupporterOrg
+  # ---------------------------------------------------------------------------
+  - Name: SupporterOrg
+    Domain: SupporterOrg.example.com
+    Template:
+      Count: 2
+      # Start: 5
+    Users:
+      Count: 1                
