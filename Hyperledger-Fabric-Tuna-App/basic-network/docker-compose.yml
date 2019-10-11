@@ -26,7 +26,8 @@ services:
       - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/e4530b45f2112860bb3a9cdb51b71eaaf8498f6782371c201576d674d01dd8d2_sk
     ports:
       - "17054:7054"
-    command: sh -c 'fabric-ca-server start -b admin:adminpw'
+      #-d 수정
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/GovernmentOrg.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca.GovernmentOrg.example.com
@@ -43,7 +44,7 @@ services:
       - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/4626c1c939f1253d75024e8e424d4852925de7cdd8e179505fc241f62afac577_sk
     ports:
       - "27054:7054"
-    command: sh -c 'fabric-ca-server start -b admin:adminpw'
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/SupportingEnterpriseOrg.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca.SupportingEnterpriseOrg.example.com
@@ -60,7 +61,7 @@ services:
       - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/0ff6b7319f98c7088ad5d150ca1026649d2cc65bfca15ffa80f83d19aab4cf47_sk
     ports:
       - "37054:7054"
-    command: sh -c 'fabric-ca-server start -b admin:adminpw'
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/RecipientOrg.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca.RecipientOrg.example.com
@@ -77,7 +78,7 @@ services:
       - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/9af7552a3e5bc4a622047d2dbe9d7a57372b64086edb1418f7eed6376789c7d7_sk
     ports:
       - "47054:7054"
-    command: sh -c 'fabric-ca-server start -b admin:adminpw'
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/SupporterOrg.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca.SupporterOrg.example.com
@@ -88,7 +89,8 @@ services:
     container_name: orderer.example.com
     image: hyperledger/fabric-orderer
     environment:
-      - FABRIC_LOGGING_SPEC=info
+      - ORDERER_GENERAL_LOGLEVEL=debug
+      #- FABRIC_LOGGING_SPEC=info
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
       - ORDERER_GENERAL_GENESISMETHOD=file
       - ORDERER_GENERAL_GENESISFILE=/etc/hyperledger/configtx/genesis.block
@@ -109,8 +111,10 @@ services:
     image: hyperledger/fabric-peer
     environment:
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      - FABRIC_LOGGING_SPEC=info
-      - CORE_CHAINCODE_LOGGING_LEVEL=info
+      - CORE_LOGGING_PEER=debug
+      - CORE_CHAINCODE_LOGGING_LEVEL=DEBUG
+     # - FABRIC_LOGGING_SPEC=info
+      #- CORE_CHAINCODE_LOGGING_LEVEL=info
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=${COMPOSE_PROJECT_NAME}_basic
       - CORE_PEER_GOSSIP_USELEADERELECTION=true
       - CORE_PEER_GOSSIP_ORGLEADER=false                
@@ -136,13 +140,14 @@ services:
     environment:
       - CORE_PEER_ID=peer0.GovernmentOrg.example.com
       - CORE_PEER_LOCALMSPID=GovernmentOrgMSP
-      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@GovernmentOrg.example.com/msp
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/peer/
+      #- CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@GovernmentOrg.example.com/msp
       - CORE_PEER_ADDRESS=peer0.GovernmentOrg.example.com:17051   
       - CORE_PEER_LISTENADDRESS=0.0.0.0:17051        
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
       - CORE_PEER_CHAINCODEADDRESS=peer0.GovernmentOrg.example.com:17053
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:17053      
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.GovernmentOrg.example.com:17051 peer1.GovernmentOrg.example.com:18051 peer2.GovernmentOrg.example.com:19051 
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.GovernmentOrg.example.com:17051 peer1.GovernmentOrg.example.com:18051 
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.GovernmentOrg.example.com:17051        
     ports:
       - 17051:17051
@@ -167,7 +172,7 @@ services:
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
       - CORE_PEER_CHAINCODEADDRESS=peer1.GovernmentOrg.example.com:18053
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:18053      
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.GovernmentOrg.example.com:17051 peer1.GovernmentOrg.example.com:18051 peer2.GovernmentOrg.example.com:19051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.GovernmentOrg.example.com:17051 peer1.GovernmentOrg.example.com:18051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.GovernmentOrg.example.com:18051    
     ports:
       - 18051:18051
