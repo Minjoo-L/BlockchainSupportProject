@@ -23,7 +23,7 @@ services:
     environment:
       - FABRIC_CA_SERVER_CA_NAME=ca.GovernmentOrg.example.com
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.GovernmentOrg.example.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/e4530b45f2112860bb3a9cdb51b71eaaf8498f6782371c201576d674d01dd8d2_sk
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/d8e55d57dce9f7b5bccb5a760dce3bf71dd93faf9f418d600c032434005fa5d1_sk
     ports:
       - "17054:7054"
       #-d 수정
@@ -41,7 +41,7 @@ services:
     environment:
       - FABRIC_CA_SERVER_CA_NAME=ca.SupportingEnterpriseOrg.example.com
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.SupportingEnterpriseOrg.example.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/4626c1c939f1253d75024e8e424d4852925de7cdd8e179505fc241f62afac577_sk
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/79864ce376289c3b61c87b3c90449558f53d57b8360ba6060d5789eff2cab25d_sk
     ports:
       - "27054:7054"
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
@@ -58,7 +58,7 @@ services:
     environment:
       - FABRIC_CA_SERVER_CA_NAME=ca.RecipientOrg.example.com
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.RecipientOrg.example.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/0ff6b7319f98c7088ad5d150ca1026649d2cc65bfca15ffa80f83d19aab4cf47_sk
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/d989d98059dcb170df48e08db2ee5ab1bc9b56c3db690b943f93c29cb3dac35f_sk
     ports:
       - "37054:7054"
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
@@ -75,7 +75,7 @@ services:
     environment:
       - FABRIC_CA_SERVER_CA_NAME=ca.SupporterOrg.example.com
       - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.SupporterOrg.example.com-cert.pem
-      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/9af7552a3e5bc4a622047d2dbe9d7a57372b64086edb1418f7eed6376789c7d7_sk
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/a347df9d5c5f9719e27f45bcc7dca14f3090e863eec31fb3a4e9e6b0b4580855_sk
     ports:
       - "47054:7054"
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
