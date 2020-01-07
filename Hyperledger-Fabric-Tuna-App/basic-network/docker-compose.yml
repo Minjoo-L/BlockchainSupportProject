@@ -44,7 +44,7 @@ services:
       - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/79864ce376289c3b61c87b3c90449558f53d57b8360ba6060d5789eff2cab25d_sk
     ports:
       - "27054:7054"
-    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start -b admin2:adminpw2 -d'
     volumes:
       - ./crypto-config/peerOrganizations/SupportingEnterpriseOrg.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca.SupportingEnterpriseOrg.example.com
@@ -61,7 +61,7 @@ services:
       - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/d989d98059dcb170df48e08db2ee5ab1bc9b56c3db690b943f93c29cb3dac35f_sk
     ports:
       - "37054:7054"
-    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start -b admin3:adminpw3 -d'
     volumes:
       - ./crypto-config/peerOrganizations/RecipientOrg.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca.RecipientOrg.example.com
@@ -78,7 +78,7 @@ services:
       - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/a347df9d5c5f9719e27f45bcc7dca14f3090e863eec31fb3a4e9e6b0b4580855_sk
     ports:
       - "47054:7054"
-    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    command: sh -c 'fabric-ca-server start -b admin4:adminpw4 -d'
     volumes:
       - ./crypto-config/peerOrganizations/SupporterOrg.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca.SupporterOrg.example.com
