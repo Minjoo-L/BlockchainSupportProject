@@ -12,6 +12,12 @@ app.controller('appController', function($scope, appFactory){
 	$("#error_holder").hide();
 	$("#error_query").hide();
 	
+	$scope.registerSupporter = function(){//후원자 회원가입
+
+		appFactory.registerSupporter($scope.supporter, function(data){
+		});
+	}
+
 	$scope.queryAllTuna = function(){
 
 		appFactory.queryAllTuna(function(data){
@@ -72,6 +78,14 @@ app.controller('appController', function($scope, appFactory){
 app.factory('appFactory', function($http){
 	
 	var factory = {};
+
+	//후원자 회원가입
+	factory.registerSupporter = function(data, callback){
+		var supporter = data.name + "-" + data.id + "-" + data.email + "-" + data.pw + "-" + data.address+"-"+data.phoneNum+"-"+0;
+    	$http.get('/registerSupporter/'+supporter).success(function(output){
+			callback(output)
+		});
+	}
 
     factory.queryAllTuna = function(callback){
 

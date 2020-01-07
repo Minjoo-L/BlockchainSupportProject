@@ -67,6 +67,21 @@
     </header>
 
     <div id="body">
+      
+      <!--후원자 회원가입-->
+      <div class="form-group">
+        <label>Register form for Supporter</label><br>
+        이름: <input class="form-control" type="text" ng-model="supporter.name">
+        주민등록번호: <input class="form-control" type="text" ng-model="supporter.id">
+        이메일: <input class="form-control" type="text" ng-model="supporter.email"> 
+        비밀번호: <input class="form-control" type="password" ng-model="supporter.pw">
+        주소: <input class="form-control" type="text" ng-model="supporter.address">
+        전화번호: <input class="form-control" type="text" ng-model="supporter.phoneNum">
+        <input id="registerSupporter" type="submit" value="Create" ng-click="registerSupporter()">
+      </div>
+      
+      <!--후원자 로그인-->
+
       <div class="form-group">
         <label>Query All Tuna Catches</label>
         <p><input id="queryAllTuna" type="submit" value="Query" class="btn btn-primary" ng-click="queryAllTuna()"></p>

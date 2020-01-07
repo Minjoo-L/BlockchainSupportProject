@@ -16,9 +16,39 @@ var Fabric_Client = require('fabric-client');
 var path          = require('path');
 var util          = require('util');
 var os            = require('os');
+var crypto = require('crypto');
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+	host	: 'localhost',
+	user	: 'root',
+	password	: '1234',
+	database	: 'userdb'
+});
+connection.connect();
 
 module.exports = (function() {
 return{
+	registerSupporter: function(req, res){//후원자 회원가입
+		console.log("register Supporter: ");
+		var array = req.params.supporter.split("-");
+		console.log(array);
+		console.log(req.params.supporter);
+		var name = array[0]
+		var id = array[1]
+		var email = array[2]
+		var pw = array[3]
+		pw = crypto.createHash('sha512').update(pw).digest('base64');
+		var address = array[4]
+		var phoneNum = array[5]
+		var auth = array[6]
+		connection.query("insert into usertbl values('"+name+"' , '"+id+"' , '"+email+"', '"+address+"' , '"+phoneNum+"' , "+auth+" , '"+pw+"' )", async function(err, rows, fields){
+			if(err){
+				console.log(err);
+			}else{
+				console.log("successfully registered!!!");
+			}
+		});
+	},
 	get_all_tuna: function(req, res){
 		console.log("getting all tuna from database: ");
 

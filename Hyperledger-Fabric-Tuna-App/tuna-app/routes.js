@@ -4,6 +4,9 @@ var tuna = require('./controller.js');
 
 module.exports = function(app){
 
+  app.get('/registerSupporter/:supporter', function(req, res){
+    tuna.registerSupporter(req, res);
+  });
   app.get('/get_tuna/:id', function(req, res){
     tuna.get_tuna(req, res);
   });
