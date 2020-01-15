@@ -21,7 +21,7 @@ export MSYS_NO_PATHCONV=1
 
 docker-compose -f docker-compose.yml down --remove-orphans
 
-docker-compose -f docker-compose.yml up -d ca.GovernmentOrg.example.com ca.SupportingEnterpriseOrg.example.com  ca.RecipientOrg.example.com  ca.SupporterOrg.example.com orderer.example.com peer0.GovernmentOrg.example.com peer1.GovernmentOrg.example.com couchdb1 peer0.SupportingEnterpriseOrg.example.com peer1.SupportingEnterpriseOrg.example.com couchdb2 peer0.RecipientOrg.example.com peer1.RecipientOrg.example.com couchdb3 peer0.SupporterOrg.example.com peer1.SupporterOrg.example.com couchdb4 
+docker-compose -f docker-compose.yml up -d ca.GovernmentOrg.example.com ca.SupportingEnterpriseOrg.example.com  ca.RecipientOrg.example.com  ca.SupporterOrg.example.com orderer.example.com peer0.GovernmentOrg.example.com peer1.GovernmentOrg.example.com couchdb1 peer0.SupportingEnterpriseOrg.example.com peer1.SupportingEnterpriseOrg.example.com couchdb2 peer0.RecipientOrg.example.com peer1.RecipientOrg.example.com couchdb3 peer0.SupporterOrg.example.com peer1.SupporterOrg.example.com couchdb4 cli_GovernmentOrg  cli_SupportingEnterpriseOrg  cli_RecipientOrg  cli_SupporterOrg
 
 docker ps -a
 

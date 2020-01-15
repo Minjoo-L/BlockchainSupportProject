@@ -18,9 +18,10 @@ app.controller('appController', function($scope, appFactory){
 		});
 	}
 
-	$scope.queryAllTuna = function(){
+	//모든 피후원자 정보 조회
+	$scope.queryAllRecipient = function(){
 
-		appFactory.queryAllTuna(function(data){
+		appFactory.queryAllRecipient(function(data){
 			var array = [];
 			for (var i = 0; i < data.length; i++){
 				parseInt(data[i].Key);
@@ -30,7 +31,7 @@ app.controller('appController', function($scope, appFactory){
 			array.sort(function(a, b) {
 			    return parseFloat(a.Key) - parseFloat(b.Key);
 			});
-			$scope.all_tuna = array;
+			$scope.all_recipient = array;
 		});
 	}
 
@@ -87,9 +88,10 @@ app.factory('appFactory', function($http){
 		});
 	}
 
-    factory.queryAllTuna = function(callback){
+	//모든 피후원자 정보 조회
+    factory.queryAllRecipient = function(callback){
 
-    	$http.get('/get_all_tuna/').success(function(output){
+    	$http.get('/get_all_recipient/').success(function(output){
 			callback(output)
 		});
 	}
