@@ -64,8 +64,8 @@
 		 return s.initLedger(APIstub)
 	 } else if function == "registerSupporter" { //후원자 등록
 		 return s.registerSupporter(APIstub, args)
-	 } else if function == "querySupporter" { //후원자 조회
-		 return s.querySupporter(APIstub)
+	 } else if function == "queryAllSupporter" { //후원자 조회
+		 return s.queryAllSupporter(APIstub)
 	 }
  
 	 return shim.Error("Invalid Smart Contract function name.")
@@ -115,7 +115,7 @@
 
  }
 
- func (s *SmartContract) querySupporter(APIstub shim.ChaincodeStubInterface) sc.Response {
+ func (s *SmartContract) queryAllSupporter(APIstub shim.ChaincodeStubInterface) sc.Response {
 
 	startKey := "0"
 	endKey := "999"

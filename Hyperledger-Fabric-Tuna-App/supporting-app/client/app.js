@@ -18,6 +18,23 @@ app.controller('appController', function($scope, appFactory){
 		});
 	}
 
+	//모든 후원자 정보 조회
+	$scope.queryAllSupporter = function(){
+
+		appFactory.queryAllSupporter(function(data){
+			var array = [];
+			for (var i = 0; i < data.length; i++){
+				parseInt(data[i].Key);
+				data[i].Record.Key = parseInt(data[i].Key);
+				array.push(data[i].Record);
+			}
+			array.sort(function(a, b) {
+			    return parseFloat(a.Key) - parseFloat(b.Key);
+			});
+			$scope.all_supporter = array;
+		});
+	}
+
 	//모든 피후원자 정보 조회
 	$scope.queryAllRecipient = function(){
 
@@ -84,6 +101,14 @@ app.factory('appFactory', function($http){
 	factory.registerSupporter = function(data, callback){
 		var supporter = data.name + "-" + data.id + "-" + data.email + "-" + data.pw + "-" + data.address+"-"+data.phoneNum+"-"+0;
     	$http.get('/registerSupporter/'+supporter).success(function(output){
+			callback(output)
+		});
+	}
+
+	//모든 후원자 정보 조회
+    factory.queryAllSupporter = function(callback){
+
+    	$http.get('/get_all_supporter/').success(function(output){
 			callback(output)
 		});
 	}

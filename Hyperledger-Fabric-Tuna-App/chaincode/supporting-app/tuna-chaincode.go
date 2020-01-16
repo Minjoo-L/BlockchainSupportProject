@@ -42,6 +42,7 @@ type Recipient struct {
 	Name string `json:"name"`
 	Address string `json:"address"`
 }
+
 /*
  * The Init method *
  called when the Smart Contract "tuna-chaincode" is instantiated by the network
@@ -72,7 +73,7 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.changeTunaHolder(APIstub, args)
 	} else if function == "queryAllRecipient" {
 		return s.queryAllRecipient(APIstub)
-	}
+	} 
 
 	return shim.Error("Invalid Smart Contract function name.")
 }
@@ -93,6 +94,7 @@ func (s *SmartContract) queryTuna(APIstub shim.ChaincodeStubInterface, args []st
 		return shim.Error("Could not locate tuna")
 	}
 	return shim.Success(tunaAsBytes)
+	
 }
 
 /*

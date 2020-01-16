@@ -102,6 +102,28 @@
         </tr>
       </table>
 
+      <!--후원자 조회-->
+
+      <div class="form-group">
+        <label>Query All Supporters</label>
+        <p><input id="queryAllSupporter" type="submit" value="Query" class="btn btn-primary" ng-click="queryAllSupporter()"></p>
+      </div>
+ 
+      <table id="all_supporter" class="table" align="center">
+
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Address</th>
+        </tr>
+
+        <tr ng-repeat="supporter in all_supporter">
+          <td>{{supporter.Key}}</td>
+          <td>{{supporter.name}}</td>
+          <td>{{supporter.address}}</td>
+        </tr>
+      </table>
+
       <div class="form-group">
         <label>Query a Specific Tuna Catch</label><br>
         <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid Tuna Id</h5>
