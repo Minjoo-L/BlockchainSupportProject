@@ -64,6 +64,8 @@
 		 return s.initLedger(APIstub)
 	 } else if function == "registerSupporter" { //후원자 등록
 		 return s.registerSupporter(APIstub, args)
+	 } else if function == "querySupporter" { //후원자 조회
+		 return s.querySupporter(APIstub)
 	 }
  
 	 return shim.Error("Invalid Smart Contract function name.")
@@ -112,6 +114,49 @@
 	return shim.Success(nil)
 
  }
+
+ func (s *SmartContract) querySupporter(APIstub shim.ChaincodeStubInterface) sc.Response {
+
+	startKey := "0"
+	endKey := "999"
+
+	resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	defer resultsIterator.Close()
+
+	// buffer is a JSON array containing QueryResults
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+
+	bArrayMemberAlreadyWritten := false
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return shim.Error(err.Error())
+		}
+		// Add comma before array members,suppress it for the first array member
+		if bArrayMemberAlreadyWritten == true {
+			buffer.WriteString(",")
+		}
+		buffer.WriteString("{\"Key\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(queryResponse.Key)
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"Record\":")
+		// Record is a JSON object, so we write as-is
+		buffer.WriteString(string(queryResponse.Value))
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
+	}
+	buffer.WriteString("]")
+
+	fmt.Printf("- querySupporter:\n%s\n", buffer.String())
+
+	return shim.Success(buffer.Bytes())
+}
 
  
  /*

@@ -138,7 +138,7 @@ return{
 		        // get an eventhub once the fabric client has a user assigned. The user
 		        // is required bacause the event registration must be signed
 		        let event_hub = fabric_client.newEventHub();
-		        event_hub.setPeerAddr('grpc://localhost:7053');
+		        event_hub.setPeerAddr('grpc://localhost:47053');
 
 		        // using resolve the promise so that result status may be processed
 		        // under the then clause rather than having the catch clause process
