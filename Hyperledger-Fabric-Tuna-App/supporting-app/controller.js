@@ -197,16 +197,17 @@ return{
 		    console.error('Failed to invoke successfully :: ' + err);
 		});
 	},
-	get_all_tuna: function(req, res){
-		console.log("getting all tuna from database: ");
+	get_all_recipient: function(req, res){
+		console.log("getting all recipients from database: ");
 
 		var fabric_client = new Fabric_Client();
 
 		// setup the fabric network
-		var channel = fabric_client.newChannel('mychannel');
-		var peer = fabric_client.newPeer('grpc://localhost:7051');
+		var channel = fabric_client.newChannel('mychannel1');
+		var peer = fabric_client.newPeer('grpc://localhost:17051'); //peer0Government.org
+	
 		channel.addPeer(peer);
-
+		
 		//
 		var member_user = null;
 		var store_path = path.join(os.homedir(), '.hfc-key-store');
@@ -237,9 +238,9 @@ return{
 
 		    // queryAllTuna - requires no arguments , ex: args: [''],
 		    const request = {
-		        chaincodeId: 'tuna-app',
+		        chaincodeId: 'test-app',
 		        txId: tx_id,
-		        fcn: 'queryAllTuna',
+		        fcn: 'queryAllRecipient',
 		        args: ['']
 		    };
 
@@ -278,9 +279,11 @@ return{
 		var fabric_client = new Fabric_Client();
 
 		// setup the fabric network
-		var channel = fabric_client.newChannel('mychannel');
-		var peer = fabric_client.newPeer('grpc://localhost:7051');
+		var channel = fabric_client.newChannel('mychannel1');
+		var peer = fabric_client.newPeer('grpc://localhost:17051'); //peer0Government.org
+
 		channel.addPeer(peer);
+
 		var order = fabric_client.newOrderer('grpc://localhost:7050')
 		channel.addOrderer(order);
 
@@ -319,10 +322,10 @@ return{
 		    // send proposal to endorser
 		    const request = {
 		        //targets : --- letting this default to the peers assigned to the channel
-		        chaincodeId: 'tuna-app',
+		        chaincodeId: 'test-app',
 		        fcn: 'recordTuna',
 		        args: [key, vessel, location, timestamp, holder],
-		        chainId: 'mychannel',
+		        chainId: 'mychannel1',
 		        txId: tx_id
 		    };
 
@@ -362,7 +365,7 @@ return{
 		        // get an eventhub once the fabric client has a user assigned. The user
 		        // is required bacause the event registration must be signed
 		        let event_hub = fabric_client.newEventHub();
-		        event_hub.setPeerAddr('grpc://localhost:7053');
+        		event_hub.setPeerAddr('grpc://localhost:17053');
 
 		        // using resolve the promise so that result status may be processed
 		        // under the then clause rather than having the catch clause process
@@ -427,10 +430,11 @@ return{
 		var key = req.params.id
 
 		// setup the fabric network
-		var channel = fabric_client.newChannel('mychannel');
-		var peer = fabric_client.newPeer('grpc://localhost:7051');
+		var channel = fabric_client.newChannel('mychannel1');
+		var peer = fabric_client.newPeer('grpc://localhost:17051'); //peer0Government.org
+		
 		channel.addPeer(peer);
-
+		
 		//
 		var member_user = null;
 		var store_path = path.join(os.homedir(), '.hfc-key-store');
@@ -461,7 +465,7 @@ return{
 
 		    // queryTuna - requires 1 argument, ex: args: ['4'],
 		    const request = {
-		        chaincodeId: 'tuna-app',
+		        chaincodeId: 'test-app',
 		        txId: tx_id,
 		        fcn: 'queryTuna',
 		        args: [key]
@@ -500,9 +504,11 @@ return{
 		var fabric_client = new Fabric_Client();
 
 		// setup the fabric network
-		var channel = fabric_client.newChannel('mychannel');
-		var peer = fabric_client.newPeer('grpc://localhost:7051');
+		var channel = fabric_client.newChannel('mychannel1');
+		var peer = fabric_client.newPeer('grpc://localhost:17051'); //peer0Government.org
+		
 		channel.addPeer(peer);
+
 		var order = fabric_client.newOrderer('grpc://localhost:7050')
 		channel.addOrderer(order);
 
@@ -541,10 +547,10 @@ return{
 		    // send proposal to endorser
 		    var request = {
 		        //targets : --- letting this default to the peers assigned to the channel
-		        chaincodeId: 'tuna-app',
+		        chaincodeId: 'test-app',
 		        fcn: 'changeTunaHolder',
 		        args: [key, holder],
-		        chainId: 'mychannel',
+		        chainId: 'mychannel1',
 		        txId: tx_id
 		    };
 
@@ -584,7 +590,7 @@ return{
 		        // get an eventhub once the fabric client has a user assigned. The user
 		        // is required bacause the event registration must be signed
 		        let event_hub = fabric_client.newEventHub();
-		        event_hub.setPeerAddr('grpc://localhost:7053');
+		        event_hub.setPeerAddr('grpc://localhost:17053');
 
 		        // using resolve the promise so that result status may be processed
 		        // under the then clause rather than having the catch clause process

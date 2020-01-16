@@ -38,6 +38,10 @@ type Tuna struct {
 	Holder  string `json:"holder"`
 }
 
+type Recipient struct {
+	Name string `json:"name"`
+	Address string `json:"address"`
+}
 /*
  * The Init method *
  called when the Smart Contract "tuna-chaincode" is instantiated by the network
@@ -64,10 +68,10 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
 		return s.initLedger(APIstub)
 	} else if function == "recordTuna" {
 		return s.recordTuna(APIstub, args)
-	} else if function == "queryAllTuna" {
-		return s.queryAllTuna(APIstub)
 	} else if function == "changeTunaHolder" {
 		return s.changeTunaHolder(APIstub, args)
+	} else if function == "queryAllRecipient" {
+		return s.queryAllRecipient(APIstub)
 	}
 
 	return shim.Error("Invalid Smart Contract function name.")
@@ -96,26 +100,18 @@ func (s *SmartContract) queryTuna(APIstub shim.ChaincodeStubInterface, args []st
 Will add test data (10 tuna catches)to our network
  */
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
-	tuna := []Tuna{
-		Tuna{Vessel: "923F", Location: "67.0006, -70.5476", Timestamp: "1504054225", Holder: "Miriam"},
-		Tuna{Vessel: "M83T", Location: "91.2395, -49.4594", Timestamp: "1504057825", Holder: "Dave"},
-		Tuna{Vessel: "T012", Location: "58.0148, 59.01391", Timestamp: "1493517025", Holder: "Igor"},
-		Tuna{Vessel: "P490", Location: "-45.0945, 0.7949", Timestamp: "1496105425", Holder: "Amalea"},
-		Tuna{Vessel: "S439", Location: "-107.6043, 19.5003", Timestamp: "1493512301", Holder: "Rafa"},
-		Tuna{Vessel: "J205", Location: "-155.2304, -15.8723", Timestamp: "1494117101", Holder: "Shen"},
-		Tuna{Vessel: "S22L", Location: "103.8842, 22.1277", Timestamp: "1496104301", Holder: "Leila"},
-		Tuna{Vessel: "EI89", Location: "-132.3207, -34.0983", Timestamp: "1485066691", Holder: "Yuan"},
-		Tuna{Vessel: "129R", Location: "153.0054, 12.6429", Timestamp: "1485153091", Holder: "Carlo"},
-		Tuna{Vessel: "49W4", Location: "51.9435, 8.2735", Timestamp: "1487745091", Holder: "Fatima"},
+	
+	recipient := []Recipient{
+		Recipient{Name: "김철수", Address: "서울 살아욤"},
+		Recipient{Name: "김영희", Address: "경기도 살아욤"},
 	}
-
-	i := 0
-	for i < len(tuna) {
-		fmt.Println("i is ", i)
-		tunaAsBytes, _ := json.Marshal(tuna[i])
-		APIstub.PutState(strconv.Itoa(i+1), tunaAsBytes)
-		fmt.Println("Added", tuna[i])
-		i = i + 1
+	j := 0
+	for j < len(recipient) {
+		fmt.Println("j is ", j)
+		recipientAsBytes, _ := json.Marshal(recipient[j])
+		APIstub.PutState(strconv.Itoa(j+1), recipientAsBytes)
+		fmt.Println("Added", recipient[j])
+		j = j + 1
 	}
 
 	return shim.Success(nil)
@@ -144,11 +140,12 @@ func (s *SmartContract) recordTuna(APIstub shim.ChaincodeStubInterface, args []s
 }
 
 /*
- * The queryAllTuna method *
+ * The queryAllRecipient method *
 allows for assessing all the records added to the ledger(all tuna catches)
 This method does not take any arguments. Returns JSON string containing results. 
  */
-func (s *SmartContract) queryAllTuna(APIstub shim.ChaincodeStubInterface) sc.Response {
+
+ func (s *SmartContract) queryAllRecipient(APIstub shim.ChaincodeStubInterface) sc.Response {
 
 	startKey := "0"
 	endKey := "999"
@@ -186,7 +183,7 @@ func (s *SmartContract) queryAllTuna(APIstub shim.ChaincodeStubInterface) sc.Res
 	}
 	buffer.WriteString("]")
 
-	fmt.Printf("- queryAllTuna:\n%s\n", buffer.String())
+	fmt.Printf("- queryAllRecipient:\n%s\n", buffer.String())
 
 	return shim.Success(buffer.Bytes())
 }
