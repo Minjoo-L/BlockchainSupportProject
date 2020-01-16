@@ -95,7 +95,7 @@ return{
 		    // send proposal to endorser
 		    const request = {
 		        //targets : --- letting this default to the peers assigned to the channel
-		        chaincodeId: 'supporting-app2',
+		        chaincodeId: 'test-app2',
 		        fcn: 'registerSupporter',
 		        args: [name, id, email, pw, address, phoneNum],
 		        chainId: 'mychannel2',

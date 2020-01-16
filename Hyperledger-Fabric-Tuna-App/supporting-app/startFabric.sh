@@ -44,13 +44,13 @@ docker exec -e "CORE_PEER_LOCALMSPID=SupporterOrgMSP" -e "CORE_PEER_MSPCONFIGPAT
 
 echo 정부, 후원자 조직 참여 채널
 echo 정부
-docker exec -e "CORE_PEER_LOCALMSPID=GovernmentOrgMSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/GovernmentOrg.example.com/users/Admin@GovernmentOrg.example.com/msp" cli_GovernmentOrg peer chaincode install -n test-app2 -v 1.0 -p github.com/supporting-app
+docker exec -e "CORE_PEER_LOCALMSPID=GovernmentOrgMSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/GovernmentOrg.example.com/users/Admin@GovernmentOrg.example.com/msp" cli_GovernmentOrg peer chaincode install -n test-app2 -v 1.0 -p github.com/supporting-app2
 #채널당 한번만 instantiate
-docker exec -e "CORE_PEER_LOCALMSPID=GovernmentOrgMSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/GovernmentOrg.example.com/users/Admin@GovernmentOrg.example.com/msp" cli_GovernmentOrg peer chaincode instantiate -o orderer.example.com:7050 -C mychannel2 -n test-app2 -v 1.0 -c '{"Args":[""]}'  -P "OR ('GovernmentOrgMSP.member', 'SupporterMSP.member')"
+docker exec -e "CORE_PEER_LOCALMSPID=GovernmentOrgMSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/GovernmentOrg.example.com/users/Admin@GovernmentOrg.example.com/msp" cli_GovernmentOrg peer chaincode instantiate -o orderer.example.com:7050 -C mychannel2 -n test-app2 -v 1.0 -c '{"Args":[""]}'  -P "OR ('GovernmentOrgMSP.member', 'SupporterOrgMSP.member')"
 sleep 10 
 docker exec -e "CORE_PEER_LOCALMSPID=GovernmentOrgMSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/GovernmentOrg.example.com/users/Admin@GovernmentOrg.example.com/msp" cli_GovernmentOrg peer chaincode invoke -o orderer.example.com:7050 -C mychannel2 -n test-app2 -c '{"function":"initLedger","Args":[""]}'
 echo 후원자
-docker exec -e "CORE_PEER_LOCALMSPID=SupporterOrgMSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/SupporterOrg.example.com/users/Admin@SupporterOrg.example.com/msp" cli_SupporterOrg peer chaincode install -n test-app2 -v 1.0 -p github.com/supporting-app
+docker exec -e "CORE_PEER_LOCALMSPID=SupporterOrgMSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/SupporterOrg.example.com/users/Admin@SupporterOrg.example.com/msp" cli_SupporterOrg peer chaincode install -n test-app2 -v 1.0 -p github.com/supporting-app2
 docker exec -e "CORE_PEER_LOCALMSPID=SupporterOrgMSP" -e "CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/SupporterOrg.example.com/users/Admin@SupporterOrg.example.com/msp" cli_SupporterOrg peer chaincode invoke -o orderer.example.com:7050 -C mychannel2 -n test-app2 -c '{"function":"initLedger","Args":[""]}'
 
 echo 정부, 피후원자조직 참여 채널
