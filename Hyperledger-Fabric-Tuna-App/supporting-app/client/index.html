@@ -90,15 +90,25 @@
       <table id="all_recipient" class="table" align="center">
 
         <tr>
-          <th>ID</th>
           <th>Name</th>
+          <th>ID</th>
+          <th>Email</th>
+          <th>Password</th>
           <th>Address</th>
+          <th>PhoneNum</th>
+          <th>Story</th>
+          <th>Status</th>
         </tr>
 
         <tr ng-repeat="recipient in all_recipient">
-          <td>{{recipient.Key}}</td>
           <td>{{recipient.name}}</td>
+          <td>{{recipient.id}}</td>
+          <td>{{recipient.email}}</td>
+          <td>{{recipient.password}}</td>
           <td>{{recipient.address}}</td>
+          <td>{{recipient.phoneNum}}</td>
+          <td>{{recipient.story}}</td>
+          <td>{{recipient.status}}</td>
         </tr>
       </table>
 

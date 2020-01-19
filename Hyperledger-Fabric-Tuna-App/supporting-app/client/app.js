@@ -41,8 +41,8 @@ app.controller('appController', function($scope, appFactory){
 		appFactory.queryAllRecipient(function(data){
 			var array = [];
 			for (var i = 0; i < data.length; i++){
-				parseInt(data[i].Key);
-				data[i].Record.Key = parseInt(data[i].Key);
+				//parseInt(data[i].Key);
+				data[i].Record.Key = data[i].Key;
 				array.push(data[i].Record);
 			}
 			array.sort(function(a, b) {
