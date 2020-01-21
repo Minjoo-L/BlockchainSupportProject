@@ -16,7 +16,7 @@ var Fabric_Client = require('fabric-client');
 var path          = require('path');
 var util          = require('util');
 var os            = require('os');
-var crypto = require('crypto');
+var crypto = require('crypto'); //비밀번호 해시화
 var mysql = require('mysql');
 var connection = mysql.createConnection({
 	host	: 'localhost',
