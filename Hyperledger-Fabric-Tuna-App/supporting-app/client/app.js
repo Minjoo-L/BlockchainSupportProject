@@ -100,7 +100,7 @@ app.factory('appFactory', function($http){
 
 	//후원자 회원가입
 	factory.registerSupporter = function(data, callback){
-		var supporter = data.test_key+ "-" + data.name + "-" + data.id + "-" + data.email + "-" + data.pw + "-" + data.address+"-"+data.phoneNum;
+		var supporter = data.name + "-" + data.id + "-" + data.email + "-" + data.pw + "-" + data.address+"-"+data.phoneNum;
     	$http.get('/registerSupporter/'+supporter).success(function(output){
 			callback(output)
 		});
@@ -150,5 +150,3 @@ app.factory('appFactory', function($http){
 
 	return factory;
 });
-
-

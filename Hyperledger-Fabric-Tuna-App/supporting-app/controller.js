@@ -33,14 +33,14 @@ return{
 		var array = req.params.supporter.split("-");
 		console.log(array);
 		console.log(req.params.supporter);
-		var key = array[0]
-		var name = array[1]
-		var id = array[2]
-		var email = array[3]
-		var pw = array[4]
+		var key = array[1]
+		var name = array[0]
+		var id = array[1]
+		var email = array[2]
+		var pw = array[3]
 		pw = crypto.createHash('sha512').update(pw).digest('base64');
-		var address = array[5]
-		var phoneNum = array[6]
+		var address = array[4]
+		var phoneNum = array[5]
 		//var auth = array[6]
 		/*
 		connection.query("insert into usertbl values('"+name+"' , '"+id+"' , '"+email+"', '"+address+"' , '"+phoneNum+"' , "+auth+" , '"+pw+"' )", async function(err, rows, fields){

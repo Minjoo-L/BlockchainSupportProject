@@ -2,7 +2,6 @@
 
 /*
   Sample Chaincode based on Demonstrated Scenario
-
  This code is based on code written by the Hyperledger Fabric community.
   Original code can be found here: https://github.com/hyperledger/fabric-samples/blob/release/chaincode/fabcar/fabcar.go
  */
@@ -18,7 +17,6 @@
 	 "bytes"
 	 "encoding/json"
 	 "fmt"
-	 "strconv"
  
 	 "github.com/hyperledger/fabric/core/chaincode/shim"
 	 sc "github.com/hyperledger/fabric/protos/peer"
@@ -81,15 +79,9 @@
 		 Supporter{Name:"Soyoung Yoo", ID:"123456", Email:"ysy@naver.com", Password:"1ARVn2Auq2/WAqx2gNrL+q3RNjAzXpUfCXrzkA6d4Xa22yhRLy4AC50E+6UTPoscbo31nbOoq51gvkuXzJ6B2w==", Address:"Seoul", PhoneNum:"01089145587"},
 	 }
  
-	 i := 0
-	 for i < len(supporter) {
-		 fmt.Println("i is ", i)
-		 supporterAsBytes, _ := json.Marshal(supporter[i])
-		 APIstub.PutState(strconv.Itoa(i+1), supporterAsBytes)
-		 fmt.Println("Added", supporter[i])
-		 i = i + 1
-	 }
- 
+	supporterAsBytes, _ := json.Marshal(supporter[0])
+	APIstub.PutState("123456", supporterAsBytes)
+
 	 return shim.Success(nil)
  }
  
@@ -99,14 +91,11 @@
   */
  func (s *SmartContract) registerSupporter(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
  
-	 if len(args) != 7 {
-		 return shim.Error("Incorrect number of arguments. Expecting 7")
-	 }
  
-	var supporter = Supporter{ Name: args[1], ID: args[2], Email: args[3], Password: args[4], Address: args[5], PhoneNum: args[6] }
+	var supporter = Supporter{ Name: args[0], ID: args[1], Email: args[2], Password: args[3], Address: args[4], PhoneNum: args[5] }
 
 	supporterAsBytes, _ := json.Marshal(supporter)
-	err := APIstub.PutState(args[0], supporterAsBytes)
+	err := APIstub.PutState(args[1], supporterAsBytes)
 	if err != nil {
 		return shim.Error(fmt.Sprintf("Failed to register supporter: %s", args[0]))
 	}

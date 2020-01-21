@@ -71,7 +71,6 @@
       <!--후원자 회원가입-->
       <div class="form-group">
         <label>Register form for Supporter</label><br>
-        테스트 키: <input class="form-control" type="text" ng-model="supporter.test_key">
         이름: <input class="form-control" type="text" ng-model="supporter.name">
         주민등록번호: <input class="form-control" type="text" ng-model="supporter.id">
         이메일: <input class="form-control" type="text" ng-model="supporter.email"> 
@@ -123,15 +122,22 @@
       <table id="all_supporter" class="table" align="center">
 
         <tr>
-          <th>ID</th>
           <th>Name</th>
+          <th>ID</th>
+          <th>Email</th>
+          <th>Password</th>
           <th>Address</th>
+          <th>phoneNum</th>
         </tr>
 
         <tr ng-repeat="supporter in all_supporter">
-          <td>{{supporter.Key}}</td>
           <td>{{supporter.name}}</td>
+          <td>{{supporter.id}}</td>
+          <td>{{supporter.email}}</td>
+          <td>{{supporter.pw}}</td>
           <td>{{supporter.address}}</td>
+          <td>{{supporter.phoneNum}}</td>
+
         </tr>
       </table>
 
