@@ -18,7 +18,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"strconv"
+	//"strconv"
 
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	sc "github.com/hyperledger/fabric/protos/peer"
@@ -40,7 +40,14 @@ type Tuna struct {
 
 type Recipient struct {
 	Name string `json:"name"`
+	ID string `json:"id"`
+	Email string `json:"email"`
+	Password string `json:"password"`
 	Address string `json:"address"`
+	PhoneNum string `json:"phoneNum"`
+	Story string `json:"story"`
+	Status string `json:"status"`
+
 }
 
 /*
@@ -104,17 +111,14 @@ Will add test data (10 tuna catches)to our network
 func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	
 	recipient := []Recipient{
-		Recipient{Name: "김철수", Address: "서울 살아욤"},
-		Recipient{Name: "김영희", Address: "경기도 살아욤"},
+		Recipient{Name: "김철수", ID: "6001012234560", Email: "kim@gmail.com", Password: "비밀번호", Address: "서울 살아욤", PhoneNum: "01044441234", Story: "제 아이가 많이 힘듭니다. 저는 장애3급 판정을 받았습니다..", Status: "N"},
+		Recipient{Name: "김영희", ID: "9901011234567", Email: "young@gmail.com", Password: "김김영희짱",Address: "경기도 살아욤", PhoneNum: "01012341234", Story: "많이 힘들어요.. 제 아가들을 위해 도와주세요", Status: "Y"},
 	}
-	j := 0
-	for j < len(recipient) {
-		fmt.Println("j is ", j)
-		recipientAsBytes, _ := json.Marshal(recipient[j])
-		APIstub.PutState(strconv.Itoa(j+1), recipientAsBytes)
-		fmt.Println("Added", recipient[j])
-		j = j + 1
-	}
+
+	recipientAsBytes, _ := json.Marshal(recipient[0])
+	APIstub.PutState("recipient1", recipientAsBytes)
+	recipientAsBytes, _ = json.Marshal(recipient[1])
+	APIstub.PutState("recipient2", recipientAsBytes)
 
 	return shim.Success(nil)
 }
@@ -152,7 +156,7 @@ This method does not take any arguments. Returns JSON string containing results.
 	startKey := "0"
 	endKey := "999"
 
-	resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
+	resultsIterator, err := APIstub.GetStateByRange("recipient"+startKey, "recipient"+endKey)
 	if err != nil {
 		return shim.Error(err.Error())
 	}
