@@ -15,6 +15,7 @@ app.controller('appController', function($scope, appFactory){
 	$scope.registerSupporter = function(){//후원자 회원가입
 
 		appFactory.registerSupporter($scope.supporter, function(data){
+			$scope.create_supporter = data;
 		});
 	}
 
@@ -99,7 +100,7 @@ app.factory('appFactory', function($http){
 
 	//후원자 회원가입
 	factory.registerSupporter = function(data, callback){
-		var supporter = data.name + "-" + data.id + "-" + data.email + "-" + data.pw + "-" + data.address+"-"+data.phoneNum+"-"+0;
+		var supporter = data.test_key+ "-" + data.name + "-" + data.id + "-" + data.email + "-" + data.pw + "-" + data.address+"-"+data.phoneNum;
     	$http.get('/registerSupporter/'+supporter).success(function(output){
 			callback(output)
 		});
