@@ -1,7 +1,7 @@
 # BlockchainSupportProject
 Hyperledger Fabric
 
-## TODO
+## TODO 0121
 - ~~후원자 가입 신청 폼~~
 - ~~key를 주민번호로~~
 - 피후원자 가입 신청 폼 & 체인코드 : **소영**
