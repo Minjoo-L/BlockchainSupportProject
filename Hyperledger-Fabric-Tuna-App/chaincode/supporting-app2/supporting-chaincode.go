@@ -96,6 +96,7 @@
 
 	supporterAsBytes, _ := json.Marshal(supporter)
 	err := APIstub.PutState(args[1], supporterAsBytes)
+	fmt.Sprintf("신규 등록 후원자의 주민번호는: %s", args[1])
 	if err != nil {
 		return shim.Error(fmt.Sprintf("Failed to register supporter: %s", args[0]))
 	}

@@ -116,9 +116,9 @@ func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Respo
 	}
 
 	recipientAsBytes, _ := json.Marshal(recipient[0])
-	APIstub.PutState("recipient1", recipientAsBytes)
+	APIstub.PutState("6001012234560", recipientAsBytes)
 	recipientAsBytes, _ = json.Marshal(recipient[1])
-	APIstub.PutState("recipient2", recipientAsBytes)
+	APIstub.PutState("9901011234567", recipientAsBytes)
 
 	return shim.Success(nil)
 }
@@ -156,7 +156,7 @@ This method does not take any arguments. Returns JSON string containing results.
 	startKey := "0"
 	endKey := "999"
 
-	resultsIterator, err := APIstub.GetStateByRange("recipient"+startKey, "recipient"+endKey)
+	resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
 	if err != nil {
 		return shim.Error(err.Error())
 	}

@@ -94,10 +94,10 @@ return{
 		    // send proposal to endorser
 		    const request = {
 		        //targets : --- letting this default to the peers assigned to the channel
-				chaincodeId: 'test-app12',
+				chaincodeId: 'test-app13',
 				txId: tx_id,
 		        fcn: 'registerSupporter',
-		        args: [key, name, id, email, pw, address, phoneNum],
+		        args: [name, id, email, pw, address, phoneNum],
 		    };
 
 		    // send the transaction proposal to the peers
@@ -236,7 +236,7 @@ return{
 
 		    // queryAllTuna - requires no arguments , ex: args: [''],
 		    const request = {
-		        chaincodeId: 'test-app12',
+		        chaincodeId: 'test-app13',
 		        txId: tx_id,
 		        fcn: 'queryAllSupporter',
 		        args: ['']
@@ -291,18 +291,18 @@ return{
 		    fabric_client.setCryptoSuite(crypto_suite);
 
 		    // get the enrolled user from persistence, this user will sign all requests
-		    return fabric_client.getUserContext('user3', true);
+		    return fabric_client.getUserContext('user1', true);
 		}).then((user_from_store) => {
 		    if (user_from_store && user_from_store.isEnrolled()) {
-		        console.log('Successfully loaded user3 from persistence');
+		        console.log('Successfully loaded user1 from persistence');
 		        member_user = user_from_store;
 		    } else {
-		        throw new Error('Failed to get user3.... run registerUser.js');
+		        throw new Error('Failed to get user1.... run registerUser.js');
 		    }
 
 		    // queryAllTuna - requires no arguments , ex: args: [''],
 		    const request = {
-		        chaincodeId: 'test-app-queryRE',
+		        chaincodeId: 'test-app-queryRE1',
 		        txId: tx_id,
 		        fcn: 'queryAllRecipient',
 		        args: ['']
