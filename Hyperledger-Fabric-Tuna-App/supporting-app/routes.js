@@ -19,6 +19,9 @@ module.exports = function(app){
   app.get('/get_recipient/:id', function(req, res){
     tuna.get_recipient(req, res);
   });
+  app.get('/approve_recipient/:recipient', function(req, res){
+    tuna.approveRecipient(req, res);
+  });
   app.get('/add_tuna/:tuna', function(req, res){
     tuna.add_tuna(req, res);
   });

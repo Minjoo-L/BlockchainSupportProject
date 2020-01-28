@@ -124,6 +124,14 @@
           <td>{{recipient.status}}</td>
         </tr>
       </table>
+      
+      <div class="form-group">
+        <label>피후원자 등록 승인</label><br>
+        <h5 style="color:green;margin-bottom:2%" id="success_recipient">Success! Tx ID: {{approve_recipient}}</h5>
+        <h5 style="color:red;margin-bottom:2%" id="error_recipient">Error: Please enter a valid Recipient Id</h5>
+        Enter a recipient id <input class="form-control" name="assetSelect" ng-model="recipient.id">
+        <input id="approveRecipient" type="submit" value="승인" class="btn btn-primary" ng-click="approveRecipient()">
+      </div>
 
       <!--후원자 조회-->
 
@@ -150,7 +158,6 @@
           <td>{{supporter.pw}}</td>
           <td>{{supporter.address}}</td>
           <td>{{supporter.phoneNum}}</td>
-
         </tr>
       </table>
 

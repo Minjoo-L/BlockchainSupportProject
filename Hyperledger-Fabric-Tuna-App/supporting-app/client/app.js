@@ -11,6 +11,9 @@ app.controller('appController', function($scope, appFactory){
 	$("#success_create").hide();
 	$("#error_holder").hide();
 	$("#error_query").hide();
+	$("#success_recipient").hide();
+	$("#error_recipient").hide();
+
 	
 	$scope.registerSupporter = function(){//후원자 회원가입
 
@@ -60,6 +63,18 @@ app.controller('appController', function($scope, appFactory){
 		});
 	}
 
+	$scope.approveRecipient = function(){ //피후원자 등록 승인
+		appFactory.approveRecipient($scope.recipient, function(data){
+			$scope.approve_recipient = data;
+			if ($scope.approve_recipient == "Error: no recipient candidate found"){
+				$("#error_recipient").show();
+				$("#success_recipient").hide();
+			} else{
+				$("#success_recipient").show();
+				$("#error_recipient").hide();
+			}
+		});
+	}
 	$scope.querySupporter = function(){
 
 		var id = $scope.supporter_id;
@@ -149,6 +164,14 @@ app.factory('appFactory', function($http){
     factory.queryAllRecipient = function(callback){
 
     	$http.get('/get_all_recipient/').success(function(output){
+			callback(output)
+		});
+	}
+
+	//피후원자 승인 등록
+	factory.approveRecipient = function(data, callback){
+		var recipient = data.id + "-Y";
+    	$http.get('/approve_recipient/'+recipient).success(function(output){
 			callback(output)
 		});
 	}

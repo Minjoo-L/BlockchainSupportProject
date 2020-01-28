@@ -68,6 +68,8 @@
 		 return s.queryAllRecipient(APIstub)
 	 } else if function == "queryRecipient" {
 		return s.queryRecipient(APIstub, args)
+	 } else if function == "approveRecipient" {
+		 return s.approveRecipient(APIstub, args)
 	 }
  
 	 return shim.Error("Invalid Smart Contract function name.")
@@ -166,6 +168,32 @@ func (s *SmartContract) queryRecipient(APIstub shim.ChaincodeStubInterface, args
 	}
 	return shim.Success(recipientAsBytes)
 	
+}
+// 피후원자 승인 등록
+func (s *SmartContract) approveRecipient(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 2 {
+		return shim.Error("Incorrect number of arguments. Expecting 2")
+	}
+
+	recipientAsBytes, _ := APIstub.GetState(args[0])
+	if recipientAsBytes == nil {
+		return shim.Error("Could not locate tuna")
+	}
+	recipient := Recipient{}
+
+	json.Unmarshal(recipientAsBytes, &recipient)
+	// Normally check that the specified argument is a valid holder of tuna
+	// we are skipping this check for this example
+	recipient.Status = args[1]
+
+	recipientAsBytes, _ = json.Marshal(recipient)
+	err := APIstub.PutState(args[0], recipientAsBytes)
+	if err != nil {
+		return shim.Error(fmt.Sprintf("Failed to approve recipient: %s", args[0]))
+	}
+
+	return shim.Success(nil)
 }
  /*
   * main function *
