@@ -94,7 +94,7 @@ return{
 		    // send proposal to endorser
 		    const request = {
 		        //targets : --- letting this default to the peers assigned to the channel
-				chaincodeId: 'test-app9',
+				chaincodeId: 'test-app12',
 				txId: tx_id,
 		        fcn: 'registerSupporter',
 		        args: [key, name, id, email, pw, address, phoneNum],
@@ -236,7 +236,7 @@ return{
 
 		    // queryAllTuna - requires no arguments , ex: args: [''],
 		    const request = {
-		        chaincodeId: 'test-app9',
+		        chaincodeId: 'test-app12',
 		        txId: tx_id,
 		        fcn: 'queryAllSupporter',
 		        args: ['']

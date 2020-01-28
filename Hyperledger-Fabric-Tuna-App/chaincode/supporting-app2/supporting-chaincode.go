@@ -76,11 +76,11 @@
   */
  func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	 supporter := []Supporter{
-		 Supporter{Name:"Soyoung Yoo", ID:"123456", Email:"ysy@naver.com", Password:"1ARVn2Auq2/WAqx2gNrL+q3RNjAzXpUfCXrzkA6d4Xa22yhRLy4AC50E+6UTPoscbo31nbOoq51gvkuXzJ6B2w==", Address:"Seoul", PhoneNum:"01089145587"},
+		 Supporter{Name:"Soyoung Yoo", ID:"9912122999999", Email:"ysy@naver.com", Password:"1ARVn2Auq2/WAqx2gNrL+q3RNjAzXpUfCXrzkA6d4Xa22yhRLy4AC50E+6UTPoscbo31nbOoq51gvkuXzJ6B2w==", Address:"Seoul", PhoneNum:"01089145587"},
 	 }
  
 	supporterAsBytes, _ := json.Marshal(supporter[0])
-	APIstub.PutState("123456", supporterAsBytes)
+	APIstub.PutState( "9912122999999", supporterAsBytes)
 
 	 return shim.Success(nil)
  }
