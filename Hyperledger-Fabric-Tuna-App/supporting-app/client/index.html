@@ -141,31 +141,6 @@
         </tr>
       </table>
 
-      <div class="form-group">
-        <label>Query a Specific Tuna Catch</label><br>
-        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid Tuna Id</h5>
-        
-        Enter a catch number: <input id="createName" class="form-control" type="text" placeholder="Ex: 3" ng-model="tuna_id">
-        <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="queryTuna()">
-      </div>
-
-      <table id="query_tuna" class="table" align="center">
-
-        <tr>
-          <th>Timestamp</th>
-          <th>Holder</th>
-          <th>Catch Location <br>(Longitude, Latitude)</th>
-          <th>Vessel</th>
-        </tr>
-
-        <tr>
-          <td>{{query_tuna.timestamp}}</td>
-          <td>{{query_tuna.holder}}</td>
-          <td>{{query_tuna.location}}</td>
-          <td>{{query_tuna.vessel}}</td>
-        </tr>
-      </table>
-
       <!-- 로그인 한 유저의 주민번호 정보로 바로 조회하여 개인 정보들을 띄워주는 것으로 수정 필요-->
       <div class="form-group">
         <label>내 정보 조회(후원자)</label><br>
@@ -195,6 +170,38 @@
         </tr>
       </table>
 
+      <!-- 로그인 한 유저의 주민번호 정보로 바로 조회하여 개인 정보들을 띄워주는 것으로 수정 필요-->
+      <div class="form-group">
+        <label>내 정보 조회(피후원자)</label><br>
+        
+        주민등록번호: <input id="createName" class="form-control" type="text" placeholder="Ex: 3" ng-model="recipient_id">
+        <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="queryRecipient()">
+      </div>
+
+      <table id="query_recipient" class="table" align="center">
+
+        <tr>
+          <th>이름</th>
+          <th>주민등록번호</th>
+          <th>이메일</th>
+          <th>비밀번호</th>
+          <th>주소</th>
+          <th>전화번호</th>
+          <th>신청 사유</th>
+          <th>상태</th>
+        </tr>
+
+        <tr>
+          <td>{{query_recipient.name}}</td>
+          <td>{{query_recipient.id}}</td>
+          <td>{{query_recipient.email}}</td>
+          <td>{{query_recipient.password}}</td>
+          <td>{{query_recipient.address}}</td>
+          <td>{{query_recipient.phoneNum}}</td>
+          <td>{{query_recipient.story}}</td>
+          <td>{{query_recipient.status}}</td>
+        </tr>
+      </table>
 <!--    <div class="form-group">
         <label>Create Tuna Record</label>
         <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{create_tuna}}</h5>
