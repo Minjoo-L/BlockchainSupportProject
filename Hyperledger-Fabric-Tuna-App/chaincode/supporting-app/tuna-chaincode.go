@@ -67,7 +67,7 @@
 	 } else if function == "queryAllRecipient" { //피후원자 조회
 		 return s.queryAllRecipient(APIstub)
 	 } else if function == "queryRecipient" {
-		return s.queryRecipient(APIstub)
+		return s.queryRecipient(APIstub, args)
 	 }
  
 	 return shim.Error("Invalid Smart Contract function name.")
