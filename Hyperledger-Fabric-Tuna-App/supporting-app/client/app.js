@@ -60,14 +60,30 @@ app.controller('appController', function($scope, appFactory){
 		});
 	}
 
-	$scope.queryTuna = function(){
+	$scope.querySupporter = function(){
 
-		var id = $scope.tuna_id;
+		var id = $scope.supporter_id;
 
-		appFactory.queryTuna(id, function(data){
-			$scope.query_tuna = data;
+		appFactory.querySupporter(id, function(data){
+			$scope.query_supporter = data;
 
-			if ($scope.query_tuna == "Could not locate tuna"){
+			if ($scope.query_supporter == "Could not locate supporter"){
+				console.log()
+				$("#error_query").show();
+			} else{
+				$("#error_query").hide();
+			}
+		});
+	}
+
+	$scope.queryRecipient = function(){
+
+		var id = $scope.recipient_id;
+
+		appFactory.queryRecipient(id, function(data){
+			$scope.query_recipient = data;
+
+			if ($scope.query_recipient == "Could not locate recipient"){
 				console.log()
 				$("#error_query").show();
 			} else{
@@ -137,8 +153,16 @@ app.factory('appFactory', function($http){
 		});
 	}
 
-	factory.queryTuna = function(id, callback){
-    	$http.get('/get_tuna/'+id).success(function(output){
+	// 내 정보 조회 (후원자)
+	factory.querySupporter = function(id, callback){
+    	$http.get('/get_supporter/'+id).success(function(output){
+			callback(output)
+		});
+	}
+
+	// 내 정보 조회 (피후원자)
+	factory.queryRecipient = function(id, callback){
+    	$http.get('/get_recipient/'+id).success(function(output){
 			callback(output)
 		});
 	}

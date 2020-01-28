@@ -66,6 +66,8 @@
 		 return s.registerRecipient(APIstub, args)
 	 } else if function == "queryAllRecipient" { //피후원자 조회
 		 return s.queryAllRecipient(APIstub)
+	 } else if function == "queryRecipient" {
+		return s.queryRecipient(APIstub)
 	 }
  
 	 return shim.Error("Invalid Smart Contract function name.")
@@ -151,6 +153,19 @@
 	fmt.Printf("- queryAllRecipient:\n%s\n", buffer.String())
 
 	return shim.Success(buffer.Bytes())
+}
+func (s *SmartContract) queryRecipient(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	recipientAsBytes, _ := APIstub.GetState(args[0])
+	if recipientAsBytes == nil {
+		return shim.Error("Could not locate recipient")
+	}
+	return shim.Success(recipientAsBytes)
+	
 }
  /*
   * main function *
