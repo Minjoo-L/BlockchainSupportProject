@@ -19,6 +19,13 @@ app.controller('appController', function($scope, appFactory){
 		});
 	}
 
+	$scope.registerRecipient = function(){//피후원자 회원가입
+
+		appFactory.registerRecipient($scope.recipient, function(data){
+			$scope.create_recipient = data;
+		});
+	}
+
 	//모든 후원자 정보 조회
 	$scope.queryAllSupporter = function(){
 
@@ -102,6 +109,14 @@ app.factory('appFactory', function($http){
 	factory.registerSupporter = function(data, callback){
 		var supporter = data.name + "-" + data.id + "-" + data.email + "-" + data.pw + "-" + data.address+"-"+data.phoneNum;
     	$http.get('/registerSupporter/'+supporter).success(function(output){
+			callback(output)
+		});
+	}
+
+	//피후원자 회원가입
+	factory.registerRecipient = function(data, callback){
+		var recipient = data.name + "-" + data.id + "-" + data.email + "-" + data.pw + "-" + data.address+"-"+data.phoneNum+"-"+data.story+"-N";
+    	$http.get('/registerRecipient/'+recipient).success(function(output){
 			callback(output)
 		});
 	}

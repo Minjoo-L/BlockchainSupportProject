@@ -80,7 +80,20 @@
         <input id="registerSupporter" type="submit" value="Create" ng-click="registerSupporter()">
       </div>
       
-      <!--후원자 로그인-->
+      <!--피후원자 회원가입-->
+      <div class="form-group">
+        <label>Register form for Recipient</label><br>
+        이름: <input class="form-control" type="text" ng-model="recipient.name">
+        주민등록번호: <input class="form-control" type="text" ng-model="recipient.id">
+        이메일: <input class="form-control" type="text" ng-model="recipient.email"> 
+        비밀번호: <input class="form-control" type="password" ng-model="recipient.pw">
+        주소: <input class="form-control" type="text" ng-model="recipient.address">
+        전화번호: <input class="form-control" type="text" ng-model="recipient.phoneNum">
+        사유: <input class="form-control" type="text" ng-model="recipient.story">
+        <input id="registerRecipient" type="submit" value="Create" ng-click="registerRecipient()">
+      </div>
+
+      <!--피후원자 조회-->
 
       <div class="form-group">
         <label>Query All Recipients</label>

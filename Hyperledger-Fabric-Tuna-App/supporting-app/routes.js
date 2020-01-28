@@ -7,6 +7,9 @@ module.exports = function(app){
   app.get('/registerSupporter/:supporter', function(req, res){
     tuna.registerSupporter(req, res);
   });
+  app.get('/registerRecipient/:recipient', function(req, res){
+    tuna.registerRecipient(req, res);
+  });
   app.get('/get_all_supporter', function(req, res){
     tuna.get_all_supporter(req,res);
   })
