@@ -64,6 +64,8 @@
 		 return s.registerSupporter(APIstub, args)
 	 } else if function == "queryAllSupporter" { //후원자 조회
 		 return s.queryAllSupporter(APIstub)
+	 } else if function == "querySupporter" {  // 개인정보 조회 (후원자)
+		 return s.querySupporter(APIstub, args)
 	 }
  
 	 return shim.Error("Invalid Smart Contract function name.")
@@ -148,6 +150,19 @@
 	return shim.Success(buffer.Bytes())
 }
 
+func (s *SmartContract) querySupporter(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	supporterAsBytes, _ := APIstub.GetState(args[0])
+	if supporterAsBytes == nil {
+		return shim.Error("Could not locate supporter")
+	}
+	return shim.Success(supporterAsBytes)
+	
+}
  
  /*
   * main function *

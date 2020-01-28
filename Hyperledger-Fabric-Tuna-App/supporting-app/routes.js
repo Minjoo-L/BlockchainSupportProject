@@ -13,6 +13,9 @@ module.exports = function(app){
   app.get('/get_tuna/:id', function(req, res){
     tuna.get_tuna(req, res);
   });
+  app.get('/get_supporter/:id', function(req, res){
+    tuna.get_supporter(req, res);
+  });
   app.get('/add_tuna/:tuna', function(req, res){
     tuna.add_tuna(req, res);
   });

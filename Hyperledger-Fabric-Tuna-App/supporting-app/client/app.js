@@ -69,6 +69,22 @@ app.controller('appController', function($scope, appFactory){
 		});
 	}
 
+	$scope.querySupporter = function(){
+
+		var id = $scope.supporter_id;
+
+		appFactory.querySupporter(id, function(data){
+			$scope.query_supporter = data;
+
+			if ($scope.query_supporter == "Could not locate supporter"){
+				console.log()
+				$("#error_query").show();
+			} else{
+				$("#error_query").hide();
+			}
+		});
+	}
+
 	$scope.recordTuna = function(){
 
 		appFactory.recordTuna($scope.tuna, function(data){
@@ -124,6 +140,12 @@ app.factory('appFactory', function($http){
 
 	factory.queryTuna = function(id, callback){
     	$http.get('/get_tuna/'+id).success(function(output){
+			callback(output)
+		});
+	}
+
+	factory.querySupporter = function(id, callback){
+    	$http.get('/get_supporter/'+id).success(function(output){
 			callback(output)
 		});
 	}
