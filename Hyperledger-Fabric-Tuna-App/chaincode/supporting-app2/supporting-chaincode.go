@@ -66,6 +66,8 @@
 		 return s.queryAllSupporter(APIstub)
 	 } else if function == "querySupporter" {  // 개인정보 조회 (후원자)
 		 return s.querySupporter(APIstub, args)
+	 } else if function == "changeSupporterInfo" {
+		 return s.changeSupporterInfo(APIstub, args)
 	 }
  
 	 return shim.Error("Invalid Smart Contract function name.")
@@ -163,7 +165,37 @@ func (s *SmartContract) querySupporter(APIstub shim.ChaincodeStubInterface, args
 	return shim.Success(supporterAsBytes)
 	
 }
- 
+
+func (s *SmartContract) changeSupporterInfo(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 6 {
+		return shim.Error("Incorrect number of arguments. Expecting 6")
+	}
+
+	userSupporterAsBytes, _ := APIstub.GetState(args[0])
+	if userSupporterAsBytes == nil {
+		return shim.Error("Could not locate supporter")
+	}
+	userSupporter := Supporter{}
+
+	json.Unmarshal(userSupporterAsBytes, &userSupporter)
+	// Normally check that the specified argument is a valid holder of tuna
+	// we are skipping this check for this example
+	userSupporter.ID = args[0]
+	userSupporter.Name = args[1]
+	userSupporter.Email = args[2]
+	userSupporter.Password = args[3]
+	userSupporter.Address = args[4]
+	userSupporter.PhoneNum = args[5]
+
+	userSupporterAsBytes, _ = json.Marshal(userSupporter)
+	err := APIstub.PutState(args[0], userSupporterAsBytes)
+	if err != nil {
+		return shim.Error(fmt.Sprintf("Failed to change user's personal info(supporter)"))
+	}
+
+	return shim.Success(nil)
+}
  /*
   * main function *
  calls the Start function 

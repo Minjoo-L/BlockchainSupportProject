@@ -238,11 +238,15 @@
 <!-- 나중에 로그인 된 사람 정보를 불러와서 띄워놓기-->
       <div class="form-group">
         <label>내 정보 수정(후원자)</label><br>
-        <h5 style="color:green;margin-bottom:2%" id="success_holder">Success! Tx ID: {{change_holder}}</h5>
-        <h5 style="color:red;margin-bottom:2%" id="error_holder">Error: Please enter a valid Tuna Id</h5>
-        Enter a catch id between 1 and 10: <input class="form-control" name="assetSelect" placeholder="Ex: 1" ng-model="holder.id">
-        Enter name of new holder: <input class="form-control" name="assetSelect" placeholder="Ex: Barry" ng-model="holder.name">
-        <input id="transferSubmit" type="submit" value="Change" class="btn btn-primary" ng-click="changeHolder()">
+        <!--<h5 style="color:green;margin-bottom:2%" id="success_holder">Success! Tx ID: {{change_userSupporter}}</h5>
+        <h5 style="color:red;margin-bottom:2%" id="error_holder">Error: Please enter a valid Tuna Id</h5>-->
+        주민등록번호를 입력 해주세요: <input class="form-control" name="assetSelect" ng-model="userSupporter.id">
+        이름: <input class="form-control" name="assetSelect"  ng-model="userSupporter.name">
+        이메일: <input class="form-control" name="assetSelect"  ng-model="userSupporter.email">
+        비밀번호: <input class="form-control" name="assetSelect"  ng-model="userSupporter.pw">
+        주소: <input class="form-control" name="assetSelect"  ng-model="userSupporter.address">
+        폰 번호: <input class="form-control" name="assetSelect"  ng-model="userSupporter.phoneNum">
+        <input id="transferSubmit" type="submit" value="수정" class="btn btn-primary" ng-click="changeSupporterInfo()">
       </div>
 
       <div class="form-group">

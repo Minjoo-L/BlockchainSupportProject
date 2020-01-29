@@ -31,4 +31,7 @@ module.exports = function(app){
   app.get('/change_holder/:holder', function(req, res){
     tuna.change_holder(req, res);
   });
+  app.get('/change_supporter_info/:userSupporter', function(req, res){
+    tuna.change_supporter_info(req, res);
+  });
 }

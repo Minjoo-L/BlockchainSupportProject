@@ -128,6 +128,20 @@ app.controller('appController', function($scope, appFactory){
 			}
 		});
 	}
+	// 내 정보 수정(후원자)
+	$scope.changeSupporterInfo = function(){
+
+		appFactory.changeSupporterInfo($scope.userSupporter, function(data){
+			//$scope.change_userSupporter = data;
+			/*if ($scope.change_userSupporter == "Error: no tuna catch found"){
+				$("#error_holder").show();
+				$("#success_holder").hide();
+			} else{
+				$("#success_holder").show();
+				$("#error_holder").hide();
+			}*/
+		});
+	}
 
 });
 
@@ -206,6 +220,15 @@ app.factory('appFactory', function($http){
 		var holder = data.id + "-" + data.name;
 
     	$http.get('/change_holder/'+holder).success(function(output){
+			callback(output)
+		});
+	}
+	// 내 정보 수정(후원자)
+	factory.changeSupporterInfo = function(data, callback){
+
+		var userSupporter = data.id + "-" + data.name + "-" + data.email + "-" + data.pw + "-" + data.address+"-"+data.phoneNum;
+
+    	$http.get('/change_supporter_info/'+userSupporter).success(function(output){
 			callback(output)
 		});
 	}
