@@ -64,9 +64,9 @@
 		 return s.registerSupporter(APIstub, args)
 	 } else if function == "queryAllSupporter" { //후원자 조회
 		 return s.queryAllSupporter(APIstub)
-	 } else if function == "querySupporter" {  // 개인정보 조회 (후원자)
+	 } else if function == "querySupporter" {  // 내 개인정보 조회 (후원자)
 		 return s.querySupporter(APIstub, args)
-	 } else if function == "changeSupporterInfo" {
+	 } else if function == "changeSupporterInfo" { // 내 정보 수정 (후원자)
 		 return s.changeSupporterInfo(APIstub, args)
 	 }
  
@@ -165,7 +165,7 @@ func (s *SmartContract) querySupporter(APIstub shim.ChaincodeStubInterface, args
 	return shim.Success(supporterAsBytes)
 	
 }
-
+//내 정보 수정(후원자)
 func (s *SmartContract) changeSupporterInfo(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	if len(args) != 6 {

@@ -251,11 +251,17 @@
 
       <div class="form-group">
         <label>내 정보 수정(피후원자)</label><br>
-        <h5 style="color:green;margin-bottom:2%" id="success_holder">Success! Tx ID: {{change_holder}}</h5>
-        <h5 style="color:red;margin-bottom:2%" id="error_holder">Error: Please enter a valid Tuna Id</h5>
-        Enter a catch id between 1 and 10: <input type="text" value="1" class="form-control" name="assetSelect" ng-model="holder.id">
-        Enter name of new holder: <input class="form-control" name="assetSelect" placeholder="Ex: Barry" ng-model="holder.name">
-        <input id="transferSubmit" type="submit" value="Change" class="btn btn-primary" ng-click="changeHolder()">
+        <!--<h5 style="color:green;margin-bottom:2%" id="success_holder">Success! Tx ID: {{change_holder}}</h5>
+        <h5 style="color:red;margin-bottom:2%" id="error_holder">Error: Please enter a valid Tuna Id</h5>-->
+        주민등록번호를 입력해 주세요: <input class="form-control" name="assetSelect" ng-model="userRecipient.id">
+        이름(이것두 빼기): <input class="form-control" name="assetSelect"  ng-model="userRecipient.name">
+        이메일: <input class="form-control" name="assetSelect"  ng-model="userRecipient.email">
+        비밀번호: <input class="form-control" name="assetSelect"  ng-model="userRecipient.password">
+        주소: <input class="form-control" name="assetSelect"  ng-model="userRecipient.address">
+        폰 번호: <input class="form-control" name="assetSelect"  ng-model="userRecipient.phoneNum">
+        신청 사연: <input class="form-control" name="assetSelect"  ng-model="userRecipient.story">
+        상태(건들 수 없는것으로 나중에 수정 항목에서 빼기): <input class="form-control" name="assetSelect"  ng-model="userRecipient.status">
+        <input id="transferSubmit" type="submit" value="수정" class="btn btn-primary" ng-click="changeRecipientInfo()">
       </div>
 
     </div>

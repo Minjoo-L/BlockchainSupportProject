@@ -132,14 +132,13 @@ app.controller('appController', function($scope, appFactory){
 	$scope.changeSupporterInfo = function(){
 
 		appFactory.changeSupporterInfo($scope.userSupporter, function(data){
-			//$scope.change_userSupporter = data;
-			/*if ($scope.change_userSupporter == "Error: no tuna catch found"){
-				$("#error_holder").show();
-				$("#success_holder").hide();
-			} else{
-				$("#success_holder").show();
-				$("#error_holder").hide();
-			}*/
+		});
+	}
+
+	// 내 정보 수정(피후원자)
+	$scope.changeRecipientInfo = function(){
+
+		appFactory.changeRecipientInfo($scope.userRecipient, function(data){
 		});
 	}
 
@@ -229,6 +228,16 @@ app.factory('appFactory', function($http){
 		var userSupporter = data.id + "-" + data.name + "-" + data.email + "-" + data.pw + "-" + data.address+"-"+data.phoneNum;
 
     	$http.get('/change_supporter_info/'+userSupporter).success(function(output){
+			callback(output)
+		});
+	}
+
+	// 내 정보 수정(피후원자)
+	factory.changeRecipientInfo = function(data, callback){
+
+		var userRecipient = data.id + "-" + data.name + "-" + data.email + "-" + data.password + "-" + data.address+ "-" + data.phoneNum + "-" + data.story + "-" + data.status;
+
+    	$http.get('/change_recipient_info/'+userRecipient).success(function(output){
 			callback(output)
 		});
 	}

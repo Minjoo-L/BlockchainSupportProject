@@ -28,10 +28,10 @@ module.exports = function(app){
   app.get('/get_all_recipient', function(req, res){
     tuna.get_all_recipient(req, res);
   });
-  app.get('/change_holder/:holder', function(req, res){
-    tuna.change_holder(req, res);
-  });
   app.get('/change_supporter_info/:userSupporter', function(req, res){
     tuna.change_supporter_info(req, res);
+  });
+  app.get('/change_recipient_info/:userRecipient', function(req, res){
+    tuna.change_recipient_info(req, res);
   });
 }
