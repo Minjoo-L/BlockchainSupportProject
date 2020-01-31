@@ -800,7 +800,7 @@ return{
 	approveRecipient: function(req, res){ // 피후원자 승인 등록
 		console.log("Approve Recipient : ");
 
-		var array = req.params.recipient.split("-");
+		var array = req.params.appRecipient.split("-");
 		var key = array[0]
 		var status = array[1];
 

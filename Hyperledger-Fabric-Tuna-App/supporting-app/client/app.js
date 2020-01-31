@@ -62,9 +62,9 @@ app.controller('appController', function($scope, appFactory){
 			$scope.all_recipient = array;
 		});
 	}
-
-	$scope.approveRecipient = function(){ //피후원자 등록 승인
-		appFactory.approveRecipient($scope.recipient, function(data){
+	//피후원자 등록 승인
+	$scope.approveRecipient = function(){ 
+		appFactory.approveRecipient($scope.appRecipient, function(data){
 			$scope.approve_recipient = data;
 			if ($scope.approve_recipient == "Error: no recipient candidate found"){
 				$("#error_recipient").show();

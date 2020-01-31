@@ -180,7 +180,7 @@ func (s *SmartContract) approveRecipient(APIstub shim.ChaincodeStubInterface, ar
 
 	recipientAsBytes, _ := APIstub.GetState(args[0])
 	if recipientAsBytes == nil {
-		return shim.Error("Could not locate tuna")
+		return shim.Error("Could not locate recipient")
 	}
 	recipient := Recipient{}
 
