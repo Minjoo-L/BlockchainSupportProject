@@ -41,15 +41,15 @@ return{
 		pw = crypto.createHash('sha512').update(pw).digest('base64');
 		var address = array[4]
 		var phoneNum = array[5]
-		//var auth = array[6]
-		/*
-		connection.query("insert into usertbl values('"+name+"' , '"+id+"' , '"+email+"', '"+address+"' , '"+phoneNum+"' , "+auth+" , '"+pw+"' )", async function(err, rows, fields){
+		var auth = 0; //후원자는 0번
+		
+		connection.query("insert into usertbl values('"+name+"' , '"+id+"' , '"+email+"', '"+pw+"' , "+auth+" )", async function(err, rows, fields){
 			if(err){
 				console.log(err);
 			}else{
 				console.log("successfully registered!!!");
 			}
-		});*/
+		});
 		var fabric_client = new Fabric_Client();
 
 		// setup the fabric network
@@ -210,14 +210,14 @@ return{
 		var phoneNum = array[5]
 		var story = array[6]
 		var status = array[7]
-		/*
-		connection.query("insert into usertbl values('"+name+"' , '"+id+"' , '"+email+"', '"+address+"' , '"+phoneNum+"' , "+auth+" , '"+pw+"' )", async function(err, rows, fields){
+		var auth = 1; //피후원자는 1번
+		connection.query("insert into usertbl values('"+name+"' , '"+id+"' , '"+email+"', '"+pw+"' , "+auth+" )", async function(err, rows, fields){
 			if(err){
 				console.log(err);
 			}else{
 				console.log("successfully registered!!!");
 			}
-		});*/
+		});
 		var fabric_client = new Fabric_Client();
 
 		// setup the fabric network
