@@ -1126,6 +1126,14 @@ return{
 		var address = array[4]
 		var phoneNum = array[5]
 
+		connection.query("update usertbl set email = '"+email+"', password = '"+pw+"' where id = '"+id+"'", async function(err, rows, fields){
+			if(err){
+				console.log(err);
+			}else{
+				console.log("successfully update personal information of supporter!!!");
+			}
+		});
+
 		var fabric_client = new Fabric_Client();
 
 		// setup the fabric network
@@ -1291,6 +1299,14 @@ return{
 		var phoneNum = array[5]
 		var story = array[6]
 		var status = array[7]
+		
+		connection.query("update usertbl set email = '"+email+"', password = '"+password+"' where id = '"+id+"'", async function(err, rows, fields){
+			if(err){
+				console.log(err);
+			}else{
+				console.log("successfully update personal information of recipient!!!");
+			}
+		});
 
 		var fabric_client = new Fabric_Client();
 
