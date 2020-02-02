@@ -67,6 +67,20 @@
     </header>
 
     <div id="body">
+      <!--로그인-->
+      <div class="form-group" id="logingroup">
+        이메일: <input class="form-control" type="text" ng-model="login.email">
+        비밀번호: <input class="form-control" type="password" ng-model="login.pw">
+        <input id="login" type="submit" value="Login" ng-click="login()">
+      </div>
+      <!--로그아웃-->
+      <div class="form-group" id="logoutgroup">
+        <h5>{{name}}
+        </h5>
+        <h5>{{auth}}</h5>
+        <input id="logout" type="submit" value="Logout" ng-click="logout()">
+      </div>
+      
       
       <!--후원자 회원가입-->
       <div class="form-group">

@@ -3,7 +3,12 @@
 var tuna = require('./controller.js');
 
 module.exports = function(app){
-
+  app.get('/login/:login', function(req,res){
+    tuna.login(req,res);
+  });
+  app.get('/logout', function(req,res){
+    tuna.logout(req, res);
+  });
   app.get('/registerSupporter/:supporter', function(req, res){
     tuna.registerSupporter(req, res);
   });

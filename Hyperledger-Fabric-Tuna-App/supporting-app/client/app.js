@@ -13,8 +13,45 @@ app.controller('appController', function($scope, appFactory){
 	$("#error_query").hide();
 	$("#success_recipient").hide();
 	$("#error_recipient").hide();
+	$("#logoutgroup").hide();
 
+	$scope.login = function(){ //로그인
+		appFactory.login($scope.login, function(data){
+			var recieve = data;
+			if(recieve == "failed to register"){
+				$("#logingroup").show();
+				$("#logoutgroup").hide();
+			} else{
+				$("#logoutgroup").show();
+				$("#logingroup").hide();
+				var array = recieve.split("-");
+				var email = array[0];
+				var name = array[1];
+				var auth = array[2];
+				if(auth==0){
+					auth='후원자';
+				}
+				else if(auth==1){
+					auth='피후원자';
+				}
+				$scope.name = name;
+				$scope.auth = auth;
+			}
+		});
+	}
 	
+	$scope.logout = function(){//로그아웃
+		appFactory.logout(function(data){
+			if(data == "success"){
+				$("#logingroup").show();
+				$("#logoutgroup").hide();
+			} else{
+				$("#logoutgroup").show();
+				$("#logingroup").hide();
+			}
+		});
+	}
+
 	$scope.registerSupporter = function(){//후원자 회원가입
 
 		appFactory.registerSupporter($scope.supporter, function(data){
@@ -148,7 +185,17 @@ app.controller('appController', function($scope, appFactory){
 app.factory('appFactory', function($http){
 	
 	var factory = {};
-
+	factory.login = function(data, callback){//로그인
+		var login = data.email + "-" + data.pw;
+		$http.get('/login/'+login).success(function(output){
+			callback(output)
+		});
+	}
+	factory.logout = function(callback){//로그아웃
+		$http.get('/logout').success(function(output){
+			callback(output)
+		});
+	}	
 	//후원자 회원가입
 	factory.registerSupporter = function(data, callback){
 		var supporter = data.name + "-" + data.id + "-" + data.email + "-" + data.pw + "-" + data.address+"-"+data.phoneNum;
