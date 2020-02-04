@@ -93,6 +93,15 @@
         전화번호: <input class="form-control" type="text" ng-model="supporter.phoneNum">
         <input id="registerSupporter" type="submit" value="Create" ng-click="registerSupporter()">
       </div>
+
+      <!-- 후원자 바우처 구매-->
+      <div class="form-group">
+        <label>후원자 바우처 구매</label><br>
+        주민등록번호: <input class="form-control" type="text" ng-model="voucher.id">
+        바우처 금액: <input class="form-control" type="text" ng-model="voucher.amount">
+        후원 회사: <input class="form-control" type="text" ng-model="voucher.suppEnter">
+        <input id="purchaseVoucher" type="submit" value="구매하기" ng-click="purchaseVoucher()">
+      </div>
       
       <!--피후원자 회원가입-->
       <div class="form-group">

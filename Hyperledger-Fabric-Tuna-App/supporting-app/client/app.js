@@ -179,6 +179,12 @@ app.controller('appController', function($scope, appFactory){
 		});
 	}
 
+	// 후원자 바우처 구매
+	$scope.purchaseVoucher = function(){
+		appFactory.purchaseVoucher($scope.voucher, function(data){
+		});
+	}
+
 });
 
 // Angular Factory
@@ -200,6 +206,14 @@ app.factory('appFactory', function($http){
 	factory.registerSupporter = function(data, callback){
 		var supporter = data.name + "-" + data.id + "-" + data.email + "-" + data.pw + "-" + data.address+"-"+data.phoneNum;
     	$http.get('/registerSupporter/'+supporter).success(function(output){
+			callback(output)
+		});
+	}
+
+	//후원자 바우처 구매
+	factory.purchaseVoucher = function(data, callback){
+		var voucher = data.id + "-" + data.amount + "-" + data.suppEnter;
+		$http.get('/purchaseVoucher/'+voucher).success(function(output){
 			callback(output)
 		});
 	}

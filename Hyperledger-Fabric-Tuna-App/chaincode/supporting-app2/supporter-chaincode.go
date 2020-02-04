@@ -17,6 +17,7 @@
 	 "bytes"
 	 "encoding/json"
 	 "fmt"
+	 "strconv"
  
 	 "github.com/hyperledger/fabric/core/chaincode/shim"
 	 sc "github.com/hyperledger/fabric/protos/peer"
@@ -29,6 +30,8 @@
  /* Define Supporter structure, with 6 properties.  
  Structure tags are used by encoding/json library
  */
+
+ // 후원자
  type Supporter struct {
 	 Name string `json:"name"`
 	 ID string `json:"id"`
@@ -37,7 +40,16 @@
 	 Address string `json:"address"`
 	 PhoneNum string `json:"phoneNum"`
  }
- 
+
+ // 바우처 (일단은 금액만)
+ type Voucher struct {
+	  Amount string `json:"amount"`
+	  SuppEnter string `json:"suppEnter"` // 후원 업체
+ }
+
+ // 현재까지 구매된 바우처 개수
+ var numOfVou int = 1
+
  /*
   * The Init method *
   called when the Smart Contract "tuna-chaincode" is instantiated by the network
@@ -68,6 +80,8 @@
 		 return s.querySupporter(APIstub, args)
 	 } else if function == "changeSupporterInfo" { // 내 정보 수정 (후원자)
 		 return s.changeSupporterInfo(APIstub, args)
+	 } else if function == "purchaseVoucher" {	// 후원자 바우처 구매
+		 return s.purchaseVoucher(APIstub, args)
 	 }
  
 	 return shim.Error("Invalid Smart Contract function name.")
@@ -195,6 +209,31 @@ func (s *SmartContract) changeSupporterInfo(APIstub shim.ChaincodeStubInterface,
 	}
 
 	return shim.Success(nil)
+}
+
+// 후원자 바우처 구매 
+func (s *SmartContract) purchaseVoucher(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+	//DApp에서 Id를 입력 받으니까 id랑 amount를 매개변수로 받는다.
+	//해당 id가 그동안 구매한 바우처 개수를 알아서 그 개수로 키 값을 생성한다.
+	if len(args) != 3 {
+		return shim.Error("Incorrect number of arguments. Expecting 3")
+	}
+	
+	voucher := Voucher{}
+
+	voucher.Amount = args[1]
+	voucher.SuppEnter =args[2]
+
+	voucherAsBytes, _ := json.Marshal(voucher)
+	err := APIstub.PutState(args[0] + "v" + strconv.Itoa(numOfVou), voucherAsBytes) 
+
+	numOfVou = numOfVou + 1
+
+	if err != nil {
+		return shim.Error(fmt.Sprintf("Failed to purchase voucher"))
+	}
+	return shim.Success(nil)
+
 }
  /*
   * main function *

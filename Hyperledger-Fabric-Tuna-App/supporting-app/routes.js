@@ -12,6 +12,9 @@ module.exports = function(app){
   app.get('/registerSupporter/:supporter', function(req, res){
     tuna.registerSupporter(req, res);
   });
+  app.get('/purchaseVoucher/:voucher', function(req, res){
+    tuna.purchaseVoucher(req, res);
+  });
   app.get('/registerRecipient/:recipient', function(req, res){
     tuna.registerRecipient(req, res);
   });
