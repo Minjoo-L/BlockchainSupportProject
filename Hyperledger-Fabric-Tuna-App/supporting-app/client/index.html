@@ -103,6 +103,27 @@
         <input id="purchaseVoucher" type="submit" value="구매하기" ng-click="purchaseVoucher()">
       </div>
       
+        <!-- 로그인 한 유저의 주민번호 정보로 바로 조회하여 구매한 바우처들을 띄워주는 것으로 수정 필요-->
+        <div class="form-group">
+          <label>구매한 바우처 내역 조회</label><br>
+          
+          주민등록번호: <input id="createName" class="form-control" type="text" ng-model="queryPurchaseVoucher_id">
+          <input id="queryVoucherSubmit" type="submit" value="Query" class="btn btn-primary" ng-click="queryPurchaseVoucher()">
+        </div>
+  
+        <table id="query_voucher" class="table" align="center">
+
+          <tr>
+            <th>금액</th>
+            <th>후원제단</th>
+          </tr>
+  
+          <tr ng-repeat="pVoucher in query_voucher">
+            <td>{{pVoucher.amount}}</td>
+            <td>{{pVoucher.suppEnter}}</td>
+          </tr>
+        </table>
+
       <!--피후원자 회원가입-->
       <div class="form-group">
         <label>Register form for Recipient</label><br>

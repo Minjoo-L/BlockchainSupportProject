@@ -42,4 +42,7 @@ module.exports = function(app){
   app.get('/change_recipient_info/:userRecipient', function(req, res){
     tuna.change_recipient_info(req, res);
   });
+  app.get('/query_purchase_voucher/:id', function(req, res){
+    tuna.query_purchase_voucher(req, res);
+  })
 }

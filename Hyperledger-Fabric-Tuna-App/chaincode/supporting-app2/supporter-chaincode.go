@@ -72,16 +72,18 @@
 	 // Route to the appropriate handler function to interact with the ledger
 	 if function == "initLedger" {
 		 return s.initLedger(APIstub)
-	 } else if function == "registerSupporter" { //후원자 등록
+	 } else if function == "registerSupporter" { 		//후원자 등록
 		 return s.registerSupporter(APIstub, args)
-	 } else if function == "queryAllSupporter" { //후원자 조회
+	 } else if function == "queryAllSupporter" { 		//후원자 조회
 		 return s.queryAllSupporter(APIstub)
-	 } else if function == "querySupporter" {  // 내 개인정보 조회 (후원자)
+	 } else if function == "querySupporter" { 			// 내 개인정보 조회 (후원자)
 		 return s.querySupporter(APIstub, args)
-	 } else if function == "changeSupporterInfo" { // 내 정보 수정 (후원자)
+	 } else if function == "changeSupporterInfo" { 		// 내 정보 수정 (후원자)
 		 return s.changeSupporterInfo(APIstub, args)
-	 } else if function == "purchaseVoucher" {	// 후원자 바우처 구매
+	 } else if function == "purchaseVoucher" {			// 후원자 바우처 구매
 		 return s.purchaseVoucher(APIstub, args)
+	 } else if function == "queryPurchaseVoucher" { 	//후원자 바우처 구매 내역 조회 
+		 return s.queryPurchaseVoucher(APIstub, args)
 	 }
  
 	 return shim.Error("Invalid Smart Contract function name.")
@@ -213,8 +215,8 @@ func (s *SmartContract) changeSupporterInfo(APIstub shim.ChaincodeStubInterface,
 
 // 후원자 바우처 구매 
 func (s *SmartContract) purchaseVoucher(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
-	//DApp에서 Id를 입력 받으니까 id랑 amount를 매개변수로 받는다.
-	//해당 id가 그동안 구매한 바우처 개수를 알아서 그 개수로 키 값을 생성한다.
+	// DApp에서 Id를 입력 받으니까 id랑 amount를 매개변수로 받는다.
+	// 판매된 바우처 개수를 알아서 그 개수로 키 값을 생성한다.
 	if len(args) != 3 {
 		return shim.Error("Incorrect number of arguments. Expecting 3")
 	}
@@ -234,6 +236,55 @@ func (s *SmartContract) purchaseVoucher(APIstub shim.ChaincodeStubInterface, arg
 	}
 	return shim.Success(nil)
 
+}
+// 후원자 바우처 구매 내역 조회
+func (s *SmartContract) queryPurchaseVoucher(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	id := args[0]+"v"
+
+	startKey := "0"
+	endKey := "999"
+
+	resultsIterator, err := APIstub.GetStateByRange(id+startKey, id+endKey)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	defer resultsIterator.Close()
+
+	// buffer is a JSON array containing QueryResults
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+
+	bArrayMemberAlreadyWritten := false
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return shim.Error(err.Error())
+		}
+		// Add comma before array members,suppress it for the first array member
+		if bArrayMemberAlreadyWritten == true {
+			buffer.WriteString(",")
+		}
+		buffer.WriteString("{\"Key\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(queryResponse.Key)
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"Record\":")
+		// Record is a JSON object, so we write as-is
+		buffer.WriteString(string(queryResponse.Value))
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
+	}
+	buffer.WriteString("]")
+	
+	fmt.Printf("- query purchased voucher:\n%s\n", buffer.String())
+
+	return shim.Success(buffer.Bytes())
 }
  /*
   * main function *

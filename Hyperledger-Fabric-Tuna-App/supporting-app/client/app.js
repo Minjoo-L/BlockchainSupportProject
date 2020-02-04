@@ -112,6 +112,7 @@ app.controller('appController', function($scope, appFactory){
 			}
 		});
 	}
+	// 내 정보 조회 (후원자)
 	$scope.querySupporter = function(){
 
 		var id = $scope.supporter_id;
@@ -127,7 +128,7 @@ app.controller('appController', function($scope, appFactory){
 			}
 		});
 	}
-
+	// 내 정보 조회 (피후원자)
 	$scope.queryRecipient = function(){
 
 		var id = $scope.recipient_id;
@@ -140,28 +141,6 @@ app.controller('appController', function($scope, appFactory){
 				$("#error_query").show();
 			} else{
 				$("#error_query").hide();
-			}
-		});
-	}
-
-	$scope.recordTuna = function(){
-
-		appFactory.recordTuna($scope.tuna, function(data){
-			$scope.create_tuna = data;
-			$("#success_create").show();
-		});
-	}
-
-	$scope.changeHolder = function(){
-
-		appFactory.changeHolder($scope.holder, function(data){
-			$scope.change_holder = data;
-			if ($scope.change_holder == "Error: no tuna catch found"){
-				$("#error_holder").show();
-				$("#success_holder").hide();
-			} else{
-				$("#success_holder").show();
-				$("#error_holder").hide();
 			}
 		});
 	}
@@ -185,6 +164,24 @@ app.controller('appController', function($scope, appFactory){
 		});
 	}
 
+	// 후원자 바우처 구매 내역 조회
+	$scope.queryPurchaseVoucher= function(){
+
+		var id = $scope.queryPurchaseVoucher_id;
+
+		appFactory.queryPurchaseVoucher(id, function(data){
+			var array = [];
+			for (var i = 0; i < data.length; i++){
+				//parseInt(data[i].Key);
+				data[i].Record.Key = data[i].Key;
+				array.push(data[i].Record);
+			}
+			array.sort(function(a, b) {
+			    return parseFloat(a.Key) - parseFloat(b.Key);
+			});
+			$scope.query_voucher = array;
+		});
+	}
 });
 
 // Angular Factory
@@ -264,25 +261,6 @@ app.factory('appFactory', function($http){
 		});
 	}
 
-	factory.recordTuna = function(data, callback){
-
-		data.location = data.longitude + ", "+ data.latitude;
-
-		var tuna = data.id + "-" + data.location + "-" + data.timestamp + "-" + data.holder + "-" + data.vessel;
-
-    	$http.get('/add_tuna/'+tuna).success(function(output){
-			callback(output)
-		});
-	}
-
-	factory.changeHolder = function(data, callback){
-
-		var holder = data.id + "-" + data.name;
-
-    	$http.get('/change_holder/'+holder).success(function(output){
-			callback(output)
-		});
-	}
 	// 내 정보 수정(후원자)
 	factory.changeSupporterInfo = function(data, callback){
 
@@ -299,6 +277,13 @@ app.factory('appFactory', function($http){
 		var userRecipient = data.id + "-" + data.name + "-" + data.email + "-" + data.password + "-" + data.address+ "-" + data.phoneNum + "-" + data.story + "-" + data.status;
 
     	$http.get('/change_recipient_info/'+userRecipient).success(function(output){
+			callback(output)
+		});
+	}
+
+	// 후원자 바우처 구매 내역 조회
+	factory.queryPurchaseVoucher = function(id, callback){
+    	$http.get('/query_purchase_voucher/'+id).success(function(output){
 			callback(output)
 		});
 	}
