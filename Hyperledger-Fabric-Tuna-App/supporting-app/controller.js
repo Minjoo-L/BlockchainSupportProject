@@ -841,6 +841,7 @@ return{
 		var name = array[1]
 		var email = array[2]
 		var pw = array[3]
+		pw = crypto.createHash('sha512').update(pw).digest('base64');
 		var address = array[4]
 		var phoneNum = array[5]
 
@@ -1013,6 +1014,7 @@ return{
 		var name = array[1]
 		var email = array[2]
 		var password = array[3]
+		passwordw = crypto.createHash('sha512').update(password).digest('base64');
 		var address = array[4]
 		var phoneNum = array[5]
 		var story = array[6]
