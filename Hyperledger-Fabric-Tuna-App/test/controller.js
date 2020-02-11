@@ -17,11 +17,11 @@ var path          = require('path');
 var util          = require('util');
 var os            = require('os');
 var crypto = require('crypto'); //비밀번호 해시화
-//var mysql = require('mysql');
-//var session = require('express-session');//로그인 세션 유지
-//var FileStore = require('session-file-store')(session);
+var mysql = require('mysql');
+var session = require('express-session');//로그인 세션 유지
+var FileStore = require('session-file-store')(session);
 
-/*var connection = mysql.createConnection({
+var connection = mysql.createConnection({
 	host	: 'localhost',
 	user	: 'root',
 	password	: '1234',
@@ -35,7 +35,7 @@ app.use(session({
 	saveUninitialized: true,
 	store: new FileStore()
 }));
-*/
+
 module.exports = (function() {
 return{
 	login: function(req, res){
