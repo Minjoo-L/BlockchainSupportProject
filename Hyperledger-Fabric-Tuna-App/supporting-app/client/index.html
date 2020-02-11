@@ -99,7 +99,7 @@
         <label>후원자 바우처 구매</label><br>
         주민등록번호: <input class="form-control" type="text" ng-model="voucher.id">
         바우처 금액: <input class="form-control" type="text" ng-model="voucher.amount">
-        후원 회사: <input class="form-control" type="text" ng-model="voucher.suppEnter">
+        후원 재단: <input class="form-control" type="text" ng-model="voucher.suppEnter">
         <input id="purchaseVoucher" type="submit" value="구매하기" ng-click="purchaseVoucher()">
       </div>
       
@@ -115,7 +115,7 @@
 
           <tr>
             <th>금액</th>
-            <th>후원제단</th>
+            <th>후원재단</th>
           </tr>
   
           <tr ng-repeat="pVoucher in query_voucher">
