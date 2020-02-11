@@ -34,13 +34,20 @@
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
-
+ 
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript">
+	$(document).ready(function(){
+	  $(".header").load("./header.html");
+	  $(".footer").load("./footer.html");
+	});
+  </script>
 </head>
 
 <body ng-app="application" ng-controller="appController" id="body">
 <!-- Header Start -->
-<header></header><!-- header close -->
-
+<!--<header class="navigation"></header> header close -->
+<header class="header"></header>
 <section class="page-title bg-2">
   <div class="container">
     <div class="row">
@@ -68,7 +75,7 @@
 </section>
 
 <!-- footer Start -->
-<footer></footer>
+<footer class="footer"></footer>
     <!-- 
     Essential Scripts
     =====================================-->
