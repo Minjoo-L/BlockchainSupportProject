@@ -44,5 +44,8 @@ module.exports = function(app){
   });
   app.get('/query_purchase_voucher/:id', function(req, res){
     tuna.query_purchase_voucher(req, res);
-  })
+  });
+  app.get('/all_voucher', function(req, res){
+    tuna.all_voucher(req, res);
+  });
 }

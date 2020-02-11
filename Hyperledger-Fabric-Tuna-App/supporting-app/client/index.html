@@ -124,6 +124,27 @@
           </tr>
         </table>
 
+        <!-- 필요한진 모르겠지만 일단 추가. 나중에 검색하는 식으로 하면 좋을것같기도?!-->
+        <div class="form-group">
+          <label>구매한 바우처 내역 조회(정부)</label><br>
+          <input id="allVoucherSubmit" type="submit" value="조회" class="btn btn-primary" ng-click="allVoucher()">
+        </div>
+  
+        <table id="all_voucher" class="table" align="center">
+
+          <tr>
+            <th>주민등록번호</th>
+            <th>금액</th>
+            <th>후원재단</th>
+          </tr>
+  
+          <tr ng-repeat="allVoucher in all_voucher">
+            <td>{{allVoucher.Key}}</td>
+            <td>{{allVoucher.amount}}</td>
+            <td>{{allVoucher.suppEnter}}</td>
+          </tr>
+        </table>
+
       <!--피후원자 회원가입-->
       <div class="form-group">
         <label>Register form for Recipient</label><br>

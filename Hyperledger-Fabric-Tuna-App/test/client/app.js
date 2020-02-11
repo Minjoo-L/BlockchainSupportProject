@@ -182,6 +182,23 @@ app.controller('appController', function($scope, appFactory){
 			$scope.query_voucher = array;
 		});
 	}
+
+	// 후원자 바우처 구매 내역 조회(정부)
+	$scope.allVoucher= function(){
+
+		appFactory.allVoucher(function(data){
+			var array = [];
+			for (var i = 0; i < data.length; i++){
+				//parseInt(data[i].Key);
+				data[i].Record.Key = data[i].Key;
+				array.push(data[i].Record);
+			}
+			array.sort(function(a, b) {
+			    return parseFloat(a.Key) - parseFloat(b.Key);
+			});
+			$scope.all_voucher = array;
+		});
+	}
 });
 
 // Angular Factory
@@ -288,5 +305,11 @@ app.factory('appFactory', function($http){
 		});
 	}
 
+	// 후원자 바우처 구매 내역 조회(정부)
+	factory.allVoucher = function(callback){
+    	$http.get('/all_voucher/').success(function(output){
+			callback(output)
+		});
+	}
 	return factory;
 });

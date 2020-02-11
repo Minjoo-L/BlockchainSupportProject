@@ -48,7 +48,7 @@
  }
 
  // 현재까지 구매된 바우처 개수
- var numOfVou int = 1
+ var numOfVou uint64 = 1
 
  /*
   * The Init method *
@@ -84,6 +84,8 @@
 		 return s.purchaseVoucher(APIstub, args)
 	 } else if function == "queryPurchaseVoucher" { 	//후원자 바우처 구매 내역 조회 
 		 return s.queryPurchaseVoucher(APIstub, args)
+	 } else if function == "allVoucher" {
+		 return s.allVoucher(APIstub)
 	 }
  
 	 return shim.Error("Invalid Smart Contract function name.")
@@ -227,9 +229,9 @@ func (s *SmartContract) purchaseVoucher(APIstub shim.ChaincodeStubInterface, arg
 	voucher.SuppEnter =args[2]
 
 	voucherAsBytes, _ := json.Marshal(voucher)
-	err := APIstub.PutState(args[0] + "v" + strconv.Itoa(numOfVou), voucherAsBytes) 
+	err := APIstub.PutState("v" + args[0] + strconv.FormatUint(numOfVou, 10), voucherAsBytes) 
 
-	numOfVou = numOfVou + 1
+	numOfVou = numOfVou + 1 
 
 	if err != nil {
 		return shim.Error(fmt.Sprintf("Failed to purchase voucher"))
@@ -244,7 +246,7 @@ func (s *SmartContract) queryPurchaseVoucher(APIstub shim.ChaincodeStubInterface
 		return shim.Error("Incorrect number of arguments. Expecting 1")
 	}
 
-	id := args[0]+"v"
+	id := "v"+args[0]
 
 	startKey := "0"
 	endKey := "999"
@@ -283,6 +285,50 @@ func (s *SmartContract) queryPurchaseVoucher(APIstub shim.ChaincodeStubInterface
 	buffer.WriteString("]")
 	
 	fmt.Printf("- query purchased voucher:\n%s\n", buffer.String())
+
+	return shim.Success(buffer.Bytes())
+}
+
+// 후원자 바우처 구매 내역 조회(정부)
+func (s *SmartContract) allVoucher(APIstub shim.ChaincodeStubInterface) sc.Response {
+
+	startKey := "0"
+	endKey := "999"
+
+	resultsIterator, err := APIstub.GetStateByRange("v"+startKey, "v"+endKey)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	defer resultsIterator.Close()
+
+	// buffer is a JSON array containing QueryResults
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+
+	bArrayMemberAlreadyWritten := false
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return shim.Error(err.Error())
+		}
+		// Add comma before array members,suppress it for the first array member
+		if bArrayMemberAlreadyWritten == true {
+			buffer.WriteString(",")
+		}
+		buffer.WriteString("{\"Key\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(queryResponse.Key)
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"Record\":")
+		// Record is a JSON object, so we write as-is
+		buffer.WriteString(string(queryResponse.Value))
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
+	}
+	buffer.WriteString("]")
+	
+	fmt.Printf("- query all purchased voucher:\n%s\n", buffer.String())
 
 	return shim.Success(buffer.Bytes())
 }
