@@ -75,7 +75,7 @@ app.get('/login/:login', (req,res)=>{ //로그인
 				req.session.email = rows[0].Email;
 				req.session.name = rows[0].Name;
 				req.session.auth = rows[0].auth;
-				res.send(req.session.email+'-'+req.session.name+'-'+req.session.auth);
+				res.send(req.session);
 				console.log('success');
 				console.log(req.session.email);
 			}

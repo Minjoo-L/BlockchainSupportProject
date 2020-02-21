@@ -14,7 +14,7 @@ app.controller('appController', function($scope, appFactory){
 	$("#success_recipient").hide();
 	$("#error_recipient").hide();
 	$("#logoutgroup").hide();
-
+	
 	$scope.login = function(){ //로그인
 		appFactory.login($scope.login, function(data){
 			var recieve = data;
@@ -24,10 +24,9 @@ app.controller('appController', function($scope, appFactory){
 			} else{
 				$("#logoutgroup").show();
 				$("#logingroup").hide();
-				var array = recieve.split("-");
-				var email = array[0];
-				var name = array[1];
-				var auth = array[2];
+				var email = recieve.email;
+				var name = recieve.name;
+				var auth = recieve.auth;
 				if(auth==0){
 					auth='후원자';
 				}
