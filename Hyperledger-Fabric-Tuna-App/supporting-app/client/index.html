@@ -116,11 +116,13 @@
           <tr>
             <th>금액</th>
             <th>후원재단</th>
+            <th>기부 여부</th>
           </tr>
   
           <tr ng-repeat="pVoucher in query_voucher">
             <td>{{pVoucher.amount}}</td>
             <td>{{pVoucher.suppEnter}}</td>
+            <td>{{pVoucher.status}}</td>
           </tr>
         </table>
 
@@ -136,12 +138,14 @@
             <th>주민등록번호</th>
             <th>금액</th>
             <th>후원재단</th>
+            <th>기부 여부</th>
           </tr>
   
           <tr ng-repeat="allVoucher in all_voucher">
             <td>{{allVoucher.Key}}</td>
             <td>{{allVoucher.amount}}</td>
             <td>{{allVoucher.suppEnter}}</td>
+            <td>{{allVoucher.status}}</td>
           </tr>
         </table>
 

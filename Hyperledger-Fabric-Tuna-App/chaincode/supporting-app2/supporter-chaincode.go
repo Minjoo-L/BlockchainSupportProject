@@ -45,6 +45,7 @@
  type Voucher struct {
 	  Amount string `json:"amount"`
 	  SuppEnter string `json:"suppEnter"` // 후원 업체
+	  Status string `json:"status"` // 기부 여부
  }
 
  // 현재까지 구매된 바우처 개수
@@ -72,9 +73,9 @@
 	 // Route to the appropriate handler function to interact with the ledger
 	 if function == "initLedger" {
 		 return s.initLedger(APIstub)
-	 } else if function == "registerSupporter" { 		//후원자 등록
+	 } else if function == "registerSupporter" { 		// 후원자 등록
 		 return s.registerSupporter(APIstub, args)
-	 } else if function == "queryAllSupporter" { 		//후원자 조회
+	 } else if function == "queryAllSupporter" { 		// 후원자 조회
 		 return s.queryAllSupporter(APIstub)
 	 } else if function == "querySupporter" { 			// 내 개인정보 조회 (후원자)
 		 return s.querySupporter(APIstub, args)
@@ -82,9 +83,9 @@
 		 return s.changeSupporterInfo(APIstub, args)
 	 } else if function == "purchaseVoucher" {			// 후원자 바우처 구매
 		 return s.purchaseVoucher(APIstub, args)
-	 } else if function == "queryPurchaseVoucher" { 	//후원자 바우처 구매 내역 조회 
+	 } else if function == "queryPurchaseVoucher" { 	// 후원자 바우처 구매 내역 조회 
 		 return s.queryPurchaseVoucher(APIstub, args)
-	 } else if function == "allVoucher" {
+	 } else if function == "allVoucher" {				// 구매된 전체 바우처 조회 (정부)
 		 return s.allVoucher(APIstub)
 	 }
  
@@ -226,10 +227,11 @@ func (s *SmartContract) purchaseVoucher(APIstub shim.ChaincodeStubInterface, arg
 	voucher := Voucher{}
 
 	voucher.Amount = args[1]
-	voucher.SuppEnter =args[2]
+	voucher.SuppEnter = args[2]
+	voucher.Status = "N" // 아직 기부되지 않은 바우처
 
 	voucherAsBytes, _ := json.Marshal(voucher)
-	err := APIstub.PutState("v" + args[0] + strconv.FormatUint(numOfVou, 10), voucherAsBytes) 
+	err := APIstub.PutState("Nv-" + args[0] +strconv.FormatUint(numOfVou, 10), voucherAsBytes) 
 
 	numOfVou = numOfVou + 1 
 
@@ -246,7 +248,7 @@ func (s *SmartContract) queryPurchaseVoucher(APIstub shim.ChaincodeStubInterface
 		return shim.Error("Incorrect number of arguments. Expecting 1")
 	}
 
-	id := "v"+args[0]
+	id := "Nv-"+args[0]
 
 	startKey := "0"
 	endKey := "999"
@@ -295,7 +297,7 @@ func (s *SmartContract) allVoucher(APIstub shim.ChaincodeStubInterface) sc.Respo
 	startKey := "0"
 	endKey := "999"
 
-	resultsIterator, err := APIstub.GetStateByRange("v"+startKey, "v"+endKey)
+	resultsIterator, err := APIstub.GetStateByRange("Nv-"+startKey, "Nv-"+endKey)
 	if err != nil {
 		return shim.Error(err.Error())
 	}
