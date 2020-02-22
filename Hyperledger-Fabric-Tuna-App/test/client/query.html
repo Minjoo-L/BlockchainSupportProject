@@ -82,6 +82,7 @@
           <th>PhoneNum</th>
           <th>Story</th>
           <th>Status</th>
+          <th>후원하기</th>
         </tr>
 
         <tr ng-repeat="recipient in all_recipient">
@@ -93,8 +94,15 @@
           <td>{{recipient.phoneNum}}</td>
           <td>{{recipient.story}}</td>
           <td>{{recipient.status}}</td>
+          <td><input id = "show" type="submit" value = "후원" class="btn btn-primary" ng-click="show()"></td>
         </tr>
       </table>
+
+      <div id="showSend">
+        내 바우처 번호: <input type="text"  ng-model="sendVou.num">
+        피후원자: <input type="password"  ng-model="sendVou.reci">
+        <input id="sendVoucher" type="submit" value="후원하기" ng-click="sendVoucher()">
+      </div>
 <br>
       <!--후원자 조회-->
       <div class="form-group">

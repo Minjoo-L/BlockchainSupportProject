@@ -87,6 +87,8 @@
 		 return s.queryPurchaseVoucher(APIstub, args)
 	 } else if function == "allVoucher" {				// 구매된 전체 바우처 조회 (정부)
 		 return s.allVoucher(APIstub)
+	 } else if function == "sendVoucher" {				// 바우처 후원하기
+		 return s.sendVoucher(APIstub, args) 
 	 }
  
 	 return shim.Error("Invalid Smart Contract function name.")
@@ -333,6 +335,20 @@ func (s *SmartContract) allVoucher(APIstub shim.ChaincodeStubInterface) sc.Respo
 	fmt.Printf("- query all purchased voucher:\n%s\n", buffer.String())
 
 	return shim.Success(buffer.Bytes())
+}
+// 바우처 후원하기
+func (s *SmartContract) sendVoucher(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+
+	voucherAsBytes, _ := APIstub.GetState(args[0])
+	if voucherAsBytes == nil {
+		return shim.Error("Could not locate voucher")
+	}
+	return shim.Success(voucherAsBytes)
+	
 }
  /*
   * main function *

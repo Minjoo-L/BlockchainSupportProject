@@ -14,6 +14,7 @@ app.controller('appController', function($scope, appFactory){
 	$("#success_recipient").hide();
 	$("#error_recipient").hide();
 	$("#logoutgroup").hide();
+	$("#showSend").hide();
 	
 	$scope.login = function(){ //로그인
 		appFactory.login($scope.login, function(data){
@@ -126,6 +127,13 @@ app.controller('appController', function($scope, appFactory){
 				$("#error_query").hide();
 			}
 		});
+	}
+
+	// 바우처 후원하기
+	$scope.show = function(){
+		console.log('들어옴?');
+				$("#showSend").show();
+
 	}
 	// 내 정보 조회 (피후원자)
 	$scope.queryRecipient = function(){

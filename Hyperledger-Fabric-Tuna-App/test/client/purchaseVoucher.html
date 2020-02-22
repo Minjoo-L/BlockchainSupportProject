@@ -84,16 +84,20 @@
         <table id="query_voucher" class="table" align="center">
 
           <tr>
+            <th>바우처 번호</th>
             <th>금액</th>
             <th>후원재단</th>
+            <th>기부여부</th>
           </tr>
   
           <tr ng-repeat="pVoucher in query_voucher">
+            <td >{{pVoucher.Key}}</td>
             <td>{{pVoucher.amount}}</td>
             <td>{{pVoucher.suppEnter}}</td>
-            
-          </tr>
+            <td>{{pVoucher.status}}</td>
+            </tr>
         </table>
+
     </div>
 </section>
 <!-- footer Start -->
