@@ -73,8 +73,9 @@
       </div>
       
         <!-- 로그인 한 유저의 주민번호 정보로 바로 조회하여 구매한 바우처들을 띄워주는 것으로 수정 필요-->
+        <!-- 구매한 바우처 내역 조회 체인코드 사용. 사용 가능한 바우처이므로 기부 여부는 N-->
         <div class="form-group">
-          <label>구매한 바우처 내역 조회</label><br>
+          <label>사용 가능한 바우처</label><br>
           
           주민등록번호: <input id="createName" class="form-control" type="text" ng-model="queryPurchaseVoucher_id">
           <input id="queryVoucherSubmit" type="submit" value="조회" class="btn btn-primary" ng-click="queryPurchaseVoucher()">
@@ -90,6 +91,7 @@
           <tr ng-repeat="pVoucher in query_voucher">
             <td>{{pVoucher.amount}}</td>
             <td>{{pVoucher.suppEnter}}</td>
+            
           </tr>
         </table>
     </div>

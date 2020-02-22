@@ -1197,7 +1197,7 @@ return{
 		    // send proposal to endorser
 		    const request = {
 		        //targets : --- letting this default to the peers assigned to the channel
-				chaincodeId: 'test-app-ch6',
+				chaincodeId: 'test-app-ch11',
 				txId: tx_id,
 		        fcn: 'purchaseVoucher',
 		        args: [id, amount, suppEnter],
@@ -1338,7 +1338,7 @@ return{
 		    }
 			// supporting-app2애 있음
 		    const request = {
-		        chaincodeId: 'test-app-ch6',
+		        chaincodeId: 'test-app-ch11',
 		        txId: tx_id,
 		        fcn: 'queryPurchaseVoucher',
 		        args: [key]
@@ -1406,7 +1406,7 @@ return{
 		    }
 			// supporting-app2애 있음
 		    const request = {
-		        chaincodeId: 'test-app-ch6',
+		        chaincodeId: 'test-app-ch11',
 		        txId: tx_id,
 		        fcn: 'allVoucher',
 		        args: ['']
