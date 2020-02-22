@@ -87,8 +87,8 @@
 		 return s.queryPurchaseVoucher(APIstub, args)
 	 } else if function == "allVoucher" {				// 구매된 전체 바우처 조회 (정부)
 		 return s.allVoucher(APIstub)
-	 } else if function == "sendVoucher" {				// 바우처 후원하기
-		 return s.sendVoucher(APIstub, args) 
+	 } else if function == "donateV" {					// 바우처 후원하기
+		 return s.donateV(APIstub, args)
 	 }
  
 	 return shim.Error("Invalid Smart Contract function name.")
@@ -337,17 +337,35 @@ func (s *SmartContract) allVoucher(APIstub shim.ChaincodeStubInterface) sc.Respo
 	return shim.Success(buffer.Bytes())
 }
 // 바우처 후원하기
-func (s *SmartContract) sendVoucher(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
-
-	if len(args) != 1 {
-		return shim.Error("Incorrect number of arguments. Expecting 1")
-	}
+func (s *SmartContract) donateV(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	voucherAsBytes, _ := APIstub.GetState(args[0])
+	key := "GET-"+args[1]
+	fmt.Sprintf(key)
+	fmt.Sprintf(args[0], args[1])
 	if voucherAsBytes == nil {
-		return shim.Error("Could not locate voucher")
+		return shim.Error("Could not donate voucher")
 	}
-	return shim.Success(voucherAsBytes)
+	voucher := Voucher{}
+
+	json.Unmarshal(voucherAsBytes, &voucher)
+	// Normally check that the specified argument is a valid holder of tuna
+	// we are skipping this check for this example
+	voucher.Status = args[1]
+
+	voucherAsBytes, _ = json.Marshal(voucher)
+	err := APIstub.PutState(args[0], voucherAsBytes)
+	err1 := APIstub.PutState(key, voucherAsBytes)
+	if err != nil {
+		return shim.Error(fmt.Sprintf("Fail"))
+	} else if err1 != nil {
+		return shim.Error(fmt.Sprintf("Fail 1"))
+	}
+
+	return shim.Success(nil)
+
+	
+	
 	
 }
  /*

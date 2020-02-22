@@ -199,6 +199,14 @@ app.controller('appController', function($scope, appFactory){
 			$scope.all_voucher = array;
 		});
 	}
+
+	// 바우처 후원
+	$scope.donateV = function(){
+
+		appFactory.donateV($scope.donateV, function(data){
+			$scope.donate_v = data;
+		});
+	}
 });
 
 // Angular Factory
@@ -308,6 +316,14 @@ app.factory('appFactory', function($http){
 	// 후원자 바우처 구매 내역 조회(정부)
 	factory.allVoucher = function(callback){
     	$http.get('/all_voucher/').success(function(output){
+			callback(output)
+		});
+	}
+
+	// 바우처 후원
+	factory.donateV = function(data, callback){
+		var donateV = data.id + "-" + data.reci;
+    	$http.get('/donateV/'+donateV).success(function(output){
 			callback(output)
 		});
 	}

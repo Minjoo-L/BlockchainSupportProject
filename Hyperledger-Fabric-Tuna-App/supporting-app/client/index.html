@@ -193,6 +193,14 @@
           <td>{{recipient.status}}</td>
         </tr>
       </table>
+
+      <div class="form-group">
+        <label>바우처 후원하기</label><br>
+        내 바우처 번호<input class="form-control" type="text" ng-model="donateV.id">
+        피후원자 <input class="form-control" type="text" ng-model="donateV.reci">
+        <input id="donateV" type="submit" value="후원" ng-click="donateV()">
+      </div>
+
       
       <div class="form-group">
         <label>피후원자 등록 승인</label><br>

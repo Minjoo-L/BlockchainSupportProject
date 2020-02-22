@@ -48,4 +48,7 @@ module.exports = function(app){
   app.get('/all_voucher', function(req, res){
     tuna.all_voucher(req, res);
   });
+  app.get('/donateV/:donateV', function(req, res){
+    tuna.donateV(req, res);
+  });
 }
