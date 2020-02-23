@@ -99,9 +99,10 @@
       </table>
 
       <div id="showSend">
-        내 바우처 번호: <input type="text"  ng-model="sendVou.num">
-        피후원자: <input type="password"  ng-model="sendVou.reci">
-        <input id="sendVoucher" type="submit" value="후원하기" ng-click="sendVoucher()">
+        <label>바우처 후원하기</label><br>
+        내 바우처 번호<input class="form-control" type="text" ng-model="donateV.id">
+        피후원자 <input class="form-control" type="text" ng-model="donateV.reci">
+        <input id="donateV" type="submit" value="후원" ng-click="donateV()">
       </div>
 <br>
       <!--후원자 조회-->
