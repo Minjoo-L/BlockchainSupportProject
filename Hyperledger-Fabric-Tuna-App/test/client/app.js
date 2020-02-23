@@ -3,7 +3,7 @@
 'use strict';
 
 var app = angular.module('application', []);
-
+var tmp_id = '';		// 후원할때 필요
 // Angular Controller
 app.controller('appController', function($scope, appFactory){
 
@@ -130,9 +130,10 @@ app.controller('appController', function($scope, appFactory){
 	}
 
 	// 바우처 후원하기
-	$scope.show = function(){
-		console.log('들어옴?');
+	$scope.show = function(id){
 				$("#showSend").show();
+				$scope.reciId = id;
+				tmp_id = id;
 
 	}
 	// 내 정보 조회 (피후원자)
@@ -329,6 +330,7 @@ app.factory('appFactory', function($http){
 
 	// 바우처 후원
 	factory.donateV = function(data, callback){
+		data.reci = tmp_id;
 		var donateV = data.id + "-" + data.reci;
     	$http.get('/donateV/'+donateV).success(function(output){
 			callback(output)

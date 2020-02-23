@@ -94,14 +94,14 @@
           <td>{{recipient.phoneNum}}</td>
           <td>{{recipient.story}}</td>
           <td>{{recipient.status}}</td>
-          <td><input id = "show" type="submit" value = "후원" class="btn btn-primary" ng-click="show()"></td>
+          <td><input id = "show" type="submit" value = "후원" class="btn btn-primary" ng-click="show(recipient.id)"></td>
         </tr>
       </table>
 
       <div id="showSend">
         <label>바우처 후원하기</label><br>
         내 바우처 번호<input class="form-control" type="text" ng-model="donateV.id">
-        피후원자 <input class="form-control" type="text" ng-model="donateV.reci">
+        피후원자 <br> {{reciId}} 에게 후원하기 <br> <input class="form-control" type="hidden" ng-model="donateV.reci" >
         <input id="donateV" type="submit" value="후원" ng-click="donateV()">
       </div>
 <br>
