@@ -45,8 +45,7 @@ app.use(express.static(path.join(__dirname, './client')));
 app.use(session({
 	secret: 'thisissecret', //세션 암호화
 	resave: false,
-	saveUninitialized: true,
-	store: new FileStore()
+	saveUninitialized: true
 }));
 
 // Save our port
@@ -86,7 +85,6 @@ app.get('/login/:login', (req,res)=>{ //로그인
 });
 
 app.get('/logout', (req,res)=>{ //로그아웃
-    console.log(req.session.email);
-		delete req.session;
-		res.send('success');
+	delete req.session;
+	res.send('logout success');
 });
