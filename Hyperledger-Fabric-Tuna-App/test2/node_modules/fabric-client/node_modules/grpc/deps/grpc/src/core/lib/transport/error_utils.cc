@@ -22,7 +22,6 @@
 
 #include <grpc/support/string_util.h>
 #include "src/core/lib/iomgr/error_internal.h"
-#include "src/core/lib/slice/slice_internal.h"
 #include "src/core/lib/transport/status_conversion.h"
 
 static grpc_error* recursively_find_error_with_field(grpc_error* error,
@@ -53,15 +52,7 @@ void grpc_error_get_status(grpc_error* error, grpc_millis deadline,
   if (GPR_LIKELY(error == GRPC_ERROR_NONE)) {
     if (code != nullptr) *code = GRPC_STATUS_OK;
     if (slice != nullptr) {
-      // Normally, we call grpc_error_get_str(
-      //   error, GRPC_ERROR_STR_GRPC_MESSAGE, slice).
-      // We can fastpath since we know that:
-      // 1) Error is null
-      // 2) which == GRPC_ERROR_STR_GRPC_MESSAGE
-      // 3) The resulting slice is statically known.
-      // 4) Said resulting slice is of length 0 ("").
-      // This means 3 movs, instead of 10s of instructions and a strlen.
-      *slice = grpc_core::ExternallyManagedSlice("");
+      grpc_error_get_str(error, GRPC_ERROR_STR_GRPC_MESSAGE, slice);
     }
     if (http_error != nullptr) {
       *http_error = GRPC_HTTP2_NO_ERROR;

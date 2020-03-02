@@ -75,15 +75,7 @@ class ThreadInternalsWindows
         return;
       }
     }
-
-    if (options.stack_size() != 0) {
-      // Windows will round up the given stack_size value to nearest page.
-      handle = CreateThread(nullptr, options.stack_size(), thread_body, info_,
-                            0, nullptr);
-    } else {
-      handle = CreateThread(nullptr, 64 * 1024, thread_body, info_, 0, nullptr);
-    }
-
+    handle = CreateThread(nullptr, 64 * 1024, thread_body, info_, 0, nullptr);
     if (handle == nullptr) {
       destroy_thread();
       *success = false;

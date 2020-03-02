@@ -27,11 +27,10 @@
 #include "src/core/lib/gpr/string.h"
 #include "src/core/lib/iomgr/exec_ctx.h"
 
-#define GRPC_HTTP2_TIMEOUT_ENCODE_MIN_BUFSIZE 10
+#define GRPC_HTTP2_TIMEOUT_ENCODE_MIN_BUFSIZE (GPR_LTOA_MIN_BUFSIZE + 1)
 
 /* Encode/decode timeouts to the GRPC over HTTP/2 format;
-   encoding may round up arbitrarily. If the timeout is larger than about 1157
-   days, it will be capped and "99999999S" will be sent on the wire. */
+   encoding may round up arbitrarily */
 void grpc_http2_encode_timeout(grpc_millis timeout, char* buffer);
 int grpc_http2_decode_timeout(const grpc_slice& text, grpc_millis* timeout);
 

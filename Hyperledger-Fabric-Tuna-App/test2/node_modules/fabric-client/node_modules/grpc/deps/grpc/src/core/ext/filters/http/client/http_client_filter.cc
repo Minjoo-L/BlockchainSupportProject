@@ -304,7 +304,7 @@ static grpc_error* update_path_for_get(grpc_call_element* elem,
   estimated_len += grpc_base64_estimate_encoded_size(
       batch->payload->send_message.send_message->length(), true /* url_safe */,
       false /* multi_line */);
-  grpc_core::UnmanagedMemorySlice path_with_query_slice(estimated_len);
+  grpc_slice path_with_query_slice = GRPC_SLICE_MALLOC(estimated_len);
   /* memcopy individual pieces into this slice */
   char* write_ptr =
       reinterpret_cast<char*> GRPC_SLICE_START_PTR(path_with_query_slice);
@@ -514,12 +514,13 @@ static size_t max_payload_size_from_args(const grpc_channel_args* args) {
   return kMaxPayloadSizeForGet;
 }
 
-static grpc_core::ManagedMemorySlice user_agent_from_args(
-    const grpc_channel_args* args, const char* transport_name) {
+static grpc_slice user_agent_from_args(const grpc_channel_args* args,
+                                       const char* transport_name) {
   gpr_strvec v;
   size_t i;
   int is_first = 1;
   char* tmp;
+  grpc_slice result;
 
   gpr_strvec_init(&v);
 
@@ -557,7 +558,7 @@ static grpc_core::ManagedMemorySlice user_agent_from_args(
 
   tmp = gpr_strvec_flatten(&v, nullptr);
   gpr_strvec_destroy(&v);
-  grpc_core::ManagedMemorySlice result(tmp);
+  result = grpc_slice_intern(grpc_slice_from_static_string(tmp));
   gpr_free(tmp);
 
   return result;
