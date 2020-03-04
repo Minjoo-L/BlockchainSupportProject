@@ -63,7 +63,6 @@ app.get('/', function(req, res){
         session: session
     });
 });
-
 app.get('/login', function(req, res){
     res.render('login',{
         session: session
