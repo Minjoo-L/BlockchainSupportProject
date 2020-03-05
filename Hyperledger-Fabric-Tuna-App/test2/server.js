@@ -90,7 +90,7 @@ app.post('/mypage', function(req,res){
         else if(rows.length==1){//로그인 성공
             session.Name = rows[0].Name;
             session.email = rows[0].Email;
-            session.auth = rows[0].auth;
+            session.auth = rows[0].Auth;
             console.log('success');
             console.log(session.Name);
             res.render("mypage",{
