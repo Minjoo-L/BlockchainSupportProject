@@ -9,10 +9,13 @@ var channel1Query = require('../channel1.js');
 router.get('/reci_query_result', async function(req, res){
     var recipients  = await channel1Query.query('queryAllRecipient');
     var data = [];
-    console.log(recipients);
-    console.log('좀 데이터 좀 보여줘.. 데이터 조회 되기 전에 니가 먼저 실행되는거니', `${recipients}`);
+
+    for(recipient of recipients){
+        data.push(recipient);
+    }
     res.render('reci_query_result',{
-        session: session
+        session: session,
+        data: data
     });
 });
 module.exports = router;

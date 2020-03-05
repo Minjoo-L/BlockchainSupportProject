@@ -43,25 +43,54 @@
       <div class="col-md-12">
         <div class="block">
           <h1>Hyperledger Fabric Supporting Application.</h1><br>
-          <p>Query Supporter / Recipient</p>
+          <p>피후원자 조회</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="contact-form">
-<div class="container"> 
-  <div class="form-group">
-    <div class="container"> 
-      반가워<br>
-       여기다 조회한 거 띄우기!!!!
-     </div> 
-  </div>
-</div>
-</section>
+<section class="portfolio-work">
+  <div class="container">
+    <div class="row">
+ 
+      <table class="table" align="center">
+
+        <tr>
+          <th>이름</th>
+          <th>주민등록번호</th>
+          <th>폰 번호</th>
+          <th>이메일</th>
+          <th>주소</th>
+          <th>비밀번호</th>
+          <th>승인상태</th>
+          <th>사연</th>
+          <!--후원 체인코드 확인을 위한 임시 버튼! 나중에 없애기-->
+          <th>후원하기</th>
+        </tr>
+
+        <%for (var i = 0; i < data.length; i++) { 
+          db = data[i].Record;
+      %>
+          <tr>
+              <td><%=i + 1%></td>
+              <td><%=db.name%></td>
+              <td><%=db.id%></td>
+              <td><%=db.phoneNum%></td>
+              <td><%=db.email%></td>
+              <td><%=db.address%></td>
+              <td><%=db.status%></td>
+              <td><%=db.story%></td>
+              <td><a class="btn btn-primary" role="button">후원 하기</a>
+              </td>
+          </tr>
+       <%}%>
+        
+       </table>
+
 <!-- footer Start -->
 <footer class="footer"></footer>
+<!-- footer Start -->
     <!-- 
     Essential Scripts
     =====================================-->
