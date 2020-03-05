@@ -56,7 +56,7 @@ async function query(name, params) {
                         args: ['']
                     };
                     break;
-                
+
                 default:
                     break;
             }

@@ -20,6 +20,7 @@ var mysql = require('mysql');
 // 라우터
 var recipientRouter = require('./routes/recipient');
 var headerRouter = require('./routes/header');
+var supporterRouter = require('./routes/supporter');
 
 var connection = mysql.createConnection({
     host    : 'localhost',
@@ -105,5 +106,6 @@ app.post('/mypage', function(req,res){
 
 app.use('/recipient', recipientRouter);
 app.use('/header', headerRouter);
+app.use('/supporter', supporterRouter);
 
 module.exports = app;

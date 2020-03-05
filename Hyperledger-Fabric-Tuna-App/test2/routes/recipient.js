@@ -1,10 +1,7 @@
 var express = require('express');
 var router = express.Router();  
 var session = require('express-session');
-var channel1Query = require('../channel1.js');
-
-//const { Recipient } = require('../models'); 
-
+var channel1Query = require('../channel3.js');
 
 router.get('/reci_query_result', async function(req, res){
     var recipients  = await channel1Query.query('queryAllRecipient');

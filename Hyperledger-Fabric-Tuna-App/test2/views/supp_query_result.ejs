@@ -43,7 +43,7 @@
       <div class="col-md-12">
         <div class="block">
           <h1>Hyperledger Fabric Supporting Application.</h1><br>
-          <p>피후원자 조회</p>
+          <p>후원자 조회</p>
         </div>
       </div>
     </div>
@@ -62,10 +62,6 @@
           <th>폰 번호</th>
           <th>이메일</th>
           <th>주소</th>
-          <th>승인상태</th>
-          <th>사연</th>
-          <!--후원 체인코드 확인을 위한 임시 버튼! 나중에 없애기-->
-          <th>후원하기</th>
         </tr>
 
         <%for (var i = 0; i < data.length; i++) { 
@@ -77,9 +73,6 @@
               <td><%=db.phoneNum%></td>
               <td><%=db.email%></td>
               <td><%=db.address%></td>
-              <td><%=db.status%></td>
-              <td><%=db.story%></td>
-              <td><a class="btn btn-primary" role="button">후원 하기</a>
               </td>
           </tr>
        <%}%>
