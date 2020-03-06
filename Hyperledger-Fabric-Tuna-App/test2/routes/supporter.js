@@ -6,7 +6,7 @@ var channel2Query = require('../channel2.js');
 
 // 후원자 조회
 router.get('/supp_query_result', async function(req, res){
-    var supporters  = await channel2Query.query('queryAllSupporter');
+    var supporters  = await channel2Query.query2('queryAllSupporter');
     var data = [];
 
     for(supporter of supporters){

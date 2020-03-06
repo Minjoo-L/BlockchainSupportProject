@@ -91,7 +91,7 @@ async function query2(name, params) {
     console.log("getting recipient from database: ");
 
     var fabric_client = new Fabric_Client();
-    console.log(params[0]);
+    //console.log(params[0]);
 
     // setup the fabric network
     var channel = fabric_client.newChannel('mychannel2');
@@ -168,5 +168,10 @@ async function query2(name, params) {
             resolve(result);
         });
 }
+
+async function registerSupporter(params) {
+    
+}
+module.exports.registerSupporter = registerSupporter;
 module.exports.query1 = query1;
 module.exports.query2 = query2;
