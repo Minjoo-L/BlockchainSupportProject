@@ -82,14 +82,8 @@ app.post('/mypage', function(req,res){
     console.log("login : ");
     var email = req.body.email;
     var pw = req.body.pw;
-    //pw = crypto.createHash('sha512').update(pw).digest('base64');
-    //비밀번호 암호화 회원가입으로도 옮기기
-    var cipher = crypto.createCipher('aes192', pw);
-    cipher.update(pw, 'utf8', 'base64');
-    var result = cipher.final('base64');
-    pw = result;
+    pw = crypto.createHash('sha512').update(pw).digest('base64');
 
-    console.log('비밀번호는',pw);
     connection.query("select * from usertbl where Email = '"+email+"' and Password = '"+pw+"'", async function(err, rows, fields){
         if(err){
             console.log(err);

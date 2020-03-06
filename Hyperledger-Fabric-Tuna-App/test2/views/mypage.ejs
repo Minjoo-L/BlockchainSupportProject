@@ -89,82 +89,24 @@
           </form>
           <%}%>
       
-       
-      <!-- 로그인 한 유저의 주민번호 정보로 바로 조회하여 개인 정보들을 띄워주는 것으로 수정 필요-->
-      <div class="form-group">
-        <label>내 정보 조회(피후원자)</label><br>
-        
-        주민등록번호: <input id="createName" class="form-control" type="text" placeholder="Ex: 3" ng-model="recipient_id">
-        <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="queryRecipient()">
-      </div>
+          <div class="form-group">
+            <label>비밀번호 수정</label><br>
+            <%if (session.auth == 0){%>
+              <form class="form-register" method="post" action="">
+              주민번호를 입력해 주세요 <input type = "text" class="form-control" id="id" name="id">
+              비밀번호를 입력해 주세요 <input type="password" class="form-control" id="password" name="password">
+              <input id="edit" class="btn btn-primary" type="submit" value="확인">
+            </form>
+            <%}
+             else {%>
+              <form class="form-register" method="post" action="">
+                주민번호를 입력해 주세요 <input type = "text" class="form-control" id="id" name="id">
+                비밀번호를 입력해 주세요 <input type="password" class="form-control" id="password" name="password">
+                <input id="edit" class="btn btn-primary" type="submit" value="확인">
+              </form>
+              <%}%>
+      
 
-      <table id="query_recipient" class="table" align="center">
-
-        <tr>
-          <th>이름</th>
-          <th>주민등록번호</th>
-          <th>이메일</th>
-          <th>비밀번호</th>
-          <th>주소</th>
-          <th>전화번호</th>
-          <th>신청 사유</th>
-          <th>상태</th>
-        </tr>
-
-        <tr>
-          <td>{{query_recipient.name}}</td>
-          <td>{{query_recipient.id}}</td>
-          <td>{{query_recipient.email}}</td>
-          <td>{{query_recipient.password}}</td>
-          <td>{{query_recipient.address}}</td>
-          <td>{{query_recipient.phoneNum}}</td>
-          <td>{{query_recipient.story}}</td>
-          <td>{{query_recipient.status}}</td>
-        </tr>
-      </table>
-<!--    <div class="form-group">
-        <label>Create Tuna Record</label>
-        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{create_tuna}}</h5>
-        <br>
-        Enter catch id: <input class="form-control" type="text" placeholder="Ex: 11" ng-model="tuna.id">
-        Enter name of vessel: <input class="form-control" type="text" placeholder="Ex: 0239L" ng-model="tuna.vessel">
-        Enter longitude: <input id="createName" class="form-control" type="text" placeholder="Ex: 28.012" ng-model="tuna.longitude"> 
-        Enter latitude: <input id="createName" class="form-control" type="text" placeholder="Ex: 150.405" ng-model="tuna.latitude">
-        Enter timestamp: <input class="form-control" type="text" placeholder="Ex: 4982342301" ng-model="tuna.timestamp">
-        Enter name of holder: <input class="form-control" type="text" placeholder="Ex: Hansel" ng-model="tuna.holder">
-        <input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="recordTuna()"> 
-      </div>
--->
-<!-- 나중에 로그인 된 사람 정보를 불러와서 띄워놓기-->
-      <div class="form-group">
-        <label>내 정보 수정(후원자)</label><br>
-        <!--<h5 style="color:green;margin-bottom:2%" id="success_holder">Success! Tx ID: {{change_userSupporter}}</h5>
-        <h5 style="color:red;margin-bottom:2%" id="error_holder">Error: Please enter a valid Tuna Id</h5>-->
-        주민등록번호를 입력 해주세요: <input class="form-control" name="assetSelect" ng-model="userSupporter.id">
-        이름: <input class="form-control" name="assetSelect"  ng-model="userSupporter.name">
-        이메일: <input class="form-control" name="assetSelect"  ng-model="userSupporter.email">
-        비밀번호: <input class="form-control" name="assetSelect"  ng-model="userSupporter.pw">
-        주소: <input class="form-control" name="assetSelect"  ng-model="userSupporter.address">
-        폰 번호: <input class="form-control" name="assetSelect"  ng-model="userSupporter.phoneNum">
-        <input id="transferSubmit" type="submit" value="수정" class="btn btn-primary" ng-click="changeSupporterInfo()">
-      </div>
-
-      <div class="form-group">
-        <label>내 정보 수정(피후원자)</label><br>
-        <!--<h5 style="color:green;margin-bottom:2%" id="success_holder">Success! Tx ID: {{change_holder}}</h5>
-        <h5 style="color:red;margin-bottom:2%" id="error_holder">Error: Please enter a valid Tuna Id</h5>-->
-        주민등록번호를 입력해 주세요: <input class="form-control" name="assetSelect" ng-model="userRecipient.id">
-        이름(이것두 빼기): <input class="form-control" name="assetSelect"  ng-model="userRecipient.name">
-        이메일: <input class="form-control" name="assetSelect"  ng-model="userRecipient.email">
-        비밀번호: <input class="form-control" name="assetSelect"  ng-model="userRecipient.password">
-        주소: <input class="form-control" name="assetSelect"  ng-model="userRecipient.address">
-        폰 번호: <input class="form-control" name="assetSelect"  ng-model="userRecipient.phoneNum">
-        신청 사연: <input class="form-control" name="assetSelect"  ng-model="userRecipient.story">
-        상태(건들 수 없는것으로 나중에 수정 항목에서 빼기): <input class="form-control" name="assetSelect"  ng-model="userRecipient.status">
-        <input id="transferSubmit" type="submit" value="수정" class="btn btn-primary" ng-click="changeRecipientInfo()">
-      </div>
-    </div>
-</section>
 <!-- footer Start -->
 <footer class="footer"></footer>
     <!-- 

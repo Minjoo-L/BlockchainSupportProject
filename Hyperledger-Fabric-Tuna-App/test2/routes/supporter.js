@@ -22,18 +22,18 @@ router.get('/supp_query_result', async function(req, res){
 router.post('/supp_personal_info', async function(req, res){
     var id = req.body.id;
     var pw = req.body.password;
-    var params =[id, pw];
-
+    var params =[id];
     var supporter = await channel2Query.query2('querySupporter', params);
-    // 비밀번호 복호화
-    var decipher = crypto.createDecipher('aes192', pw);
-    decipher.update(supporter.pw, 'base64', 'utf8');
-    var result = decipher.final('utf8');
-    supporter.pw = result;
+    pw = crypto.createHash('sha512').update(pw).digest('base64');
 
-    res.render('supp_personal_info',{
-        session: session,
-        data: supporter
-    });
+    if(supporter != null && supporter.pw == pw){
+        res.render('supp_personal_info',{
+            session: session,
+            data: supporter
+        });
+    } else{
+        // 예외처리 하기
+    }
+    
 });
 module.exports = router;
