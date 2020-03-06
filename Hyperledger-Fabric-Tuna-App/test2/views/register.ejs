@@ -34,7 +34,9 @@
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
- 
+  <style>
+    #registerSupporter, #registerRecipient{width:150px;}
+  </style>
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 </head>
 <%- include("header") %>
@@ -56,18 +58,21 @@
 </section>
 <!-- contact form start -->
 <section class="contact-form">
-    <div class="container">
-        <div class="row">
-                <div class="col-md-12">
-                    <div class="block">
-                       <input class="btn btn-default" id="registerSupporter" type="submit" onclick="location.href='/registerSupporter'" value="후원자"></button>
-                       <input class="btn btn-default" id="registerRecipient" type="submit" onclick="location.href='/registerRecipient'" value="피후원자"></button>
-                    </div>
-                </div>
+  <div class="container"> 
+    <div class="form-group">
+      <div class ="row">
+        <div class ="column">
+          <h2> 후원자로 회원가입</h2><br>
+          <input class="btn btn-default" id="registerSupporter" type="submit" onclick="location.href='/registerSupporter'" value="회원가입"></button>
         </div>
-    </div>
-</section>
-
+        <div class ="column">
+          <h2> 피후원자로 회원가입</h2><br>
+          <input class="btn btn-default" id="registerRecipient" type="submit" onclick="location.href='/registerRecipient'" value="회원가입"></button>
+        </div>
+      </div>
+      </div>
+  </div>
+  </section>
 <!-- footer Start -->
 <footer class="footer"></footer>
     <!-- 

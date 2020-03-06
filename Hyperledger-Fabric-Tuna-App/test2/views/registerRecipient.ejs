@@ -57,14 +57,14 @@
 <section class="contact-form">
     <div class="container"> 
        <!--피후원자 회원가입-->
-       <form action="/mypage" method="post">
-        이름: <input class="form-control" type="text" ng-model="rname">
-        주민등록번호: <input class="form-control" type="text" ng-model="rid">
-        이메일: <input class="form-control" type="text" ng-model="remail"> 
-        비밀번호: <input class="form-control" type="password" ng-model="rpw">
-        주소: <input class="form-control" type="text" ng-model="raddress">
-        전화번호: <input class="form-control" type="text" ng-model="rphoneNum">
-        사유: <input class="form-control" type="text" ng-model="rstory">
+       <form action="registerRecipient/reci_reg" method="post">
+        이름: <input class="form-control" type="text" name="rname">
+        주민등록번호: <input class="form-control" type="text" name="rid">
+        이메일: <input class="form-control" type="text" name="remail"> 
+        비밀번호: <input class="form-control" type="password" name="rpw">
+        주소: <input class="form-control" type="text" name="raddress">
+        전화번호: <input class="form-control" type="text" name="rphoneNum">
+        사유: <input class="form-control" type="text" name="rstory">
         <input id="registerRecipient" type="submit" value="회원가입">
        </form>
       

@@ -34,6 +34,11 @@
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    td{padding:5px;}
+    #login{width:100%;}
+    #register{width:100%;}
+  </style>
 </head>
 
 <body ng-app="application" ng-controller="appController" id="body">
@@ -58,9 +63,22 @@
     <div class="container"> 
       <!--로그인-->
        <form action="/mypage" method="post">
-        이메일: <input type="text" name="email">
-        비밀번호: <input type="password" name="pw">
-        <input id="login" type="submit" value="Login">
+        <table align="center">
+          <tr>
+            <td>이메일:</td>
+            <td><input type="text" name="email"></td>
+          </tr>
+          <tr>
+            <td>비밀번호:</td>
+            <td><input type="password" name="pw"></td>
+          </tr>
+          <tr>
+            <td colspan="2"><input class="btn btn-default" id="login" type="submit" value="로그인"></td>
+          </tr>
+          <tr>
+            <td colspan="2"><a class="btn btn-default" id="register" href="/register" role="button">회원가입</a></td>
+          </tr>
+        </table>
       </form>
     </div>
 </section>

@@ -19,7 +19,7 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a href="/index">Home</a></li>
+                                <li><a href="/">Home</a></li>
                                 <li><a href="/header/query">후원자/피후원자 조회</a></li>
                                 <li><a href="approve.html">피후원자 승인</a></li>
                                 <%if(session.auth==0){ //후원자인 경우%>
@@ -41,7 +41,6 @@
                                         <li><a href="blog-full-width.html">Blog Full Width</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="/register">회원가입</a></li>
                                 <%if(!session.email){%>
                                 <li><a href="/login">로그인</a></li>
                                 <%} else{%>

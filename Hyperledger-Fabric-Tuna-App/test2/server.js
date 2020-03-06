@@ -11,7 +11,6 @@ var Fabric_Client = require('fabric-client');
 var path          = require('path');
 var util          = require('util');
 var os            = require('os');
-//var ejs = require('ejs');
 var session = require('express-session');//로그인 세션 유지
 var FileStore = require('session-file-store')(session);
 var crypto = require('crypto'); //비밀번호 해시화
@@ -38,7 +37,6 @@ var app = express();
 // Load all of our middleware
 // configure app to use bodyParser()
 // this will let us get the data from a POST
-// app.use(express.static(__dirname + '/client'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.set('view engine','ejs');
@@ -80,6 +78,16 @@ app.get('/register', function(req, res){
         session: session
     });
 });
+app.get('/registerSupporter', function(req, res){
+    res.render('registerSupporter',{
+        session: session
+    });
+});
+app.get('/registerRecipient', function(req, res){
+    res.render('registerRecipient',{
+        session: session
+    });
+});
 app.get('/mypage', function(req, res){
     res.render('mypage',{
         session: session
@@ -115,6 +123,6 @@ app.post('/mypage', function(req,res){
 app.use('/recipient', recipientRouter);
 app.use('/header', headerRouter);
 app.use('/supporter', supporterRouter);
-//app.use('/registerSupporter', registerSRouter);
-//app.use('/registerRecipient', registerRRouter);
+app.use('/registerSupporter', registerSRouter);
+app.use('/registerRecipient', registerRRouter);
 module.exports = app;
