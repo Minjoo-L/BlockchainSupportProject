@@ -12,7 +12,9 @@ router.post('/supp_reg', async function(req, res){
     supporter[3] = crypto.createHash('sha512').update(req.body.spw).digest('base64');
     supporter[4] = req.body.saddress;
     supporter[5] = req.body.sphoneNum;
-    await channel2Query.registerSupporter(supporter);
+    await channel2Query.query3('registerSupporter', supporter);
+
     res.redirect('/');
 });
+
 module.exports = router;

@@ -144,7 +144,7 @@ async function query2(name, params) {
 		                fcn: 'querySupporter',
 		                args: [params[0]]
                     };
-                    break;
+					break;
 
                 default:
                     break;
@@ -178,15 +178,17 @@ async function query2(name, params) {
         });
 }
 
-async function registerSupporter(params) {
-    console.log("register Supporter: ");
-		var key = params[1]
-		var name = params[0]
-		var id = params[1]
-		var email = params[2]
-		var pw = params[3]
-		var address = params[4]
-		var phoneNum = params[5]
+async function query3(func, params) {
+	
+	var name, id, email, pw, address, phoneNum;
+	if (func == "registerSupporter"){
+   		console.log("register Supporter: ");
+		name = params[0]
+		id = params[1]
+		email = params[2]
+		pw = params[3]
+		address = params[4]
+		phoneNum = params[5]
 		var auth = 0; //후원자는 0번
 		
 		connection.query("insert into usertbl values('"+name+"' , '"+id+"' , '"+email+"', '"+pw+"' , "+auth+" )", async function(err, rows, fields){
@@ -196,6 +198,7 @@ async function registerSupporter(params) {
 				console.log("successfully registered!!!");
 			}
 		});
+	}
 		var fabric_client = new Fabric_Client();
 
 		// setup the fabric network
@@ -238,14 +241,38 @@ async function registerSupporter(params) {
 
 		    // recordTuna - requires 5 args, ID, vessel, location, timestamp,holder - ex: args: ['10', 'Hound', '-12.021, 28.012', '1504054225', 'Hansel'], 
 		    // send proposal to endorser
-		    const request = {
+		   /* const request = {
 		        //targets : --- letting this default to the peers assigned to the channel
 				chaincodeId: 'test-app18',
 				txId: tx_id,
 		        fcn: 'registerSupporter',
 		        args: [name, id, email, pw, address, phoneNum],
 		    };
+			*/
+			var request;
+            switch (func) {
+                case 'registerSupporter':
+                    request = {
+                        chaincodeId: 'test-app18',
+						txId: tx_id,
+		        		fcn: 'registerSupporter',
+		        		args: [name, id, email, pw, address, phoneNum],
+                    };
+					break;
+					
+				case 'changeSupporterInfo':
+					request = {
+						chaincodeId: 'test-app18',
+						fcn: 'changeSupporterInfo',
+						args: [params[0], params[1], params[2]], // id, address, phoneNum
+						chainId: 'mychannel2',
+						txId: tx_id
+					};
+					break;
 
+                default:
+                    break;
+            }
 		    // send the transaction proposal to the peers
 		    return channel.sendTransactionProposal(request);
 		}).then((results) => {
@@ -341,6 +368,7 @@ async function registerSupporter(params) {
 		    console.error('Failed to invoke successfully :: ' + err);
 		});
 }
-module.exports.registerSupporter = registerSupporter;
+
 module.exports.query1 = query1;
 module.exports.query2 = query2;
+module.exports.query3 = query3;

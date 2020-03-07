@@ -189,9 +189,9 @@ func (s *SmartContract) querySupporter(APIstub shim.ChaincodeStubInterface, args
 //내 정보 수정(후원자)
 func (s *SmartContract) changeSupporterInfo(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
-	if len(args) != 6 {
+	/*if len(args) != 6 {
 		return shim.Error("Incorrect number of arguments. Expecting 6")
-	}
+	}*/
 
 	userSupporterAsBytes, _ := APIstub.GetState(args[0])
 	if userSupporterAsBytes == nil {
@@ -202,13 +202,22 @@ func (s *SmartContract) changeSupporterInfo(APIstub shim.ChaincodeStubInterface,
 	json.Unmarshal(userSupporterAsBytes, &userSupporter)
 	// Normally check that the specified argument is a valid holder of tuna
 	// we are skipping this check for this example
+
+	if len(args) == 3{ //주소와 폰 번호 바꾸는 경우
+        userSupporter.Address = args[1]
+        userSupporter.PhoneNum = args[2]
+       // fmt.Sprintf("들어오나?")
+    } else {
+        userSupporter.Password = args[1]
+    }
+/*
 	userSupporter.ID = args[0]
 	userSupporter.Name = args[1]
 	userSupporter.Email = args[2]
 	userSupporter.Password = args[3]
 	userSupporter.Address = args[4]
 	userSupporter.PhoneNum = args[5]
-
+*/
 	userSupporterAsBytes, _ = json.Marshal(userSupporter)
 	err := APIstub.PutState(args[0], userSupporterAsBytes)
 	if err != nil {
