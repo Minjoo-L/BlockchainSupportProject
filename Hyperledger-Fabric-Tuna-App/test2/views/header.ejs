@@ -47,11 +47,11 @@
                                         <li><a href="blog-full-width.html">Blog Full Width</a></li>
                                     </ul>
                                 </li>
-                                <%if(!session){%>
-                                <li><a href="/login">로그인</a></li>
+                                <%if(session){%>
+                                    <li><a href="/logout">로그아웃</a></li>
+                                    <li><a href="/mypage">마이페이지(내정보)</a></li>
                                 <%} else{%>
-                                <li><a href="/logout">로그아웃</a></li>
-                                <li><a href="/mypage">마이페이지(내정보)</a></li>
+                                    <li><a href="/login">로그인</a></li>
                                 <%}%>
                             </ul>
                             </div><!-- /.navbar-collapse -->

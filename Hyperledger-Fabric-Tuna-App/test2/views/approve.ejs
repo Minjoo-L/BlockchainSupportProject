@@ -82,14 +82,14 @@
        <%}%>
         
 </table>
-<br><br>
+<br>
 <div class="form-group">
-    <form class="form-register" method="post" action="/approve/approveAction"></form>
     <label>피후원자 등록 승인</label><br>
-    후원자 ID <input class="form-control" name ="recipientId">
-    <input id="approveRecipient" type="submit" value="승인" class="btn btn-default">
+    <form method="post" action="/government/approveAction">
+    후원자 ID <input name ="recipientId" type="text">
+    <input class="btn btn-primary" type="submit" value="승인">
     </form>
-  </div>
+</div>
 <!-- footer Start -->
 <footer class="footer"></footer>
    

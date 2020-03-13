@@ -22,6 +22,7 @@ var headerRouter = require('./routes/header');
 var supporterRouter = require('./routes/supporter');
 var registerSRouter = require('./routes/registerSupporter');
 var registerRRouter = require('./routes/registerRecipient');
+var governmentRouter = require('./routes/government');
 
 var connection = mysql.createConnection({
     host    : 'localhost',
@@ -77,7 +78,7 @@ app.get('/login', function(req, res){
 app.get('/logout', function(req, res){
     delete req.session;
     res.render('index',{
-        session: session
+        session: req.session
     });
 });
 app.get('/register', function(req, res){
@@ -144,4 +145,5 @@ app.use('/header', headerRouter);
 app.use('/supporter', supporterRouter);
 app.use('/registerSupporter', registerSRouter);
 app.use('/registerRecipient', registerRRouter);
+app.use('/government', governmentRouter);
 module.exports = app;
