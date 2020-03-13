@@ -59,7 +59,12 @@ app.listen(port,function(){
 });
 
 app.get('/', function(req, res){
-    let session = req.session;
+    //let session = req.session;
+    res.render('index',{
+        session: session
+    });
+});
+app.get('/index', function(req, res){
     res.render('index',{
         session: session
     });
@@ -106,7 +111,7 @@ app.post('/mypage', function(req,res){
         else if(rows.length==1){//로그인 성공
             session.Name = rows[0].Name;
             session.email = rows[0].Email;
-            session.auth = rows[0].Auth;   // auth로 다시 바꿔주기
+            session.auth = rows[0].auth;   // auth로 다시 바꿔주기
             console.log('success');
             console.log(session.Name);
             res.render("mypage",{
