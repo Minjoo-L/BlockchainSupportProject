@@ -15,7 +15,7 @@ var session = require('express-session');//로그인 세션 유지
 var FileStore = require('session-file-store')(session);
 var crypto = require('crypto'); //비밀번호 해시화
 var mysql = require('mysql');
-
+var channel3Query = require('./channel3.js');
 // 라우터
 var recipientRouter = require('./routes/recipient');
 var headerRouter = require('./routes/header');
@@ -76,7 +76,9 @@ app.get('/login', function(req, res){
 });
 app.get('/logout', function(req, res){
     delete req.session;
-    res.redirect("/");
+    res.render('index',{
+        session: session
+    });
 });
 app.get('/register', function(req, res){
     res.render('register',{
@@ -96,6 +98,18 @@ app.get('/registerRecipient', function(req, res){
 app.get('/mypage', function(req, res){
     res.render('mypage',{
         session: session
+    });
+});
+app.get('/approve', async function(req, res){
+    var recipients  = await channel3Query.query1('queryAllRecipient');
+    var data = [];
+    console.log(recipients);
+    for(recipient of recipients){
+        data.push(recipient);
+    }
+    res.render('approve',{
+        session: session,
+        data: data
     });
 });
 app.post('/mypage', function(req,res){

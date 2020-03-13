@@ -341,6 +341,7 @@ async function registerRecipient(param){
 		    console.error('Failed to invoke successfully :: ' + err);
 		});
 }
+
 module.exports.query1 = query1;
 module.exports.query2 = query2;
 module.exports.registerRecipient = registerRecipient;
