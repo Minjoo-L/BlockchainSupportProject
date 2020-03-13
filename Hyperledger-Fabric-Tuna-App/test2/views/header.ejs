@@ -23,10 +23,14 @@
                                 <li><a href="/header/query">후원자/피후원자 조회</a></li>
                                 <li><a href="approve.html">피후원자 승인</a></li>
                                 <%if(session.auth==0){ //후원자인 경우%>
-                                <li><a href="purchaseVoucher.html">바우처 구매</a></li>
-                                <!-- 정부가 바우처 구매 확인. 일단 여기다 둠ㅎㅎ-->
-                                <li><a href="queryallvoucher.html">바우처 구매 확인</a></li>
-                                <li><a href="#">바우처 기부</a></li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">바우처 <span class="ion-ios-arrow-down"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="/supporter/purchaseVoucher">바우처 구매</a></li>
+                                            <li><a href="/supporter/beforeShowDoVou">바우처 조회</a></li>
+                                            <li><a href="">바우처 기부</a></li>
+                                        </ul>
+                                    </li>
                                 <%}%>
                                 <%if(session.auth==1){ //피후원자인 경우%>
                                 <li><a href="#">받은 바우처 내역 확인</a></li>
