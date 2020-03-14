@@ -20,8 +20,8 @@
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav navbar-right">
                                 <li><a href="/">Home</a></li>
-                                <li><a href="/header/query">후원자/피후원자 조회</a></li>
                                 <%if(session&&session.auth==2){ //정부인 경우%>
+                                <li><a href="/header/query">후원자/피후원자 목록</a></li>
                                 <li><a href="/approve">피후원자 승인</a></li>
                                 <%}%>
                                 <%if(session&&session.auth==0){ //후원자인 경우%>
@@ -33,21 +33,16 @@
                                             <li><a href="">바우처 기부</a></li>
                                         </ul>
                                     </li>
+                                    <li><a href="#">피후원자 추천 요청</a></li>
                                 <%}%>
                                 <%if(session&&session.auth==1){ //피후원자인 경우%>
                                 <li><a href="#">받은 바우처 내역 확인</a></li>
                                 <%}%>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog <span class="ion-ios-arrow-down"></span></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="blog-grid.html">Blog Grid</a></li>
-                                        <li><a href="blog-single.html">Blog Single</a></li>
-                                        <li><a href="blog-right-sidebar.html">Blog Right Sidebar</a></li>
-                                        <li><a href="blog-left-sidebar.html">Blog Left Sidebar</a></li>
-                                        <li><a href="blog-full-width.html">Blog Full Width</a></li>
-                                    </ul>
-                                </li>
+                                <%if(session&&session.auth==3){ //후원기관인 경우%>
+                                <li><a href="#">피후원자 목록</a></li>
+                                <%}%>
                                 <%if(session&&(session.auth==0||session.auth==1||session.auth==2||session.auth==3)){%>
+                                    <li><a href="#후원금 사용내역 조회">로그아웃</a></li>
                                     <li><a href="/logout">로그아웃</a></li>
                                     <li><a href="/mypage">마이페이지(내정보)</a></li>
                                 <%} else{%>
