@@ -53,29 +53,38 @@
 <section class="portfolio-work">
   <div class="container">
     <div class="row">
- 
-      <table class="table" align="center">
+      현재 필터: <%=filter%>
+      <form method="post" action="/supporter/filter">
+        <select name="kind">
+            <option value="all">전체</option>
+            <option value="y">사용 완료</option>
+            <option value="n">사용 가능</option>
+        </select>
+        <input id="edit" class="btn btn-primary" type="submit" value="필터">
+      </form>
+
+    <table class="table" align="center">
 
         <tr>
-          <th>바우처 키값</th>
-          <th>후원 업체</th>
-          <th>금액</th>
-          <th>상태</th>
+        <th>바우처 키값</th>
+        <th>후원 업체</th>
+        <th>금액</th>
+        <th>상태</th>
         </tr>
 
         <%for (var i = 0; i < data.length; i++) { 
-          key = data[i].Key;
-          db = data[i].Record;
+        key = data[i].Key;
+        db = data[i].Record;
         %>
-          <tr>
-              <td><%=key%></td>
-              <td><%=db.suppEnter%></td>
-              <td><%=db.amount%></td>
-              <td><%=db.status%></td>
-          </tr>
-       <%}%>
+        <tr>
+            <td><%=key%></td>
+            <td><%=db.suppEnter%></td>
+            <td><%=db.amount%></td>
+            <td><%=db.status%></td>
+        </tr>
+    <%}%>
         
-       </table>
+    </table>
 
 <!-- footer Start -->
 <footer class="footer"></footer>

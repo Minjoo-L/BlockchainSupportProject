@@ -4,7 +4,9 @@ var session = require('express-session');
 var crypto = require('crypto'); //비밀번호 해시화
 var channel2Query = require('../channel2.js');
 var channel1Query = require('../channel1.js');
+
 var Sid ="";
+var DATA = [];
 // 후원자 조회
 router.get('/supp_query_result', async function(req, res){
     var supporters  = await channel2Query.query1('queryAllSupporter');
@@ -73,15 +75,15 @@ router.post('/showDonateVoucher', async function(req, res){
     var data = [];
 
     for(i of DonateVoucher){
-        //console.log('i는', i);
-       // console.log('i의 status', i.Record.status);
-        if(i.Record.status != 'N'){
             data.push(i);
-        }
     }
+
+    DATA = data;
+
         res.render('showDonateVoucher', {
             session: session,
-            data: data
+            data: data,
+            filter: '전체'
         })
 });
 
@@ -101,6 +103,33 @@ router.post('/purchaseResult', async function(req, res){
     await channel1Query.query3('purchaseVoucher', params);
     res.render('purchaseResult',{
         session: session
+    })
+});
+
+// 바우처 조회내역 필터링 해서 보여주기
+router.post('/filter', async function(req, res){
+    var kind = req.body.kind;
+    var data = [];
+    if (kind == 'all'){
+        data = DATA;
+        kind = '전체';
+    } else if (kind == 'n'){
+        for(i of DATA){
+            if(i.Record.status == 'N')
+                data.push(i);
+        }
+        kind = '사용 가능';
+    } else if (kind == 'y'){
+        for(i of DATA){
+            if(i.Record.status != 'N')
+                data.push(i);
+        }
+        kind = '사용 완료';
+    }
+    res.render('showDonateVoucher',{
+        session: session,
+        data: data,
+        filter: kind
     })
 });
 

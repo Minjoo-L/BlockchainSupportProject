@@ -56,7 +56,15 @@
         <form class="form-register" method="post" action="/supporter/purchaseResult">
         <label>후원자 바우처 구매</label><br>
         주민등록번호: <input class="form-control" type="text" name="id">
-        바우처 금액: <input class="form-control" type="text" name="amount">
+        <br>
+        바우처 금액: 
+        <select name="amount">
+            <option value="10000">10000</option>
+            <option value="30000">30000</option>
+            <option value="50000">50000</option>
+            <option value="100000">100000</option>
+        </select>원
+        <br><br>
         후원 재단: <input class="form-control" type="text" name="suppEnter">
         <input id="edit" class="btn btn-primary" type="submit" value="구매">
         </form>
