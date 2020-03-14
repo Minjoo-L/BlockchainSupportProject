@@ -47,7 +47,7 @@
                                         <li><a href="blog-full-width.html">Blog Full Width</a></li>
                                     </ul>
                                 </li>
-                                <%if(session){%>
+                                <%if(session&&(session.auth==0||session.auth==1||session.auth==2||session.auth==3)){%>
                                     <li><a href="/logout">로그아웃</a></li>
                                     <li><a href="/mypage">마이페이지(내정보)</a></li>
                                 <%} else{%>
