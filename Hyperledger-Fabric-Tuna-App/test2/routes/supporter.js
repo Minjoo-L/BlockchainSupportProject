@@ -9,6 +9,7 @@ var Sid ="";
 var DATA = [];
 // 후원자 조회
 router.get('/supp_query_result', async function(req, res){
+    sess = req.session;
     var supporters  = await channel2Query.query1('queryAllSupporter');
     var data = [];
 
@@ -16,13 +17,14 @@ router.get('/supp_query_result', async function(req, res){
         data.push(supporter);
     }
     res.render('supp_query_result',{
-        session: session,
+        session: sess,
         data: data
     });
 });
 
 //내 정보 조회(후원자)
 router.post('/supp_personal_info', async function(req, res){
+    sess = req.session;
     var id = req.body.id;
     Sid = id;
     var pw = req.body.password;
@@ -32,7 +34,7 @@ router.post('/supp_personal_info', async function(req, res){
 
     if(supporter != null && supporter.pw == pw){
         res.render('supp_personal_info',{
-            session: session,
+            session: sess,
             data: supporter
         });
     } else{
@@ -41,34 +43,36 @@ router.post('/supp_personal_info', async function(req, res){
 });
 
 router.post('/changeAl', async function(req,res){
- 
+    sess = req.session;
     var address = req.body.address;
     var phoneNum = req.body.phoneNum;
     var params = [Sid, address, phoneNum];
     await channel2Query.query3('changeSupporterInfo', params);
 
         res.render('changeAl',{
-            session: session
+            session: sess
         });
 });
 
 // 기부기부
 router.get('/beforeShowDoVou', async function(req, res){
+    sess = req.session;
     res.render('beforeShowDoVou', {
-        session: session
+        session: sess
     })
 });
 
 // 기부한 바우처 내역 조회를 위한 비밀번호 입력 창
 router.get('/beforeShowDoVou', async function(req, res){
+    sess = req.session;
     res.render('beforeShowDoVou', {
-        session: session
+        session: sess
     })
 });
 
 // 기부한 바우처 내역 조회
 router.post('/showDonateVoucher', async function(req, res){
-
+    sess = req.session;
     var id = req.body.id;
     var params = [id];
     var DonateVoucher = await channel1Query.query1('queryVoucher', params);
@@ -81,7 +85,7 @@ router.post('/showDonateVoucher', async function(req, res){
     DATA = data;
 
         res.render('showDonateVoucher', {
-            session: session,
+            session: sess,
             data: data,
             filter: '전체'
         })
@@ -89,12 +93,14 @@ router.post('/showDonateVoucher', async function(req, res){
 
 // 바우처 구매
 router.get('/purchaseVoucher', async function(req, res){
+    sess = req.session;
     res.render('purchaseVoucher', {
-        session: session
+        session: sess
     })
 });
 
 router.post('/purchaseResult', async function(req, res){
+    sess = req.session;
     var id = req.body.id;
     var amount= req.body.amount;
     var suppEnter = req.body.suppEnter;
@@ -102,12 +108,13 @@ router.post('/purchaseResult', async function(req, res){
 
     await channel1Query.query3('purchaseVoucher', params);
     res.render('purchaseResult',{
-        session: session
+        session: sess
     })
 });
 
 // 바우처 조회내역 필터링 해서 보여주기
 router.post('/filter', async function(req, res){
+    sess = req.session;
     var kind = req.body.kind;
     var data = [];
     if (kind == 'all'){
@@ -127,7 +134,7 @@ router.post('/filter', async function(req, res){
         kind = '사용 완료';
     }
     res.render('showDonateVoucher',{
-        session: session,
+        session: sess,
         data: data,
         filter: kind
     })

@@ -5,6 +5,7 @@ var crypto = require('crypto'); //비밀번호 해시화
 var channel3Query = require('../channel3.js');
 
 router.get('/reci_query_result', async function(req, res){
+    sess = req.session;
     var recipients  = await channel3Query.query1('queryAllRecipient');
     var data = [];
 
@@ -12,12 +13,13 @@ router.get('/reci_query_result', async function(req, res){
         data.push(recipient);
     }
     res.render('reci_query_result',{
-        session: session,
+        session: sess,
         data: data
     });
 });
 
 router.post('/reci_personal_info', async function(req, res){
+    sess = req.session;
     var id = req.body.id;
     var pw = req.body.password;
     var params =[id];
@@ -26,7 +28,7 @@ router.post('/reci_personal_info', async function(req, res){
 
     if(recipient != null && recipient.pw == pw){
         res.render('reci_personal_info',{
-            session: session,
+            session: sess,
             data: recipient
         });
     } else{

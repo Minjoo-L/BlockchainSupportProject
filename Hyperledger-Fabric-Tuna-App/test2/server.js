@@ -60,48 +60,61 @@ app.listen(port,function(){
 });
 
 app.get('/', function(req, res){
-    //let session = req.session;
+    sess = req.session;
     res.render('index',{
-        session: session
+        session: sess
     });
 });
 app.get('/index', function(req, res){
+    sess = req.session;
     res.render('index',{
-        session: session
+        session: sess
     });
 });
 app.get('/login', function(req, res){
+    sess = req.session;
     res.render('login',{
-        session: session
+        session: sess
     });
 });
 app.get('/logout', function(req, res){
-    delete req.session;
-    res.render('index',{
-        session: req.session
-    });
+    req.session.destroy(function(err){
+        if(err){
+            console.log(err);
+        }else{
+            sess = req.session;
+            res.render('index',{
+                session: sess
+            });
+        }
+    })
 });
 app.get('/register', function(req, res){
+    sess = req.session;
     res.render('register',{
-        session: session
+        session: sess
     });
 });
 app.get('/registerSupporter', function(req, res){
+    sess = req.session;
     res.render('registerSupporter',{
-        session: session
+        session: sess
     });
 });
 app.get('/registerRecipient', function(req, res){
+    sess = req.session;
     res.render('registerRecipient',{
-        session: session
+        session: sess
     });
 });
 app.get('/mypage', function(req, res){
+    sess = req.session;
     res.render('mypage',{
-        session: session
+        session: sess
     });
 });
 app.get('/approve', async function(req, res){
+    sess = req.session;
     var recipients  = await channel3Query.query1('queryAllRecipient');
     var data = [];
     console.log(recipients);
@@ -109,11 +122,12 @@ app.get('/approve', async function(req, res){
         data.push(recipient);
     }
     res.render('approve',{
-        session: session,
+        session: sess,
         data: data
     });
 });
 app.post('/mypage', function(req,res){
+    sess = req.session;
     console.log("login : ");
     var email = req.body.email;
     var pw = req.body.pw;
@@ -124,13 +138,13 @@ app.post('/mypage', function(req,res){
             console.log(err);
         }
         else if(rows.length==1){//로그인 성공
-            session.Name = rows[0].Name;
-            session.email = rows[0].Email;
-            session.auth = rows[0].auth;   // auth로 다시 바꿔주기
+            sess.Name = rows[0].Name;
+            sess.email = rows[0].Email;
+            sess.auth = rows[0].auth;   // auth로 다시 바꿔주기
             console.log('success');
-            console.log(session.Name);
+            console.log(sess.Name);
             res.render("mypage",{
-                session: session
+                session: sess
             });
         }
         else{
