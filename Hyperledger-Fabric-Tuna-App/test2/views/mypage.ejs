@@ -45,7 +45,7 @@
       <div class="col-md-12">
         <div class="block">
           <h1>Hyperledger Fabric Supporting Application</h1>
-          <p>Login / Logout</p>
+          <p>mypage</p>
         </div>
       </div>
     </div>
@@ -58,11 +58,11 @@
         <label>내 정보</label>
         <table class="table" align="center">
           <tr>
-            <td>이름</td>
+            <td width="30%" border-right="1px solid black">이름</td>
             <td><%=session.Name%></td>
           </tr>
           <tr>
-            <td>해당 그룹</td>
+            <td width="30%" border-right="1px solid black">해당 그룹</td>
               <%if(session.auth==0){%>
                 <td>후원자</td>
               <%}else if(session.auth==1){%>
@@ -72,23 +72,23 @@
               <%}%>
           </tr>
         </table>
-      </div>
+      </div><br>
       <div class="form-group">
         <label>내 정보 수정</label><br>
         <%if (session.auth == 0){%>
           <form class="form-register" method="post" action="/supporter/supp_personal_info">
           주민번호를 입력해 주세요 <input type = "text" class="form-control" id="id" name="id">
           비밀번호를 입력해 주세요 <input type="password" class="form-control" id="password" name="password">
-          <input id="edit" class="btn btn-primary" type="submit" value="확인">
+          <input id="edit" class="btn btn-default" type="submit" value="확인">
         </form>
         <%}
          else {%>
           <form class="form-register" method="post" action="/recipient/reci_personal_info">
             주민번호를 입력해 주세요 <input type = "text" class="form-control" id="id" name="id">
             비밀번호를 입력해 주세요 <input type="password" class="form-control" id="password" name="password">
-            <input id="edit" class="btn btn-primary" type="submit" value="확인">
+            <input id="edit" class="btn btn-default" type="submit" value="확인">
           </form>
-          <%}%>
+          <%}%><br>
       
           <div class="form-group">
             <label>비밀번호 수정</label><br>
@@ -96,20 +96,22 @@
               <form class="form-register" method="post" action="">
               주민번호를 입력해 주세요 <input type = "text" class="form-control" id="id" name="id">
               비밀번호를 입력해 주세요 <input type="password" class="form-control" id="password" name="password">
-              <input id="edit" class="btn btn-primary" type="submit" value="확인">
+              <input id="edit" class="btn btn-default" type="submit" value="확인">
             </form>
             <%}
              else {%>
               <form class="form-register" method="post" action="">
                 주민번호를 입력해 주세요 <input type = "text" class="form-control" id="id" name="id">
                 비밀번호를 입력해 주세요 <input type="password" class="form-control" id="password" name="password">
-                <input id="edit" class="btn btn-primary" type="submit" value="확인">
+                <input id="edit" class="btn btn-default" type="submit" value="확인">
               </form>
               <%}%>
       
 
 <!-- footer Start -->
-<footer class="footer"></footer>
+<footer class="footer">
+<%- include("footer") %>
+</footer>
     <!-- 
     Essential Scripts
     =====================================-->
