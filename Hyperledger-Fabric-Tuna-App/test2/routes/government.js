@@ -4,6 +4,7 @@ var session = require('express-session');
 var channel3Query = require('../channel3.js');
 
 router.post('/approveAction', async function(req, res){//피후원자 승인
+    sess = req.session;
     var rid = req.body.recipientId;
     var data = [];
     data = await channel3Query.approveRecipient(rid).then(async function(){
@@ -16,7 +17,7 @@ router.post('/approveAction', async function(req, res){//피후원자 승인
         return data;
     })
     res.render('approve',{
-        session: session,
+        session: sess,
         data: data
     });
 });
