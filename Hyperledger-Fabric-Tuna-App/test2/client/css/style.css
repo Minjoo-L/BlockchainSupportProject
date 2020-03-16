@@ -931,7 +931,6 @@ font header .navbar-default .navbar-nav li a:hover {
 
 .portfolio-work .block .portfolio-contant ul li a {
   display: block;
-  color: #fff;
 }
 
 .portfolio-work .block .portfolio-contant ul li a h4 {
@@ -944,7 +943,6 @@ font header .navbar-default .navbar-nav li a:hover {
 .portfolio-work .block .portfolio-contant ul li a p {
   font-size: 13px;
   line-height: 20px;
-  color: #fff;
 }
 
 .portfolio-work .block .portfolio-contant ul img {
