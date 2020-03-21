@@ -140,4 +140,34 @@ router.post('/filter', async function(req, res){
     })
 });
 
+// 후원하기 버튼을 눌러서 후원하는 페이지 이동
+router.post('/donatePage', async function(req, res){
+    sess = req.session;
+    var name = req.body.name;
+    var id = req.body.ReId;
+
+    res.render('donatePage', {
+        session:sess,
+        name: name,
+        id: id
+    })
+});
+
+// 바우처 선택후 후원완료
+router.post('/donate', async function(req, res){
+    sess = req.session;
+    console.log("내일 체인코드랑 연결하기");
+    var name = req.body.name;
+    var id = req.body.id;
+    var number = req.body.number;
+    var params = [number, id]; //바우처 번호, 피후원자 식별번호(주민번호)
+    //donateV 체인코드
+   // await channel1Query.query3('purchaseVoucher', params);
+
+    res.render('donateComplete', {
+        session: sess,
+        name: name,
+        number: number
+    })
+})
 module.exports = router;

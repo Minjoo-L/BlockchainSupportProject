@@ -43,7 +43,7 @@
       <div class="col-md-12">
         <div class="block">
           <h1>Hyperledger Fabric Supporting Application.</h1><br>
-          <p>피후원자 조회</p>
+          <p>후원하기</p>
         </div>
       </div>
     </div>
@@ -51,39 +51,23 @@
 </section>
 
 <section class="portfolio-work">
-  <div class="container">
-    <div class="row">
-      <table class="table" align="center">
-        <tr>
-          <th>이름</th>
-          <th>주민등록번호</th>
-          <th>폰 번호</th>
-          <th>이메일</th>
-          <th>주소</th>
-          <th>승인상태</th>
-          <th>사연</th>
-          <!--후원 체인코드 확인을 위한 임시 버튼! 나중에 없애기-->
-          <th>후원하기</th>
-        </tr>
-        <%for (var i = 0; i < data.length; i++) { 
-          db = data[i].Record;
-        %>
-        <form action="/supporter/donatePage" method="post">
-          <tr>
-              <td><%=db.name%></td>
-              <td><%=db.id%></td> 
-              <td><%=db.phoneNum%></td>
-              <td><%=db.email%></td>
-              <td><%=db.address%></td>
-              <td><%=db.status%></td>
-              <td><%=db.story%></td>
-              <input type = "hidden" name = "name" value = <%=db.name%>>
-              <input type = "hidden" name = "ReId" value = <%=db.id%>> 
-              <td><input class="btn btn-default" type="submit" value="후원하기"></td>
-          </tr>
+    <div class="container">
+      <div class="row">
+        <h3>바우처 후원</h3><br><br>	
+        <label><%=name%> 님께 후원</label> 
+        <br>
+        <form method="post" action="/supporter/donate">
+        <!-- 구매한 바우처 목록에서 바우처를 선택할 수 있도록 수정하기 -->
+        <label>바우처 번호:  <input type = "text" name = "number"></label>
+        <br><br>
+        <input type = "hidden" name = "name" value = <%= name%>>
+        <input type = "hidden" name = "id" value = <%=id%>>
+        <input class="btn btn-default" type="submit" value="후원하기">
         </form>
-       <%}%>
-       </table>
+      </div>
+    </div>
+</section>
+
 <!-- footer Start -->
 <footer class="footer">
 <%- include("footer") %>
@@ -117,4 +101,4 @@
     <script type="text/javascript" src="app.js"> </script>
 
   </body>
-</html>
+  </html>
