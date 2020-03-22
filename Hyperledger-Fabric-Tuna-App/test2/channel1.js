@@ -149,7 +149,16 @@ async function query3(func, params) {
                         txId: tx_id
                     };
                     break;
-
+                
+                case 'donateV' :
+                    request = {
+                        chaincodeId: 'test-app-ch12',
+                        txId: tx_id,
+                        fcn: 'donateV',
+                        args: [params[0], params[1]],  // 바우처 번호, 피후원자
+                    };
+                    break;
+                    
                 default:
                     break;
             }
