@@ -205,7 +205,7 @@ router.post('/donate', async function(req, res){
         var number = req.body.number;
         var params = [number, id]; //바우처 번호, 피후원자 식별번호(주민번호)
         //donateV 체인코드
-    // await channel1Query.query3('purchaseVoucher', params);
+        await channel1Query.query3('donateV', params);
 
         res.render('donateComplete', {
             session: sess,

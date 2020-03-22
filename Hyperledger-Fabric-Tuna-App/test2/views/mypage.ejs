@@ -84,7 +84,7 @@
           <input id="edit" class="btn btn-default" type="submit" value="확인">
         </form>
         <%}
-         else {%>
+         else if (session.auth == 1){%>
           <form class="form-register" method="post" action="/recipient/reci_personal_info">
             주민번호를 입력해 주세요 <input type = "text" class="form-control" id="id" name="id">
             비밀번호를 입력해 주세요 <input type="password" class="form-control" id="password" name="password">

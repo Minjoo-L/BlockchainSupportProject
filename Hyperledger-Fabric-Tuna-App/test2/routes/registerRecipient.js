@@ -14,7 +14,7 @@ router.post('/reci_reg', async function(req, res){
     recipient[5] = req.body.rphoneNum;
     recipient[6] = req.body.rstory;
     recipient[7] = 0;//status 0으로 초기화
-    await channel3Query.registerRecipient(recipient);
+    await channel3Query.query3('registerRecipient', recipient);
     res.redirect('/');
 });
 module.exports = router;
