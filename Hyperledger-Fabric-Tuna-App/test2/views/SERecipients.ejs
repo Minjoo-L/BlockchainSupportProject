@@ -56,18 +56,19 @@
       <table class="table" align="center">
         <tr>
           <th>이름</th>
-          <th>피후원자 번호</th>
+          <th>주민번호</th>
           <th>사연</th>
         </tr>
         <%for (var i = 0; i < data.length; i++) { 
           db = data[i].Record;
+          if(db.status!='N'){
         %>
           <tr>
               <td><%=db.name%></td>
               <td><%=db.id%></td> 
               <td><%=db.story%></td>
           </tr>
-       <%}%>
+       <%}}%>
        </table>
 <!-- footer Start -->
 <footer class="footer">

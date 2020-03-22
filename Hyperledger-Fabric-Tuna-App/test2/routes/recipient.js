@@ -8,7 +8,7 @@ var Sid = "";
 
 router.get('/reci_query_result', async function(req, res){
     sess = req.session;
-    if(sess.auth!=1){
+    if(sess.auth!=1&&sess.auth!=2){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
         var recipients  = await channel3Query.query1('queryAllRecipient');
@@ -49,6 +49,9 @@ router.post('/reci_personal_info', async function(req, res){
 
 router.post('/changeRI', async function(req,res){
     sess = req.session;
+    if(sess.auth!=1){
+        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+    }else{
     var address = req.body.address;
     var phoneNum = req.body.phoneNum;
     var params = [Sid, address, phoneNum];
@@ -57,6 +60,7 @@ router.post('/changeRI', async function(req,res){
         res.render('changeAl',{
             session: sess
         });
+    }
 });
 
 module.exports = router;

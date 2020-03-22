@@ -10,7 +10,7 @@ var DATA = [];
 // 후원자 조회
 router.get('/supp_query_result', async function(req, res){
     sess = req.session;
-    if(sess.auth!=0){
+    if(sess.auth!=0&&sess.auth!=2){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
         var supporters  = await channel2Query.query1('queryAllSupporter');
