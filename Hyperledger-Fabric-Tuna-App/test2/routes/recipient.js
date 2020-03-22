@@ -4,6 +4,8 @@ var session = require('express-session');
 var crypto = require('crypto'); //비밀번호 해시화
 var channel3Query = require('../channel3.js');
 
+var Sid = "";
+
 router.get('/reci_query_result', async function(req, res){
     sess = req.session;
     var recipients  = await channel3Query.query1('queryAllRecipient');
@@ -21,6 +23,7 @@ router.get('/reci_query_result', async function(req, res){
 router.post('/reci_personal_info', async function(req, res){
     sess = req.session;
     var id = req.body.id;
+    Sid = id;
     var pw = req.body.password;
     var params =[id];
     var recipient  = await channel3Query.query2('queryRecipient', params);
@@ -35,4 +38,17 @@ router.post('/reci_personal_info', async function(req, res){
         // 예외처리 하기
     }
 });
+
+router.post('/changeRI', async function(req,res){
+    sess = req.session;
+    var address = req.body.address;
+    var phoneNum = req.body.phoneNum;
+    var params = [Sid, address, phoneNum];
+    await channel2Query.query3('changeRecipientInfo', params);
+
+        res.render('changeAl',{
+            session: sess
+        });
+});
+
 module.exports = router;

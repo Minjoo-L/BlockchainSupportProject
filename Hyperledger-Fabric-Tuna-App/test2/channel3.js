@@ -177,17 +177,18 @@ async function query2(name, params) {
             resolve(result);
         });
 }
-async function registerRecipient(param){
-	console.log("register Recipient: ");
-		var key = param[1]
-		var name = param[0]
-		var id = param[1]
-		var email = param[2]
-		var pw = param[3]
-		var address = param[4]
-		var phoneNum = param[5]
-		var story = param[6]
-		var status = 'N';
+async function query3(func, params){
+	var key, name, id, email, pw, address, phoneNum, story, status;
+	if (func == "registerRecipient"){
+		key = params[1]
+		name = params[0]
+		id = params[1]
+	    email = params[2]
+		pw = params[3]
+		address = params[4]
+		phoneNum = params[5]
+		story = params[6]
+		status = 'N';
 		var auth = 1; //피후원자는 1번
 		connection.query("insert into usertbl values('"+name+"' , '"+id+"' , '"+email+"', '"+pw+"' , "+auth+" )", async function(err, rows, fields){
 			if(err){
@@ -196,6 +197,7 @@ async function registerRecipient(param){
 				console.log("successfully registered!!!");
 			}
 		});
+	}
 		var fabric_client = new Fabric_Client();
 
 		// setup the fabric network
@@ -236,15 +238,33 @@ async function registerRecipient(param){
 		    tx_id = fabric_client.newTransactionID();
 		    console.log("Assigning transaction_id: ", tx_id._transaction_id);
 
-		    // recordTuna - requires 5 args, ID, vessel, location, timestamp,holder - ex: args: ['10', 'Hound', '-12.021, 28.012', '1504054225', 'Hansel'], 
-		    // send proposal to endorser
-		    const request = {
-		        //targets : --- letting this default to the peers assigned to the channel
-				chaincodeId: 'test-app-queryRE6',
-				txId: tx_id,
-		        fcn: 'registerRecipient',
-		        args: [name, id, email, pw, address, phoneNum, story, status],
-		    };
+			var request;
+			switch (func) {
+				case 'registerRecipient':
+					request = {
+						//targets : --- letting this default to the peers assigned to the channel
+						chaincodeId: 'test-app-queryRE6',
+						txId: tx_id,
+						fcn: 'registerRecipient',
+						args: [name, id, email, pw, address, phoneNum, story, status],
+					};
+					break;
+
+				case 'changeRecipientInfo':
+					request = {
+						//targets : --- letting this default to the peers assigned to the channel
+						chaincodeId: 'test-app-queryRE6',
+						txId: tx_id,
+						fcn: 'changeRecipientInfo',
+						args: [params[0], params[1], params[2]], //id, address, phoneNum
+						chainId: 'mychannel3'
+					};
+					break;
+
+				default:
+					break;
+
+			}
 
 		    // send the transaction proposal to the peers
 		    return channel.sendTransactionProposal(request);
@@ -498,5 +518,6 @@ async function approveRecipient(param){
 }
 module.exports.query1 = query1;
 module.exports.query2 = query2;
-module.exports.registerRecipient = registerRecipient;
+module.exports.query3 = query3;
+//module.exports.registerRecipient = registerRecipient;
 module.exports.approveRecipient = approveRecipient;

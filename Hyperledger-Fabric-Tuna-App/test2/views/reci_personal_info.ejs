@@ -56,7 +56,15 @@
     <div class="container"> 
       <div class="form-group">
         <label>내 정보</label><br>
-        
+        <!-- 항목 수정하기 -->
+        <form method="post" action="/recipient/changeRl">
+          이름: <%= data.name %>  <br>
+          이메일: <%= data.email%> <br>
+          주민번호: <%= data.id%> <br>
+          주소: <input name = "address" type = "text" value = <%= data.address%>><br>
+          폰 번호: <input name = "phoneNum" type = "text" value = <%= data.phoneNum%>> <br>
+          <input id="edit" class="btn btn-default" type="submit" value="수정">
+          </form>
       </div>
     </div>
 </section>
