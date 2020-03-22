@@ -23,6 +23,7 @@ var supporterRouter = require('./routes/supporter');
 var registerSRouter = require('./routes/registerSupporter');
 var registerRRouter = require('./routes/registerRecipient');
 var governmentRouter = require('./routes/government');
+var supportingEnterpriseRouter = require('./routes/supportingEnterprise');
 
 var connection = mysql.createConnection({
     host    : 'localhost',
@@ -160,4 +161,5 @@ app.use('/supporter', supporterRouter);
 app.use('/registerSupporter', registerSRouter);
 app.use('/registerRecipient', registerRRouter);
 app.use('/government', governmentRouter);
+app.use('/supportingEnterprise', supportingEnterpriseRouter);
 module.exports = app;

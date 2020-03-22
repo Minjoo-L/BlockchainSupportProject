@@ -27,7 +27,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
-    
+  <script src ="../routes/government.js"></script>
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -36,7 +36,6 @@
 
 <!-- Header Start -->
 <%- include("header") %>
-
 <section class="page-title bg-2">
   <div class="container">
     <div class="row">
@@ -53,9 +52,10 @@
 <section class="portfolio-work">
   <div class="container">
     <div class="row">
- 
+      <input type="button" class="btn btn-default" onclick="" value="전체 조회">
+      <input type="button" class="btn btn-default" onclick="" value="미승인 피후원자 조회">
+      <br><br>
       <table class="table" align="center">
-
         <tr>
           <th>이름</th>
           <th>주민등록번호</th>
@@ -90,6 +90,7 @@
     <input class="btn btn-primary" type="submit" value="승인">
     </form>
 </div>
+<br><br>
 <!-- footer Start -->
 <footer class="footer">
 <%- include("footer") %>
