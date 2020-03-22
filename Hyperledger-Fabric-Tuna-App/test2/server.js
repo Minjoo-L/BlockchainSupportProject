@@ -110,22 +110,30 @@ app.get('/registerRecipient', function(req, res){
 });
 app.get('/mypage', function(req, res){
     sess = req.session;
-    res.render('mypage',{
-        session: sess
-    });
+    if(!sess.auth){
+        res.send('<script type="text/javascript">alert("로그인 이후 사용해주세요.");location.href="/login";</script>');
+    }else{
+        res.render('mypage',{
+            session: sess
+        });
+    }
 });
 app.get('/approve', async function(req, res){
     sess = req.session;
-    var recipients  = await channel3Query.query1('queryAllRecipient');
-    var data = [];
-    console.log(recipients);
-    for(recipient of recipients){
-        data.push(recipient);
+    if(sess.auth!=2){//정부가 아닌 경우 접근 불가
+        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+    }else{
+        var recipients  = await channel3Query.query1('queryAllRecipient');
+        var data = [];
+        console.log(recipients);
+        for(recipient of recipients){
+            data.push(recipient);
+        }
+        res.render('approve',{
+            session: sess,
+            data: data
+        });
     }
-    res.render('approve',{
-        session: sess,
-        data: data
-    });
 });
 app.post('/mypage', function(req,res){
     sess = req.session;

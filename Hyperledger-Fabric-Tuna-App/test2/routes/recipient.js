@@ -6,33 +6,41 @@ var channel3Query = require('../channel3.js');
 
 router.get('/reci_query_result', async function(req, res){
     sess = req.session;
-    var recipients  = await channel3Query.query1('queryAllRecipient');
-    var data = [];
+    if(sess.auth!=1){
+        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+    }else{
+        var recipients  = await channel3Query.query1('queryAllRecipient');
+        var data = [];
 
-    for(recipient of recipients){
-        data.push(recipient);
+        for(recipient of recipients){
+            data.push(recipient);
+        }
+        res.render('reci_query_result',{
+            session: sess,
+            data: data
+        });
     }
-    res.render('reci_query_result',{
-        session: sess,
-        data: data
-    });
 });
 
 router.post('/reci_personal_info', async function(req, res){
     sess = req.session;
-    var id = req.body.id;
-    var pw = req.body.password;
-    var params =[id];
-    var recipient  = await channel3Query.query2('queryRecipient', params);
-    pw = crypto.createHash('sha512').update(pw).digest('base64');
+    if(sess.auth!=1){
+        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+    }else{
+        var id = req.body.id;
+        var pw = req.body.password;
+        var params =[id];
+        var recipient  = await channel3Query.query2('queryRecipient', params);
+        pw = crypto.createHash('sha512').update(pw).digest('base64');
 
-    if(recipient != null && recipient.pw == pw){
-        res.render('reci_personal_info',{
-            session: sess,
-            data: recipient
-        });
-    } else{
-        // 예외처리 하기
+        if(recipient != null && recipient.pw == pw){
+            res.render('reci_personal_info',{
+                session: sess,
+                data: recipient
+            });
+        } else{
+            // 예외처리 하기
+        }
     }
 });
 module.exports = router;
