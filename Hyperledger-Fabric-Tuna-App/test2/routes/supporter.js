@@ -50,6 +50,29 @@ router.post('/supp_personal_info', async function(req, res){
     }
 });
 
+//내 비밀번호 변경(후원자)
+router.post('/supp_pass_info', async function(req, res){
+    sess = req.session;
+    if(sess.auth!=0){
+        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+    }else{
+        var id = req.body.id;
+        Sid = id;
+        var pw = req.body.password;
+        var params =[id];
+        var supporter = await channel2Query.query2('querySupporter', params);
+        pw = crypto.createHash('sha512').update(pw).digest('base64');
+
+        if(supporter != null && supporter.pw == pw){
+            res.render('supp_pass_info',{
+                session: sess
+            });
+        } else{
+            // 예외처리 하기
+        }
+    }
+});
+
 router.post('/changeAl', async function(req,res){
     sess = req.session;
     if(sess.auth!=0){
@@ -63,6 +86,27 @@ router.post('/changeAl', async function(req,res){
             res.render('changeAl',{
                 session: sess
             });
+    }
+});
+
+router.post('/changePass', async function(req,res){
+    sess = req.session;
+    if(sess.auth!=0){
+        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+    }else{
+        var newPassword1 = req.body.newPassword1;
+        var newPassword2 = req.body.newPassword2;
+        var pw = crypto.createHash('sha512').update(newPassword1).digest('base64');
+
+        if(newPassword1 != newPassword2){
+            res.send('<script type="text/javascript">alert("비밀번호가 다릅니다");history.go(-1);</script>');
+        }else{
+        var params = [Sid, pw];
+        await channel2Query.query3('changeSupporterPass', params);
+            res.render('changeAl',{
+                session: sess
+            });
+        }
     }
 });
 

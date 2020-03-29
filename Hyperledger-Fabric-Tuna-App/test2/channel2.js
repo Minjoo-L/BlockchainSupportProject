@@ -198,6 +198,16 @@ async function query3(func, params) {
 				console.log("successfully registered!!!");
 			}
 		});
+	} else if(func == "changeSupporterPass"){
+		id = params[0];
+		var password = params[1];
+		connection.query("update usertbl set Password = '"+password+"' where id = '"+id+"'", async function(err, rows, fields){
+			if(err){
+				console.log(err);
+			}else{
+				console.log("successfully update password of recipient!!!");
+			}
+		});
 	}
 		var fabric_client = new Fabric_Client();
 
@@ -265,6 +275,16 @@ async function query3(func, params) {
 						chaincodeId: 'test-app18',
 						fcn: 'changeSupporterInfo',
 						args: [params[0], params[1], params[2]], // id, address, phoneNum
+						chainId: 'mychannel2',
+						txId: tx_id
+					};
+					break;
+				
+				case 'changeSupporterPass':
+					request = {
+						chaincodeId: 'test-app18',
+						fcn: 'changeSupporterInfo',
+						args: [params[0], params[1]], // id, password
 						chainId: 'mychannel2',
 						txId: tx_id
 					};
