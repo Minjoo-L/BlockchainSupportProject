@@ -230,6 +230,7 @@ func (s *SmartContract) changeRecipientInfo(APIstub shim.ChaincodeStubInterface,
 
 	return shim.Success(nil)
 }
+
  /*
   * main function *
  calls the Start function 

@@ -89,7 +89,9 @@
 		 return s.allVoucher(APIstub)
 	 } else if function == "donateV" {					// 바우처 후원하기
 		 return s.donateV(APIstub, args)
-	 } 
+	 } else if function == "recievedVoucher"{ //받은 바우처 내역 확인(피후원자)
+		return s.recievedVoucher(APIstub, args);
+	 }
  
 	 return shim.Error("Invalid Smart Contract function name.")
  }
@@ -125,7 +127,6 @@
 	if err != nil {
 		return shim.Error(fmt.Sprintf("Failed to register supporter: %s", args[0]))
 	}
-
 	return shim.Success(nil)
 
  }
@@ -373,7 +374,16 @@ func (s *SmartContract) donateV(APIstub shim.ChaincodeStubInterface, args []stri
 
 	return shim.Success(nil)
 }
-
+func (s *SmartContract) recievedVoucher(APIstub shim.ChaincodeStubInterface, args []string) sc.Response{
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+	voucherAsBytes, _ := APIstub.GetState(args[0])
+	if voucherAsBytes == nil {
+		return shim.Error("Could not locate voucher")
+	}
+	return shim.Success(voucherAsBytes)
+}
 
  /*
   * main function *

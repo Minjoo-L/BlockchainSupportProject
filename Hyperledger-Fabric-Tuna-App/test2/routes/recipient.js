@@ -24,10 +24,10 @@ router.post('/recievedVoucher', async function(req, res){
     }else{
         var id = req.body.id;
         var params = [id];
-        var DonateVoucher = await channel1Query.query1('queryVoucher', params);
+        var Voucher = await channel1Query.query2('recievedVoucher', params);
         var data = [];
-        for(i of DonateVoucher){
-                data.push(i);
+        for(i of Voucher){
+            data.push(i);
         }
         res.render('recievedVoucher', {
             session: sess,
