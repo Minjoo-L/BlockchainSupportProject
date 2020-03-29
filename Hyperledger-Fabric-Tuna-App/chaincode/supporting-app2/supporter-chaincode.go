@@ -375,11 +375,8 @@ func (s *SmartContract) donateV(APIstub shim.ChaincodeStubInterface, args []stri
 	return shim.Success(nil)
 }
 func (s *SmartContract) recievedVoucher(APIstub shim.ChaincodeStubInterface, args []string) sc.Response{
-
-	startKey := "0"
-	endKey := "999"
-
-	resultsIterator, err := APIstub.GetStateByRange("Nv-"+startKey, "Nv-"+endKey)
+	queryString := fmt.Sprintf("{\"selector\":{\"status\":\"%s\"}}", args[0])
+	resultsIterator, err := APIstub.GetQueryResult(queryString)
 	if err != nil {
 		return shim.Error(err.Error())
 	}
@@ -395,12 +392,10 @@ func (s *SmartContract) recievedVoucher(APIstub shim.ChaincodeStubInterface, arg
 		if err != nil {
 			return shim.Error(err.Error())
 		}
-		fmt.Printf(queryResponse.Status)
 		// Add comma before array members,suppress it for the first array member
 		if bArrayMemberAlreadyWritten == true {
 			buffer.WriteString(",")
-		}
-		
+		}	
 		buffer.WriteString("{\"Key\":")
 		buffer.WriteString("\"")
 		buffer.WriteString(queryResponse.Key)
