@@ -15,7 +15,9 @@ router.get('/reci_query_result', async function(req, res){
         var data = [];
 
         for(recipient of recipients){
-            data.push(recipient);
+            if(recipient.Record.status == 'Y'){
+                data.push(recipient);
+            }
         }
         res.render('reci_query_result',{
             session: sess,
