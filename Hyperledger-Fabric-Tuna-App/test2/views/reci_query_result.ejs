@@ -50,6 +50,9 @@
   </div>
 </section>
 
+<input class="btn btn-default" type="submit" value="전체 조회"> <!-- 팔요헌지 회의하기-->
+<input class="btn btn-default" type="submit" value="피후원자 조회">
+
 <section class="portfolio-work">
   <div class="container">
     <div class="row">
@@ -62,8 +65,6 @@
           <th>주소</th>
           <th>승인상태</th>
           <th>사연</th>
-          <!--후원 체인코드 확인을 위한 임시 버튼! 나중에 없애기-->
-          <th>후원하기</th>
         </tr>
         <%for (var i = 0; i < data.length; i++) { 
           db = data[i].Record;
@@ -77,9 +78,6 @@
               <td><%=db.address%></td>
               <td><%=db.status%></td>
               <td><%=db.story%></td>
-              <input type = "hidden" name = "name" value = <%=db.name%>>
-              <input type = "hidden" name = "ReId" value = <%=db.id%>> 
-              <td><input class="btn btn-default" type="submit" value="후원하기"></td>
           </tr>
         </form>
        <%}%>

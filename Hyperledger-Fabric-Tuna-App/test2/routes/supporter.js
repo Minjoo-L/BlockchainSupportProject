@@ -4,6 +4,7 @@ var session = require('express-session');
 var crypto = require('crypto'); //비밀번호 해시화
 var channel2Query = require('../channel2.js');
 var channel1Query = require('../channel1.js');
+var channel3Query = require('../channel3.js');
 
 var Sid ="";
 var DATA = [];
@@ -257,5 +258,22 @@ router.post('/donate', async function(req, res){
             number: number
         })
     } 
-})
+});
+
+// 후원할 피후원자 조회 (후원자)
+router.get('/check_Reci', async function(req, res){
+    sess = req.session;
+        var recipients  = await channel3Query.query1('queryAllRecipient');
+        var data = [];
+
+        for(recipient of recipients){
+            if(recipient.Record.status == 'Y'){
+                data.push(recipient);
+            }
+        }
+        res.render('check_Reci',{
+            session: sess,
+            data: data
+        });
+});
 module.exports = router;

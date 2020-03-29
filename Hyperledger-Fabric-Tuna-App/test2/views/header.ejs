@@ -21,7 +21,14 @@
                                             <li><a href="#">바우처 기부</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="#">피후원자 추천</a></li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">후원 하러가기 <span class="ion-ios-arrow-down"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <!-- 정부와는 다른 피후원자 보기/ 정보를 꾸며서 보여주던-->
+                                            <li><a href="/supporter/check_Reci">피후원자 보기</a></li>
+                                            <li><a href="/supporter/recom">피후원자 추천받기</a></li>
+                                        </ul>
+                                    </li>
                                 <%}%>
                                 <%if(session&&session.auth==1){ //피후원자인 경우%>
                                 <li><a href="#">받은 바우처 내역 확인</a></li>

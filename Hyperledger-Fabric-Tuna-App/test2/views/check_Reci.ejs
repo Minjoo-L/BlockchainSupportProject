@@ -27,7 +27,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
-  <script src ="../routes/government.js"></script>
+    
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -36,13 +36,14 @@
 
 <!-- Header Start -->
 <%- include("header") %>
+
 <section class="page-title bg-2">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="block">
           <h1>Hyperledger Fabric Supporting Application.</h1><br>
-          <p>피후원자 승인</p>
+          <p>후원을 기다리는 피후원자 목록 </p>
         </div>
       </div>
     </div>
@@ -52,47 +53,48 @@
 <section class="portfolio-work">
   <div class="container">
     <div class="row">
-      <br><br>
       <table class="table" align="center">
         <tr>
           <th>이름</th>
-          <th>주민등록번호</th>
+         <!-- <th>주민등록번호</th> 
           <th>폰 번호</th>
           <th>이메일</th>
           <th>주소</th>
-          <th>승인상태</th>
+          <th>승인상태</th>-->
           <th>사연</th>
+          <!--후원 체인코드 확인을 위한 임시 버튼! 나중에 없애기-->
+          <th>후원하기</th>
         </tr>
-
         <%for (var i = 0; i < data.length; i++) { 
           db = data[i].Record;
         %>
+        <form action="/supporter/donatePage" method="post">
           <tr>
               <td><%=db.name%></td>
-              <td><%=db.id%></td>
+              <!--<td><%=db.id%></td> 
               <td><%=db.phoneNum%></td>
               <td><%=db.email%></td>
               <td><%=db.address%></td>
-              <td><%=db.status%></td>
+              <td><%=db.status%></td>-->
               <td><%=db.story%></td>
-              </td>
+              <input type = "hidden" name = "name" value = <%=db.name%>>
+              <input type = "hidden" name = "ReId" value = <%=db.id%>> 
+              <td><input class="btn btn-default" type="submit" value="후원하기"></td>
           </tr>
+        </form>
        <%}%>
-        
-</table>
-<br>
-<div class="form-group">
-    <label>피후원자 등록 승인</label><br>
-    <form method="post" action="/government/approveAction">
-    후원자 ID <input name ="recipientId" type="text">
-    <input class="btn btn-primary" type="submit" value="승인">
-    </form>
-</div>
-<br><br>
+       </table>
 <!-- footer Start -->
 <footer class="footer">
 <%- include("footer") %>
 </footer>
+    <!-- 
+    Essential Scripts
+    =====================================-->
+    
+    <!-- <script src="js/jquery.counterup.js"></script> -->
+    
+    <!-- Main jQuery -->
    
     <script src="https://code.jquery.com/jquery-git.min.js"></script>
     <!-- Bootstrap 3.1 -->
@@ -111,14 +113,8 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
 
-
-    
-    <!-- Google Map -->
-    <script src="../plugins/google-map/map.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkeLMlsiwzp6b3Gnaxd86lvakimwGA6UA&callback=initMap"></script>    
-
     <script src="../js/script.js"></script>
     <script type="text/javascript" src="app.js"> </script>
 
   </body>
-  </html>
+</html>
