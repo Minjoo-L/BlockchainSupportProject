@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html class="no-js"> <!--<![endif]-->
 <head>
@@ -39,39 +38,46 @@
 <%- include("header") %>
 
 <section class="page-title bg-2">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="block">
-            <h1>Hyperledger Fabric Supporting Application</h1>
-            <p>비밀번호 변경</p>
-          </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block">
+          <h1>Hyperledger Fabric Supporting Application.</h1><br>
+          <p>받은 바우처 내역 조회</p>
         </div>
       </div>
     </div>
-  </section>
-  
-  <!-- contact form start -->
-  <section class="contact-form">
-      <div class="container"> 
-        <!--로그인-->
-         <form action="/supporter/changePass" method="post">
-          <table align="center">
-            <tr>
-              <td>새 비밀번호:</td>
-              <td><input type="password" name="newPassword1"></td>
-            </tr>
-            <tr>
-                <td>새 비밀번호 확인:</td>
-                <td><input type="password" name="newPassword2"></td>
-              </tr>
-            <tr>
-              <td colspan="2"><input class="btn btn-default" id="okay" type="submit" value="변경"></td>
-            </tr>
-          </table>
-        </form>
-      </div>
-    </section>
+  </div>
+</section>
+
+<section class="portfolio-work">
+  <div class="container">
+    <div class="row">
+    <table class="table" align="center">
+        <tr>
+        <th>바우처 키값</th>
+        <th>후원 업체</th>
+        <th>금액</th>
+        </tr>
+        <%
+        var result =0;
+        for (var i = 0; i < data.length; i++) { 
+        key = data[i].Key;
+        db = data[i].Record;
+        result +=db.amount;
+        %>
+        <tr>
+            <td><%=key%></td>
+            <td><%=db.suppEnter%></td>
+            <td><%=db.amount%></td>
+        </tr>
+        <%}%>
+        <tr>총액: <%=result%>원</tr>
+    </table>
+    </div>
+    </div>
+</section>
+
 <!-- footer Start -->
 <footer class="footer">
 <%- include("footer") %>
@@ -102,9 +108,5 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
 
     <script src="../js/script.js"></script>
-    <script type="text/javascript" src="app.js"> </script>
-
   </body>
   </html>
-
-

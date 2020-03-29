@@ -183,9 +183,7 @@ router.post('/purchaseResult', async function(req, res){
         var params = [id, amount, suppEnter];
 
         await channel1Query.query3('purchaseVoucher', params);
-        res.render('purchaseResult',{
-            session: sess
-        })
+        res.send('<script type="text/javascript">alert("구매 완료 되었습니다.");location.href="/supporter/purchaseVoucher";</script>');
     }
 });
 
