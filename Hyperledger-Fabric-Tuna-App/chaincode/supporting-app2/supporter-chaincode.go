@@ -375,14 +375,48 @@ func (s *SmartContract) donateV(APIstub shim.ChaincodeStubInterface, args []stri
 	return shim.Success(nil)
 }
 func (s *SmartContract) recievedVoucher(APIstub shim.ChaincodeStubInterface, args []string) sc.Response{
-	if len(args) != 1 {
-		return shim.Error("Incorrect number of arguments. Expecting 1")
+
+	startKey := "0"
+	endKey := "999"
+
+	resultsIterator, err := APIstub.GetStateByRange("Nv-"+startKey, "Nv-"+endKey)
+	if err != nil {
+		return shim.Error(err.Error())
 	}
-	voucherAsBytes, _ := APIstub.GetState(args[0])
-	if voucherAsBytes == nil {
-		return shim.Error("Could not locate voucher")
+	defer resultsIterator.Close()
+
+	// buffer is a JSON array containing QueryResults
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+
+	bArrayMemberAlreadyWritten := false
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return shim.Error(err.Error())
+		}
+		fmt.Printf(queryResponse.Status)
+		// Add comma before array members,suppress it for the first array member
+		if bArrayMemberAlreadyWritten == true {
+			buffer.WriteString(",")
+		}
+		
+		buffer.WriteString("{\"Key\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(queryResponse.Key)
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"Record\":")
+		// Record is a JSON object, so we write as-is
+		buffer.WriteString(string(queryResponse.Value))
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
 	}
-	return shim.Success(voucherAsBytes)
+	buffer.WriteString("]")
+	
+	fmt.Printf("- query all recieved voucher:\n%s\n", buffer.String())
+
+	return shim.Success(buffer.Bytes())
 }
 
  /*
