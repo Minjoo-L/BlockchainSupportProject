@@ -110,12 +110,12 @@ app.get('/registerRecipient', function(req, res){
 });
 app.get('/mypage', function(req, res){
     sess = req.session;
-    if(!sess.auth){
-        res.send('<script type="text/javascript">alert("로그인 이후 사용해주세요.");location.href="/login";</script>');
-    }else{
+    if(sess.Name){
         res.render('mypage',{
             session: sess
         });
+    }else{
+        res.send('<script type="text/javascript">alert("로그인 이후 사용해주세요.");location.href="/login";</script>');
     }
 });
 app.get('/approve', async function(req, res){
