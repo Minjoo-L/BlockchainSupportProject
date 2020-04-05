@@ -60,11 +60,11 @@
         <th>금액</th>
         </tr>
         <%
-        var result =0;
-        for (var i = 0; i < data.length; i++) { 
-        key = data[i].Key;
-        db = data[i].Record;
-        result += db.amount;
+          var result =0;
+          for (var i = 0; i < data.length; i++) { 
+          key = data[i].Key;
+          db = data[i].Record;
+          result += parseInt(db.amount);
         %>
         <tr>
             <td><%=key%></td>
