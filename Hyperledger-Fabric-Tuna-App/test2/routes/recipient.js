@@ -24,7 +24,7 @@ router.post('/recievedVoucher', async function(req, res){
     }else{
         var id = req.body.id;
         var params = [id];
-        var Voucher = await channel1Query.query2('recievedVoucher', params);
+        var Voucher = await channel1Query.query2('queryVoucher', params);
         var data = [];
         for(i of Voucher){
             data.push(i);

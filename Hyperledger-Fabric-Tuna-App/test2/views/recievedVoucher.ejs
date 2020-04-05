@@ -55,24 +55,17 @@
     <div class="row">
     <table class="table" align="center">
         <tr>
-        <th>바우처 키값</th>
-        <th>후원 업체</th>
         <th>금액</th>
         </tr>
         <%
-          var result =0;
           for (var i = 0; i < data.length; i++) { 
           key = data[i].Key;
           db = data[i].Record;
-          result += parseInt(db.amount);
         %>
         <tr>
-            <td><%=key%></td>
-            <td><%=db.suppEnter%></td>
-            <td><%=db.amount%></td>
+            <td><%=db.amount%> 원</td>
         </tr>
         <%}%>
-        <tr>총액: <%=result%>원</tr>
     </table>
     </div>
     </div>

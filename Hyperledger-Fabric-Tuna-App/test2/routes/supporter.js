@@ -144,17 +144,10 @@ router.post('/showDonateVoucher', async function(req, res){
         var id = req.body.id;
         var params = [id];
         var DonateVoucher = await channel1Query.query1('queryVoucher', params);
-        var data = [];
-
-        for(i of DonateVoucher){
-                data.push(i);
-        }
-
-        DATA = data;
 
             res.render('showDonateVoucher', {
                 session: sess,
-                data: data,
+                data: DonateVoucher,
                 filter: '전체'
             })
     }

@@ -27,13 +27,13 @@
 
  // 바우처 (일단은 금액만)
  type Voucher struct {
-	  Amount string `json:"amount"`
-	  SuppEnter string `json:"suppEnter"` // 후원 업체
-	  Status string `json:"status"` // 기부 여부
+	  Amount int `json:"amount"`
+	  //SuppEnter string `json:"suppEnter"` // 후원 업체
+	  //Status string `json:"status"` // 기부 여부
  }
 
  // 현재까지 구매된 바우처 개수
- var numOfVou uint64 = 1
+ //var numOfVou uint64 = 1
 
  /*
   * The Init method *
@@ -59,14 +59,12 @@
 		 return s.initLedger(APIstub)
 	 } else if function == "purchaseVoucher" {			// 후원자 바우처 구매
 		 return s.purchaseVoucher(APIstub, args)
-	 } else if function == "queryPurchaseVoucher" { 	// 후원자 바우처 구매 내역 조회 
-		 return s.queryPurchaseVoucher(APIstub, args)
+	 } else if function == "queryVoucher" { 	// 후원자, 피후원자 바우처 조회 
+		 return s.queryVoucher(APIstub, args)
 	 } else if function == "allVoucher" {				// 구매된 전체 바우처 조회 (정부)
 		 return s.allVoucher(APIstub)
 	 } else if function == "donateV" {					// 바우처 후원하기
 		 return s.donateV(APIstub, args)
-	 } else if function == "recievedVoucher"{ //받은 바우처 내역 확인(피후원자)
-		return s.recievedVoucher(APIstub, args);
 	 }
  
 	 return shim.Error("Invalid Smart Contract function name.")
@@ -89,75 +87,34 @@
 func (s *SmartContract) purchaseVoucher(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 	// DApp에서 Id를 입력 받으니까 id랑 amount를 매개변수로 받는다.
 	// 판매된 바우처 개수를 알아서 그 개수로 키 값을 생성한다.
-	if len(args) != 3 {
-		return shim.Error("Incorrect number of arguments. Expecting 3")
+	if len(args) != 2 {
+		return shim.Error("Incorrect number of arguments. Expecting 2")
 	}
 	
 	voucher := Voucher{}
-
-	voucher.Amount = args[1]
-	voucher.SuppEnter = args[2]
-	voucher.Status = "N" // 아직 기부되지 않은 바우처
-
+	i, err := strconv.Atoi(args[1])
+	voucher.Amount = i
 	voucherAsBytes, _ := json.Marshal(voucher)
-	err := APIstub.PutState("Nv-" + args[0] +strconv.FormatUint(numOfVou, 10), voucherAsBytes) 
+	err1 := APIstub.PutState(args[0], voucherAsBytes) 
 
-	numOfVou = numOfVou + 1 
-
-	if err != nil {
+	if err != nil{
+		return shim.Error(fmt.Sprintf("Fail"))
+	}else if err1 != nil {
 		return shim.Error(fmt.Sprintf("Failed to purchase voucher"))
 	}
 	return shim.Success(nil)
 
 }
-// 후원자 바우처 구매 내역 조회
-func (s *SmartContract) queryPurchaseVoucher(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
-
+// 후원자, 피후원자 바우처 조회
+func (s *SmartContract) queryVoucher(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of arguments. Expecting 1")
 	}
-
-	id := "Nv-"+args[0]
-
-	startKey := "0"
-	endKey := "999"
-
-	resultsIterator, err := APIstub.GetStateByRange(id+startKey, id+endKey)
-	if err != nil {
-		return shim.Error(err.Error())
+	voucherAsBytes, _ := APIstub.GetState(args[0])
+	if voucherAsBytes == nil {
+		return shim.Error("Could not locate voucher")
 	}
-	defer resultsIterator.Close()
-
-	// buffer is a JSON array containing QueryResults
-	var buffer bytes.Buffer
-	buffer.WriteString("[")
-
-	bArrayMemberAlreadyWritten := false
-	for resultsIterator.HasNext() {
-		queryResponse, err := resultsIterator.Next()
-		if err != nil {
-			return shim.Error(err.Error())
-		}
-		// Add comma before array members,suppress it for the first array member
-		if bArrayMemberAlreadyWritten == true {
-			buffer.WriteString(",")
-		}
-		buffer.WriteString("{\"Key\":")
-		buffer.WriteString("\"")
-		buffer.WriteString(queryResponse.Key)
-		buffer.WriteString("\"")
-
-		buffer.WriteString(", \"Record\":")
-		// Record is a JSON object, so we write as-is
-		buffer.WriteString(string(queryResponse.Value))
-		buffer.WriteString("}")
-		bArrayMemberAlreadyWritten = true
-	}
-	buffer.WriteString("]")
-	
-	fmt.Printf("- query purchased voucher:\n%s\n", buffer.String())
-
-	return shim.Success(buffer.Bytes())
+	return shim.Success(voucherAsBytes)
 }
 
 // 후원자 바우처 구매 내역 조회(정부)
@@ -166,7 +123,7 @@ func (s *SmartContract) allVoucher(APIstub shim.ChaincodeStubInterface) sc.Respo
 	startKey := "0"
 	endKey := "999"
 
-	resultsIterator, err := APIstub.GetStateByRange("Nv-"+startKey, "Nv-"+endKey)
+	resultsIterator, err := APIstub.GetStateByRange(startKey, endKey)
 	if err != nil {
 		return shim.Error(err.Error())
 	}
@@ -206,69 +163,45 @@ func (s *SmartContract) allVoucher(APIstub shim.ChaincodeStubInterface) sc.Respo
 // 바우처 후원하기
 func (s *SmartContract) donateV(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
-	voucherAsBytes, _ := APIstub.GetState(args[0])
-	key := "GET-"+args[1]
-	//fmt.Sprintf(key)
-	fmt.Sprintf(args[0], args[1])
+	voucherAsBytes, _ := APIstub.GetState(args[0])//후원자 id
+	voucher2AsBytes, _ := APIstub.GetState(args[1])//피후원자 id
+	voucher := Voucher{} //후원자 바우처 업데이트
+	voucher2 := Voucher{} //피후원자 바우처 업데이트
+
 	if voucherAsBytes == nil {
 		return shim.Error("Could not donate voucher")
 	}
-	voucher := Voucher{}
-
+	if voucher2AsBytes == nil {
+		voucher2.Amount=0
+	}
+	
 	json.Unmarshal(voucherAsBytes, &voucher)
-	// Normally check that the specified argument is a valid holder of tuna
-	// we are skipping this check for this example
-	voucher.Status = args[1]
+	json.Unmarshal(voucher2AsBytes, &voucher2)
+
+	i, err := strconv.Atoi(args[2])
+	svoucher := voucher.Amount
+	rvoucher := voucher2.Amount
+
+	voucher.Amount = svoucher-i
+	voucher2.Amount = rvoucher+i
 
 	voucherAsBytes, _ = json.Marshal(voucher)
-	err := APIstub.PutState(args[0], voucherAsBytes)
-	err1 := APIstub.PutState(key, voucherAsBytes)
-	if err != nil {
+	voucher2AsBytes, _ = json.Marshal(voucher2)
+
+	err1 := APIstub.PutState(args[0], voucherAsBytes)
+	err2 := APIstub.PutState(args[1], voucher2AsBytes)
+
+	if err != nil{
 		return shim.Error(fmt.Sprintf("Fail"))
-	} else if err1 != nil {
+	}
+	if err1 != nil {
 		return shim.Error(fmt.Sprintf("Fail 1"))
+	}
+	if err2 != nil {
+		return shim.Error(fmt.Sprintf("Fail 2"))
 	}
 
 	return shim.Success(nil)
-}
-func (s *SmartContract) recievedVoucher(APIstub shim.ChaincodeStubInterface, args []string) sc.Response{
-	queryString := fmt.Sprintf("{\"selector\":{\"status\":\"%s\"}}", args[0])
-	resultsIterator, err := APIstub.GetQueryResult(queryString)
-	if err != nil {
-		return shim.Error(err.Error())
-	}
-	defer resultsIterator.Close()
-
-	// buffer is a JSON array containing QueryResults
-	var buffer bytes.Buffer
-	buffer.WriteString("[")
-
-	bArrayMemberAlreadyWritten := false
-	for resultsIterator.HasNext() {
-		queryResponse, err := resultsIterator.Next()
-		if err != nil {
-			return shim.Error(err.Error())
-		}
-		// Add comma before array members,suppress it for the first array member
-		if bArrayMemberAlreadyWritten == true {
-			buffer.WriteString(",")
-		}	
-		buffer.WriteString("{\"Key\":")
-		buffer.WriteString("\"")
-		buffer.WriteString(queryResponse.Key)
-		buffer.WriteString("\"")
-
-		buffer.WriteString(", \"Record\":")
-		// Record is a JSON object, so we write as-is
-		buffer.WriteString(string(queryResponse.Value))
-		buffer.WriteString("}")
-		bArrayMemberAlreadyWritten = true
-	}
-	buffer.WriteString("]")
-	
-	fmt.Printf("- query all recieved voucher:\n%s\n", buffer.String())
-
-	return shim.Success(buffer.Bytes())
 }
 
  /*
@@ -277,7 +210,6 @@ func (s *SmartContract) recievedVoucher(APIstub shim.ChaincodeStubInterface, arg
  The main function starts the chaincode in the container during instantiation.
   */
  func main() {
- 
 	 // Create a new Smart Contract
 	 err := shim.Start(new(SmartContract))
 	 if err != nil {

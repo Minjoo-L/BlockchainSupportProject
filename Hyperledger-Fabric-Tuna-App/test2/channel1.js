@@ -61,7 +61,7 @@ async function query1(name, params) {
                     request = {
                         chaincodeId: 'test-app-ch12',
                         txId: tx_id,
-                        fcn: 'queryPurchaseVoucher',
+                        fcn: 'queryVoucher',
                         args: [params[0]]
                     };
                     break;
@@ -134,11 +134,11 @@ async function query2(name, params) {
 
             var request;
             switch (name) {
-                case 'recievedVoucher':
+                case 'queryVoucher':
                     request={
                         chaincodeId: 'test-app-ch12',
                         txId: tx_id,
-                        fcn: 'recievedVoucher',
+                        fcn: 'queryVoucher',
                         args: [params[0]]
                     }
                     break;
@@ -217,7 +217,7 @@ async function query3(func, params) {
                     request = {
                         chaincodeId: 'test-app-ch12',
                         fcn: 'purchaseVoucher',
-                        args: [params[0], params[1], params[2]], // id, amount, suppEnter
+                        args: [params[0], params[1]], // id, amount
                         chainId: 'mychannel1',
                         txId: tx_id
                     };
@@ -228,7 +228,7 @@ async function query3(func, params) {
                         chaincodeId: 'test-app-ch12',
                         txId: tx_id,
                         fcn: 'donateV',
-                        args: [params[0], params[1]],  // 바우처 번호, 피후원자
+                        args: [params[0], params[1]],  //후원자, 피후원자
                     };
                     break;
                     
