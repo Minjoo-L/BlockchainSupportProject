@@ -59,7 +59,7 @@ async function query1(name, params) {
             switch (name) {
                 case 'queryVoucher':
                     request = {
-                        chaincodeId: 'test-app-ch12',
+                        chaincodeId: 'test-app-ch13',
                         txId: tx_id,
                         fcn: 'queryVoucher',
                         args: [params[0]]
@@ -136,7 +136,7 @@ async function query2(name, params) {
             switch (name) {
                 case 'queryVoucher':
                     request={
-                        chaincodeId: 'test-app-ch12',
+                        chaincodeId: 'test-app-ch13',
                         txId: tx_id,
                         fcn: 'queryVoucher',
                         args: [params[0]]
@@ -215,7 +215,7 @@ async function query3(func, params) {
             switch (func) {
                 case 'purchaseVoucher':
                     request = {
-                        chaincodeId: 'test-app-ch12',
+                        chaincodeId: 'test-app-ch13',
                         fcn: 'purchaseVoucher',
                         args: [params[0], params[1]], // id, amount
                         chainId: 'mychannel1',
@@ -225,7 +225,7 @@ async function query3(func, params) {
                 
                 case 'donateV' :
                     request = {
-                        chaincodeId: 'test-app-ch12',
+                        chaincodeId: 'test-app-ch13',
                         txId: tx_id,
                         fcn: 'donateV',
                         args: [params[0], params[1]],  //후원자, 피후원자

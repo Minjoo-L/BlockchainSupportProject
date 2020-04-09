@@ -59,7 +59,7 @@
 		 return s.initLedger(APIstub)
 	 } else if function == "purchaseVoucher" {			// 후원자 바우처 구매
 		 return s.purchaseVoucher(APIstub, args)
-	 } else if function == "queryVoucher" { 	// 후원자, 피후원자 바우처 조회 
+	 } else if function == "queryVoucher" { 	        // 후원자, 피후원자 바우처 조회 
 		 return s.queryVoucher(APIstub, args)
 	 } else if function == "allVoucher" {				// 구매된 전체 바우처 조회 (정부)
 		 return s.allVoucher(APIstub)
@@ -90,17 +90,29 @@ func (s *SmartContract) purchaseVoucher(APIstub shim.ChaincodeStubInterface, arg
 	if len(args) != 2 {
 		return shim.Error("Incorrect number of arguments. Expecting 2")
 	}
-	
+	voucherAsBytes, _ := APIstub.GetState(args[0])
 	voucher := Voucher{}
 	i, err := strconv.Atoi(args[1])
-	voucher.Amount = i
-	voucherAsBytes, _ := json.Marshal(voucher)
-	err1 := APIstub.PutState(args[0], voucherAsBytes) 
 
+	if voucherAsBytes == nil {
+		voucher.Amount = i
+		voucherAsBytes, _ = json.Marshal(voucher)
+		err1 := APIstub.PutState(args[0], voucherAsBytes) 
+		if err1 != nil {
+			return shim.Error(fmt.Sprintf("Failed to purchase voucher"))
+		}
+	} else {
+		json.Unmarshal(voucherAsBytes, &voucher)
+		voucher.Amount = voucher.Amount + i;
+		voucherAsBytes, _ = json.Marshal(voucher)
+		err := APIstub.PutState(args[0], voucherAsBytes)
+		if err != nil{
+			return shim.Error(fmt.Sprintf("Fail"))
+		}
+	}
+	
 	if err != nil{
 		return shim.Error(fmt.Sprintf("Fail"))
-	}else if err1 != nil {
-		return shim.Error(fmt.Sprintf("Failed to purchase voucher"))
 	}
 	return shim.Success(nil)
 
