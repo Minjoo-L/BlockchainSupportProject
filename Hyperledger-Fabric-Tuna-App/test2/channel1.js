@@ -228,7 +228,7 @@ async function query3(func, params) {
                         chaincodeId: 'test-app-ch13',
                         txId: tx_id,
                         fcn: 'donateV',
-                        args: [params[0], params[1]],  //후원자, 피후원자
+                        args: [params[0], params[1], params[2]],  //후원자, 피후원자, 바우처 양
                     };
                     break;
                     

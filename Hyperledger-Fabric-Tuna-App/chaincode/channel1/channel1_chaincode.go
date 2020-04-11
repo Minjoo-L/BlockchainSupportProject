@@ -28,12 +28,8 @@
  // 바우처 (일단은 금액만)
  type Voucher struct {
 	  Amount int `json:"amount"`
-	  //SuppEnter string `json:"suppEnter"` // 후원 업체
-	  //Status string `json:"status"` // 기부 여부
  }
 
- // 현재까지 구매된 바우처 개수
- //var numOfVou uint64 = 1
 
  /*
   * The Init method *
@@ -179,38 +175,47 @@ func (s *SmartContract) donateV(APIstub shim.ChaincodeStubInterface, args []stri
 	voucher2AsBytes, _ := APIstub.GetState(args[1])//피후원자 id
 	voucher := Voucher{} //후원자 바우처 업데이트
 	voucher2 := Voucher{} //피후원자 바우처 업데이트
+	i, err := strconv.Atoi(args[2])
 
-	if voucherAsBytes == nil {
+	if voucherAsBytes == nil {//후원자가 바우처를 구매하지 않은 경우
 		return shim.Error("Could not donate voucher")
 	}
-	if voucher2AsBytes == nil {
-		voucher2.Amount=0
+	if voucher2AsBytes == nil {//피후원자가 바우처를 처음 받는 경우
+		voucher2.Amount=i
+		json.Unmarshal(voucherAsBytes, &voucher)
+		svoucher := voucher.Amount
+		voucher.Amount = svoucher-i
+		voucherAsBytes, _ = json.Marshal(voucher)
+		voucher2AsBytes, _ = json.Marshal(voucher2)
+		err1 := APIstub.PutState(args[0], voucherAsBytes)
+		err2 := APIstub.PutState(args[1], voucher2AsBytes)
+		if err1 != nil {
+			return shim.Error(fmt.Sprintf("Fail 1"))
+		}
+		if err2 != nil {
+			return shim.Error(fmt.Sprintf("Fail 2"))
+		}
+	}else{
+		json.Unmarshal(voucherAsBytes, &voucher)
+		json.Unmarshal(voucher2AsBytes, &voucher2)
+		svoucher := voucher.Amount
+		rvoucher := voucher2.Amount
+		voucher.Amount = svoucher-i
+		voucher2.Amount = rvoucher+i
+		voucherAsBytes, _ = json.Marshal(voucher)
+		voucher2AsBytes, _ = json.Marshal(voucher2)
+		err1 := APIstub.PutState(args[0], voucherAsBytes)
+		err2 := APIstub.PutState(args[1], voucher2AsBytes)
+		if err1 != nil {
+			return shim.Error(fmt.Sprintf("Fail 1"))
+		}
+		if err2 != nil {
+			return shim.Error(fmt.Sprintf("Fail 2"))
+		}
 	}
 	
-	json.Unmarshal(voucherAsBytes, &voucher)
-	json.Unmarshal(voucher2AsBytes, &voucher2)
-
-	i, err := strconv.Atoi(args[2])
-	svoucher := voucher.Amount
-	rvoucher := voucher2.Amount
-
-	voucher.Amount = svoucher-i
-	voucher2.Amount = rvoucher+i
-
-	voucherAsBytes, _ = json.Marshal(voucher)
-	voucher2AsBytes, _ = json.Marshal(voucher2)
-
-	err1 := APIstub.PutState(args[0], voucherAsBytes)
-	err2 := APIstub.PutState(args[1], voucher2AsBytes)
-
 	if err != nil{
 		return shim.Error(fmt.Sprintf("Fail"))
-	}
-	if err1 != nil {
-		return shim.Error(fmt.Sprintf("Fail 1"))
-	}
-	if err2 != nil {
-		return shim.Error(fmt.Sprintf("Fail 2"))
 	}
 
 	return shim.Success(nil)

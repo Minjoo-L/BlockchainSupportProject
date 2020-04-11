@@ -237,9 +237,10 @@ router.post('/donate', async function(req, res){
     }else{
         console.log("내일 체인코드랑 연결하기");
         var name = req.body.name;
-        var id = req.body.id;
+        var ids = req.body.ids;
+        var idr = req.body.idr;
         var number = req.body.number;
-        var params = [number, id]; //바우처 번호, 피후원자 식별번호(주민번호)
+        var params = [ids, idr, number]; //바우처 번호, 피후원자 식별번호(주민번호)
         //donateV 체인코드
         await channel1Query.query3('donateV', params);
 

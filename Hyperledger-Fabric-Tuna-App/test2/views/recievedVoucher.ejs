@@ -57,15 +57,9 @@
         <tr>
         <th>금액</th>
         </tr>
-        <%
-          for (var i = 0; i < data.length; i++) { 
-          key = data[i].Key;
-          db = data[i].Record;
-        %>
         <tr>
-            <td><%=db.amount%> 원</td>
+            <td><%=data.amount%> 원</td>
         </tr>
-        <%}%>
     </table>
     </div>
     </div>
