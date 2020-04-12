@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: Apache-2.0
 
-// nodejs server setup 
+// nodejs server setup
 
 // call the packages we need
 var express       = require('express');        // call express
@@ -55,7 +55,7 @@ app.use(session({
 // Save our port
 var port = process.env.PORT || 8000;
 
-// Start the server and listen on port 
+// Start the server and listen on port
 app.listen(port,function(){
   console.log("Live on port: " + port);
 });
@@ -149,7 +149,7 @@ app.post('/mypage', function(req,res){
         else if(rows.length==1){//로그인 성공
             sess.Name = rows[0].Name;
             sess.email = rows[0].Email;
-            sess.auth = rows[0].auth;   // auth로 다시 바꿔주기
+            sess.auth = rows[0].Auth;   // auth로 다시 바꿔주기
             console.log('success');
             console.log(sess.Name);
             res.render("mypage",{
