@@ -97,7 +97,7 @@
  func (s *SmartContract) registerRecipient(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
  
  
-	var recipient = Recipient{ Name: args[0], ID: args[1], Email: args[2], Password: args[3], Address: args[4], PhoneNum: args[5], Story: args[6], Status: args[7] }
+	var recipient = Recipient{ Name: args[0], ID: args[1], Email: args[2], Password: args[3], Address: args[4], PhoneNum: args[5], Story: args[6], Status: args[7], BlockPass: "" }
 
 	recipientAsBytes, _ := json.Marshal(recipient)
 	err := APIstub.PutState(args[1], recipientAsBytes)
