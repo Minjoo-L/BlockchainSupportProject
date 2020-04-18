@@ -65,6 +65,14 @@ async function query1(name, params) {
                         args: [params[0]]
                     };
                     break;
+                case 'voucherUsage':
+                    request = {
+                        chaincodeId: 'test-app-ch13',
+                        txId: tx_id,
+                        fcn: 'voucherUsage',
+                        args: [params[0]]
+                    };
+                    break;
                 default:
                     break;
             }
