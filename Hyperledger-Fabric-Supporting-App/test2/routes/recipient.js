@@ -90,5 +90,31 @@ router.post('/changeRI', async function(req,res){
         });
     }
 });
-
+router.get('/QueryVoucherUsage', async function(req,res){
+    sess = req.session;
+    if(sess.auth!=1){
+        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+    }else{
+        res.render('QueryVoucherUsage',{
+            session: sess
+        });
+    }  
+});
+router.post('/voucherUsage', async function(req, res){
+    sess = req.session;
+    if(sess.auth!=1){
+        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+    }else{
+        var params = [req.body.id]
+        var voucherUsages = await channel1Query.query1('voucherUsage', params);
+        var data = [];
+        for(voucherUsage of voucherUsages){
+            data.push(voucherUsage);
+        }
+        res.render('voucherUsage',{
+            session: sess,
+            data: data
+        });
+    }
+});
 module.exports = router;

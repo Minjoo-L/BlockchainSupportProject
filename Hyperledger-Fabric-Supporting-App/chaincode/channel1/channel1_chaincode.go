@@ -28,7 +28,7 @@
  // 바우처
  type Voucher struct {
 	  Amount int `json:"amount"`//금액
-	  GiveGet int `json:"giveget"`//산건지 준건지(후원자) 받은건지(피후원자)
+	  GiveGet int `json:"giveget"`//산건지 준건지(후원자) 받은건지 쓴건지(피후원자)
  }
 
 

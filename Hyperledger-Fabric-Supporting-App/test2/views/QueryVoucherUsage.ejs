@@ -53,10 +53,17 @@
 <section class="portfolio-work">
   <div class="container">
     <div class="row">
+      <%if(sess&&sess.auth==0){%>
         <form class="form-register" method="post" action="/supporter/voucherUsage">
             주민번호를 입력해 주세요 <input type = "text" class="form-control" name="id">
             <input id="edit" class="btn btn-primary" type="submit" value="확인">
         </form>
+      <%}else{%>
+        <form class="form-register" method="post" action="/recipient/voucherUsage">
+          주민번호를 입력해 주세요 <input type = "text" class="form-control" name="id">
+          <input id="edit" class="btn btn-primary" type="submit" value="확인">
+      </form>
+      <%}%>
     </div>
   </div>
 </section>
