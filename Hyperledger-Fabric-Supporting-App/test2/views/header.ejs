@@ -17,7 +17,7 @@
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">바우처 <span class="ion-ios-arrow-down"></span></a>
                                         <ul class="dropdown-menu">
                                             <li><a href="/supporter/purchaseVoucher">바우처 구매</a></li>
-                                            <li><a href="/supporter/beforeShowDoVou">바우처 조회</a></li>
+                                            <li><a href="/supporter/beforeShowDoVou">바우처 총액 조회</a></li>
                                         </ul>
                                     </li>
                                     <li class="dropdown">
@@ -29,17 +29,18 @@
                                         </ul>
                                     </li>
                                     <li class="dropdown">
-                                        <a href="/supporter/QueryVoucherUsage">후원금 사용내역 조회</a>
+                                        <a href="/supporter/QueryVoucherUsage">바우처 내역 조회</a>
                                     </li>
                                 <%}%>
                                 <%if(session&&session.auth==1){ //피후원자인 경우%>
-                                <li><a href="/recipient/beforeShowRVou">받은 바우처 내역 확인</a></li>
+                                <li><a href="/recipient/beforeShowRVou">바우처 총액 확인</a></li>
                                 <li class="dropdown">
-                                    <a href="/recipient/QueryVoucherUsage">후원금 사용내역 조회</a>
+                                    <a href="/recipient/QueryVoucherUsage">바우처 내역 조회</a>
                                 </li>
                                 <%}%>
                                 <%if(session&&session.auth==3){ //후원기관인 경우%>
                                 <li><a href="/supportingEnterprise/SERecipients">피후원자 목록</a></li>
+                                <li><a href=""></a></li>
                                 <%}%>
                                 <%if(session&&(session.auth==0||session.auth==1||session.auth==2||session.auth==3)){%>
                                     <li><a href="/logout">로그아웃</a></li>
