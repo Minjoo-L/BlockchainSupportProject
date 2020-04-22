@@ -56,38 +56,42 @@
       <table class="table" align="center">
         <tr>
           <th>이름</th>
-          <th>주민등록번호</th>
+         <!-- <th>주민등록번호</th>-->
           <th>폰 번호</th>
           <th>이메일</th>
           <th>주소</th>
           <th>승인상태</th>
           <th>사연</th>
+          <th>승인하기</th>
         </tr>
 
         <%for (var i = 0; i < data.length; i++) { 
           db = data[i].Record;
         %>
+        <form action="/government/approveAction" method="post">
           <tr>
               <td><%=db.name%></td>
-              <td><%=db.id%></td>
               <td><%=db.phoneNum%></td>
               <td><%=db.email%></td>
               <td><%=db.address%></td>
               <td><%=db.status%></td>
               <td><%=db.story%></td>
+              <input type = "hidden" name = "recipientId" value = <%=db.id%>>
+              <td><input class="btn btn-default" type="submit" value="승인"></td>
               </td>
           </tr>
+        </form>
        <%}%>
         
 </table>
 <br>
-<div class="form-group">
+<!--<div class="form-group">
     <label>피후원자 등록 승인</label><br>
     <form method="post" action="/government/approveAction">
     후원자 ID <input name ="recipientId" type="text">
     <input class="btn btn-primary" type="submit" value="승인">
     </form>
-</div>
+</div>-->
 <br><br>
 <!-- footer Start -->
 <footer class="footer">
