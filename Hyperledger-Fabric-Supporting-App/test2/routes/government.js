@@ -38,19 +38,22 @@ router.post('/approveAction', async function(req, res){//피후원자 승인
     }else{
         var data = [];
         var rid = req.body.recipientId;
-        data = await channel3Query.approveRecipient(rid).then(async function(){
+       data = await channel3Query.approveRecipient(rid).then(async function(){
             var data=[];
             var recipients = await channel3Query.query1('queryAllRecipient');
 
             for(recipient of recipients){
+                if (recipient.Record.status == 'N')
                 data.push(recipient);
             }
-            return data;
-        })
-        res.render('approve',{
-            session: sess,
-            data: data
+            
+            res.render('approve',{
+                check: true,
+                session: sess,
+                data: data
+            });
         });
+       
     }
 });
 module.exports = router;

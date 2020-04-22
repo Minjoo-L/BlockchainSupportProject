@@ -48,11 +48,23 @@
     </div>
   </div>
 </section>
-
+<% if (check == true){
+  %>
+  <script type ="text/javascript">
+  alert ( "승인 처리 되었습니다");
+  </script>
+  <%
+  check = false;
+}
+%>
 <section class="portfolio-work">
   <div class="container">
     <div class="row">
       <br><br>
+      <%if(data.length == 0){%>
+        승인되지 않은 피후원자가 존재하지 않습니다.
+        <%} else {%>
+
       <table class="table" align="center">
         <tr>
           <th>이름</th>
@@ -81,7 +93,8 @@
               </td>
           </tr>
         </form>
-       <%}%>
+       <%}
+      }%>
         
 </table>
 <br>

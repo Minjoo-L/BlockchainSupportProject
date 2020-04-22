@@ -127,9 +127,11 @@ app.get('/approve', async function(req, res){
         var data = [];
         console.log(recipients);
         for(recipient of recipients){
+            if (recipient.Record.status == 'N') 
             data.push(recipient);
         }
         res.render('approve',{
+            check : false,
             session: sess,
             data: data
         });
