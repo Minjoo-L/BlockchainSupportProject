@@ -144,10 +144,15 @@ router.post('/showDonateVoucher', async function(req, res){
         var id = req.body.id;
         var params = [id];
         var DonateVoucher = await channel1Query.query1('queryVoucher', params);
-
+        var voucherUsages = await channel1Query.query1('voucherUsage', params);
+        var data2 = [];
+        for(voucherUsage of voucherUsages){
+            data2.push(voucherUsage);
+        }
             res.render('showDonateVoucher', {
                 session: sess,
                 data: DonateVoucher,
+                data2: data2,
                 filter: '전체'
             })
     }
@@ -266,33 +271,6 @@ router.get('/check_Reci', async function(req, res){
             }
         }
         res.render('check_Reci',{
-            session: sess,
-            data: data
-        });
-    }
-});
-router.get('/QueryVoucherUsage', async function(req,res){
-    sess = req.session;
-    if(sess.auth!=0){
-        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
-    }else{
-        res.render('QueryVoucherUsage',{
-            session: sess
-        });
-    }  
-});
-router.post('/voucherUsage', async function(req, res){
-    sess = req.session;
-    if(sess.auth!=0){
-        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
-    }else{
-        var params = [req.body.id]
-        var voucherUsages = await channel1Query.query1('voucherUsage', params);
-        var data = [];
-        for(voucherUsage of voucherUsages){
-            data.push(voucherUsage);
-        }
-        res.render('voucherUsage',{
             session: sess,
             data: data
         });

@@ -250,7 +250,6 @@ func (s *SmartContract) voucherUsage(APIstub shim.ChaincodeStubInterface, args [
 	bArrayMemberAlreadyWritten := false
 	for resultsIterator.HasNext() {
 			response, err := resultsIterator.Next()
-			console.log(response);
 			if err != nil {
 					return shim.Error(err.Error())
 			}
