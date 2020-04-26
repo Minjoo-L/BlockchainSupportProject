@@ -7,7 +7,7 @@ var channel1Query = require('../channel1.js');
 
 var Sid = "";
 
-router.get('/beforeShowRVou', async function(req, res){
+router.get('/beforeShowDoVou', async function(req, res){
     sess = req.session;
     if(sess.auth!=1){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');

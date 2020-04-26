@@ -149,7 +149,7 @@ app.post('/mypage', function(req,res){
         else if(rows.length==1){//로그인 성공
             sess.Name = rows[0].Name;
             sess.email = rows[0].Email;
-            sess.auth = rows[0].auth;
+            sess.auth = rows[0].Auth;
             console.log('success');
             console.log(sess.Name);
             res.render("mypage",{
