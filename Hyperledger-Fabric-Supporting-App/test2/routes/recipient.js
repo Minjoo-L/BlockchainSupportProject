@@ -12,7 +12,7 @@ router.get('/beforeShowDoVou', async function(req, res){
     if(sess.auth!=1){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        res.render('beforeShowRVou', {
+        res.render('beforeShowDoVou', {
             session: sess
         })
     }
