@@ -10,7 +10,7 @@
   
   <meta name="author" content="Themefisher.com">
 
-  <title>Airspace | Creative Agency Bootstrap template</title>
+  <title>개인 후원 시스템</title>
 
   <!-- Mobile Specific Meta-->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,15 +41,13 @@
 </head>
 <%- include("header") %>
 <body ng-app="application" ng-controller="appController" id="body">
-<!-- Header Start -->
-<!--<header class="navigation"></header> header close -->
-<header class="header"></header>
+
 <section class="page-title bg-2">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="block">
-          <h1>후원프로그램</h1><br>
+          <h1>개인후원</h1><br>
           <p>회원가입</p>
         </div>
       </div>
@@ -61,11 +59,11 @@
   <div class="container"> 
     <div class="form-group">
       <div class ="row">
-        <div style="float:left;width:50%;">
+        <div class="column">
           <h2> 후원자로 회원가입</h2><br>
           <input class="btn btn-default" id="registerSupporter" type="submit" onclick="location.href='/registerSupporter'" value="회원가입"></button>
         </div>
-        <div style="float:left;width:50%;">
+        <div class="column">
           <h2> 피후원자로 회원가입</h2><br>
           <input class="btn btn-default" id="registerRecipient" type="submit" onclick="location.href='/registerRecipient'" value="회원가입"></button>
         </div>
@@ -81,8 +79,6 @@
     Essential Scripts
     =====================================-->
     
-    <!-- <script src="js/jquery.counterup.js"></script> -->
-    
     <!-- Main jQuery -->
    
     <script src="https://code.jquery.com/jquery-git.min.js"></script>
@@ -94,15 +90,12 @@
     <script src="plugins/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
     <!-- Mixit Up JS -->
     <script src="plugins/mixitup/dist/mixitup.min.js"></script>
-    <!-- <script src="plugins/count-down/jquery.lwtCountdown-1.0.js"></script> -->
     <script src="plugins/SyoTimer/build/jquery.syotimer.min.js"></script>
-
 
     <!-- Form Validator -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
 
     <script src="js/script.js"></script>
-    <script type="text/javascript" src="app.js"></script>
   </body>
   </html>
