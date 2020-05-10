@@ -144,10 +144,15 @@ router.post('/showDonateVoucher', async function(req, res){
         var id = req.body.id;
         var params = [id];
         var DonateVoucher = await channel1Query.query1('queryVoucher', params);
-
+        var voucherUsages = await channel1Query.query1('voucherUsage', params);
+        var data2 = [];
+        for(voucherUsage of voucherUsages){
+            data2.push(voucherUsage);
+        }
             res.render('showDonateVoucher', {
                 session: sess,
                 data: DonateVoucher,
+                data2: data2,
                 filter: '전체'
             })
     }
@@ -229,13 +234,12 @@ router.post('/donatePage', async function(req, res){
     }
 });
 
-// 바우처 선택후 후원완료
+// 바우처 기부
 router.post('/donate', async function(req, res){
     sess = req.session;
     if(sess.auth!=0){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        console.log("내일 체인코드랑 연결하기");
         var name = req.body.name;
         var ids = req.body.ids;
         var idr = req.body.idr;
@@ -255,6 +259,9 @@ router.post('/donate', async function(req, res){
 // 후원할 피후원자 조회 (후원자)
 router.get('/check_Reci', async function(req, res){
     sess = req.session;
+    if(sess.auth!=0){
+        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+    }else{
         var recipients  = await channel3Query.query1('queryAllRecipient');
         var data = [];
 
@@ -267,5 +274,7 @@ router.get('/check_Reci', async function(req, res){
             session: sess,
             data: data
         });
+    }
 });
+
 module.exports = router;

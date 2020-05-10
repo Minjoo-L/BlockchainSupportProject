@@ -43,28 +43,42 @@
       <div class="col-md-12">
         <div class="block">
           <h1>Hyperledger Fabric Supporting Application.</h1><br>
-          <p>받은 바우처 내역 조회</p>
+          <p>바우처 사용내역</p>
         </div>
       </div>
     </div>
   </div>
 </section>
-
+<!--바우처 사용내역-->
 <section class="portfolio-work">
   <div class="container">
     <div class="row">
-    <table class="table" align="center">
+      <table class="table" align="center">
         <tr>
-        <th>금액</th>
+          <th>블록 수</th>
+          <th>+/-</th>
+          <th>거래 시간</th>
+          <th>트랜잭션 ID</th>
         </tr>
+        <%for (var i = data.length-1; i >=0; i--) { 
+          db = data[i];
+          if(db.Value.giveget>0){
+        %>
+          <tr>
+              <td><%=db.Value.amount%></td>
+              <td>+<%=db.Value.giveget%></td>
+              <td><%=db.Timestamp%></td>
+              <td><%=db.TxId%></td>
+          </tr>
+       <%}else{%>
         <tr>
-            <td><%=data.amount%> 원</td>
+            <td><%=db.Value.amount%></td>
+            <td><%=db.Value.giveget%></td>
+            <td><%=db.Timestamp%></td>
+            <td><%=db.TxId%></td>
         </tr>
-    </table>
-    </div>
-    </div>
-</section>
-
+        <%}}%>
+       </table>
 <!-- footer Start -->
 <footer class="footer">
 <%- include("footer") %>
@@ -95,5 +109,7 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
 
     <script src="../js/script.js"></script>
+    <script type="text/javascript" src="app.js"> </script>
+
   </body>
-  </html>
+</html>

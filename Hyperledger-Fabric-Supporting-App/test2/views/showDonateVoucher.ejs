@@ -64,16 +64,39 @@
       </form>-->
 
     <table class="table" align="center">
-
         <th>
-          <td>구입한 블록</td>
+          <td>총 블록수</td>
         </th>
         <th>
             <td><%=data.amount%></td>
         </th>
-        
     </table>
-
+    <table class="table" align="center">
+      <tr>
+        <th>블록 수</th>
+        <th>+/-</th>
+        <th>거래 시간</th>
+        <th>트랜잭션 ID</th>
+      </tr>
+      <%for (var i = data2.length-1; i >=0; i--) { 
+        db = data2[i];
+        if(db.Value.giveget>0){
+      %>
+        <tr>
+            <td><%=db.Value.amount%></td>
+            <td>+<%=db.Value.giveget%></td>
+            <td><%=db.Timestamp%></td>
+            <td><%=db.TxId%></td>
+        </tr>
+     <%}else{%>
+      <tr>
+          <td><%=db.Value.amount%></td>
+          <td><%=db.Value.giveget%></td>
+          <td><%=db.Timestamp%></td>
+          <td><%=db.TxId%></td>
+      </tr>
+      <%}}%>
+     </table>
 <!-- footer Start -->
 <footer class="footer">
 <%- include("footer") %>

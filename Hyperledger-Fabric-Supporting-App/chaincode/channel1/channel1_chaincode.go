@@ -12,7 +12,7 @@
 	 "encoding/json"
 	 "fmt"
 	 "strconv"
- 
+	 "time"
 	 "github.com/hyperledger/fabric/core/chaincode/shim"
 	 sc "github.com/hyperledger/fabric/protos/peer"
  )
@@ -25,9 +25,10 @@
  Structure tags are used by encoding/json library
  */
 
- // 바우처 (일단은 금액만)
+ // 바우처
  type Voucher struct {
-	  Amount int `json:"amount"`
+	  Amount int `json:"amount"`//금액
+	  GiveGet int `json:"giveget"`//산건지 준건지(후원자) 받은건지 쓴건지(피후원자)
  }
 
 
@@ -61,6 +62,8 @@
 		 return s.allVoucher(APIstub)
 	 } else if function == "donateV" {					// 바우처 후원하기
 		 return s.donateV(APIstub, args)
+	 } else if function == "voucherUsage"{			// 후원자 바우처 사용내역 조회
+		 return s.voucherUsage(APIstub, args);
 	 }
  
 	 return shim.Error("Invalid Smart Contract function name.")
@@ -92,6 +95,7 @@ func (s *SmartContract) purchaseVoucher(APIstub shim.ChaincodeStubInterface, arg
 
 	if voucherAsBytes == nil {
 		voucher.Amount = i
+		voucher.GiveGet = i
 		voucherAsBytes, _ = json.Marshal(voucher)
 		err1 := APIstub.PutState(args[0], voucherAsBytes) 
 		if err1 != nil {
@@ -100,6 +104,7 @@ func (s *SmartContract) purchaseVoucher(APIstub shim.ChaincodeStubInterface, arg
 	} else {
 		json.Unmarshal(voucherAsBytes, &voucher)
 		voucher.Amount = voucher.Amount + i;
+		voucher.GiveGet = i
 		voucherAsBytes, _ = json.Marshal(voucher)
 		err := APIstub.PutState(args[0], voucherAsBytes)
 		if err != nil{
@@ -115,12 +120,16 @@ func (s *SmartContract) purchaseVoucher(APIstub shim.ChaincodeStubInterface, arg
 }
 // 후원자, 피후원자 바우처 조회
 func (s *SmartContract) queryVoucher(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+	
 	if len(args) != 1 {
 		return shim.Error("Incorrect number of arguments. Expecting 1")
 	}
 	voucherAsBytes, _ := APIstub.GetState(args[0])
-	if voucherAsBytes == nil {
-		return shim.Error("Could not locate voucher")
+	if voucherAsBytes == nil {//바우처를 구매한 내역이 없다
+		voucher := Voucher{}
+		voucher.Amount=0
+		voucherAsBytes, _ = json.Marshal(voucher)
+		return shim.Success(voucherAsBytes)
 	}
 	return shim.Success(voucherAsBytes)
 }
@@ -182,9 +191,11 @@ func (s *SmartContract) donateV(APIstub shim.ChaincodeStubInterface, args []stri
 	}
 	if voucher2AsBytes == nil {//피후원자가 바우처를 처음 받는 경우
 		voucher2.Amount=i
+		voucher2.GiveGet=i
 		json.Unmarshal(voucherAsBytes, &voucher)
 		svoucher := voucher.Amount
 		voucher.Amount = svoucher-i
+		voucher.GiveGet = -i
 		voucherAsBytes, _ = json.Marshal(voucher)
 		voucher2AsBytes, _ = json.Marshal(voucher2)
 		err1 := APIstub.PutState(args[0], voucherAsBytes)
@@ -201,7 +212,9 @@ func (s *SmartContract) donateV(APIstub shim.ChaincodeStubInterface, args []stri
 		svoucher := voucher.Amount
 		rvoucher := voucher2.Amount
 		voucher.Amount = svoucher-i
+		voucher.GiveGet = -i
 		voucher2.Amount = rvoucher+i
+		voucher2.GiveGet = i
 		voucherAsBytes, _ = json.Marshal(voucher)
 		voucher2AsBytes, _ = json.Marshal(voucher2)
 		err1 := APIstub.PutState(args[0], voucherAsBytes)
@@ -220,7 +233,63 @@ func (s *SmartContract) donateV(APIstub shim.ChaincodeStubInterface, args []stri
 
 	return shim.Success(nil)
 }
+func (s *SmartContract) voucherUsage(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+	// 후원자 바우처 사용 내역
+	if len(args) < 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+	resultsIterator, err := APIstub.GetHistoryForKey(args[0])
+	if err != nil {
+			return shim.Error(err.Error())
+	}
+	defer resultsIterator.Close()
 
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+
+	bArrayMemberAlreadyWritten := false
+	for resultsIterator.HasNext() {
+			response, err := resultsIterator.Next()
+			if err != nil {
+					return shim.Error(err.Error())
+			}
+			// Add a comma before array members, suppress it for the first array member
+			if bArrayMemberAlreadyWritten == true {
+					buffer.WriteString(",")
+			}
+			buffer.WriteString("{\"TxId\":")
+			buffer.WriteString("\"")
+			buffer.WriteString(response.TxId)
+			buffer.WriteString("\"")
+
+			buffer.WriteString(", \"Value\":")
+			// if it was a delete operation on given key, then we need to set the
+			//corresponding value null. Else, we will write the response.Value
+			//as-is (as the Value itself a JSON)
+			if response.IsDelete {
+					buffer.WriteString("null")
+			} else {
+					buffer.WriteString(string(response.Value))
+			}
+
+			buffer.WriteString(", \"Timestamp\":")
+			buffer.WriteString("\"")
+			buffer.WriteString(time.Unix(response.Timestamp.Seconds, int64(response.Timestamp.Nanos)).String())
+			buffer.WriteString("\"")
+
+			buffer.WriteString(", \"IsDelete\":")
+			buffer.WriteString("\"")
+			buffer.WriteString(strconv.FormatBool(response.IsDelete))
+			buffer.WriteString("\"")
+
+			buffer.WriteString("}")
+			bArrayMemberAlreadyWritten = true
+	}
+	buffer.WriteString("]")
+
+	fmt.Printf("- History returning:\n%s\n", buffer.String())
+	return shim.Success(buffer.Bytes())
+}
  /*
   * main function *
  calls the Start function 

@@ -7,29 +7,35 @@ var channel1Query = require('../channel1.js');
 
 var Sid = "";
 
-router.get('/beforeShowRVou', async function(req, res){
+router.get('/beforeShowDoVou', async function(req, res){
     sess = req.session;
     if(sess.auth!=1){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        res.render('beforeShowRVou', {
+        res.render('beforeShowDoVou', {
             session: sess
         })
     }
 });
-router.post('/recievedVoucher', async function(req, res){
+router.post('/showDonateVoucher', async function(req, res){
     sess = req.session;
     if(sess.auth!=1){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
         var id = req.body.id;
         var params = [id];
-        var Voucher = await channel1Query.query2('queryVoucher', params);
-
-        res.render('recievedVoucher', {
-            session: sess,
-            data: Voucher
-        })
+        var DonateVoucher = await channel1Query.query1('queryVoucher', params);
+        var voucherUsages = await channel1Query.query1('voucherUsage', params);
+        var data2 = [];
+        for(voucherUsage of voucherUsages){
+            data2.push(voucherUsage);
+        }
+            res.render('showDonateVoucher', {
+                session: sess,
+                data: DonateVoucher,
+                data2: data2,
+                filter: '전체'
+            })
     }
 });
 router.get('/reci_query_result', async function(req, res){
@@ -90,5 +96,4 @@ router.post('/changeRI', async function(req,res){
         });
     }
 });
-
 module.exports = router;
