@@ -170,6 +170,21 @@ router.get('/purchaseVoucher', async function(req, res){
     }
 });
 
+router.post('/purchase', async function(req, res){
+    sess = req.session;
+    if(sess.auth!=0){
+        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+    }else{
+        var id = req.body.id;
+        var amount= req.body.amount;
+        res.render('purchase', {
+            session: sess,
+            amount: amount,
+            id: id
+        })
+    }
+});
+
 router.post('/purchaseResult', async function(req, res){
     sess = req.session;
     if(sess.auth!=0){
@@ -177,13 +192,11 @@ router.post('/purchaseResult', async function(req, res){
     }else{
         var id = req.body.id;
         var amount= req.body.amount;
-        var suppEnter = req.body.suppEnter;
-        var params = [id, amount, suppEnter];
-
+        var params = [id, amount];
         await channel1Query.query3('purchaseVoucher', params);
-        res.send('<script type="text/javascript">alert("구매 완료 되었습니다.");location.href="/supporter/purchaseVoucher";</script>');
+        res.send('<script type="text/javascript">alert("구매 완료 되었습니다.");location.href="/supporter/purchaseVoucher";</script>')
     }
-});
+})
 
 // 바우처 조회내역 필터링 해서 보여주기
 router.post('/filter', async function(req, res){

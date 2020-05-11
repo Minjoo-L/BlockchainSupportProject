@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html class="no-js"> <!--<![endif]-->
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="description" content="Aviato E-Commerce Template">
+  
+  <meta name="author" content="Themefisher.com">
+
+  <title>개인 후원 시스템</title>
+
+  <!-- Mobile Specific Meta-->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.png" />
+  <!-- bootstrap.min css -->
+  <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+  <!-- Ionic Icon Css -->
+  <link rel="stylesheet" href="../plugins/Ionicons/css/ionicons.min.css">
+  <!-- animate.css -->
+  <link rel="stylesheet" href="../plugins/animate-css/animate.css">
+  <!-- Magnify Popup -->
+  <link rel="stylesheet" href="../plugins/magnific-popup/dist/magnific-popup.css">
+  <!-- Owl Carousel CSS -->
+  <link rel="stylesheet" href="../plugins/slick-carousel/slick/slick.css">
+  <link rel="stylesheet" href="../plugins/slick-carousel/slick/slick-theme.css">
+ 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body ng-app="application" ng-controller="appController" id="body">
+    <script>
+      var form = document.createElement('form');
+      var objs;
+      var objs2;
+      objs = document.createElement('input');
+      objs.setAttribute('type', 'hidden');
+      objs.setAttribute('name', 'amount');
+      objs.setAttribute('value', <%=amount%>);
+      form.appendChild(objs);
+      objs2 = document.createElement('input');
+      objs2.setAttribute('type', 'hidden');
+      objs2.setAttribute('name', 'id');
+      objs2.setAttribute('value', <%=id%>);
+      form.appendChild(objs2);
+      form.setAttribute('method', 'post');
+      form.setAttribute('action', "/supporter/purchaseResult");
+      document.body.appendChild(form);
+        $(function(){
+          var IMP = window.IMP; // 생략가능
+          IMP.init('imp08683791'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+          var msg;
+          IMP.request_pay({
+                pg : 'inicis', // version 1.1.0부터 지원.
+                pay_method : 'card',
+                merchant_uid : 'merchant_' + new Date().getTime(),
+                name : '주문명:결제테스트',
+                amount : <%=amount*100%>,
+                buyer_email : '<%=session.email%>',
+                buyer_name : '<%=session.name%>',
+                buyer_tel : '010-1234-5678',
+                buyer_addr : '서울특별시 강남구 삼성동',
+                buyer_postcode : '123-456',
+                //m_redirect_url : '/supporter/purchaseR'
+            }, function(rsp) {
+                if (rsp.success) {
+                    var msg = '결제가 완료되었습니다.';
+                    msg += '고유ID : ' + rsp.imp_uid;
+                    msg += '상점 거래ID : ' + rsp.merchant_uid;
+                    msg += '결제 금액 : ' + rsp.paid_amount;
+                    msg += '카드 승인번호 : ' + rsp.apply_num;
+                    alert(msg);
+                    form.submit();
+                } else {
+                    var msg = '결제에 실패하였습니다.';
+                    msg += '에러내용 : ' + rsp.error_msg;
+                    alert(msg);
+                    location.href = "/supporter/purchaseVoucher"
+                }
+            });
+      })
+      </script>
+   
+    <script src="https://code.jquery.com/jquery-git.min.js"></script>
+    <!-- Bootstrap 3.1 -->
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Owl Carousel -->
+    <script src="../plugins/slick-carousel/slick/slick.min.js"></script>
+    <!--  -->
+    <script src="../plugins/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+    <!-- Mixit Up JS -->
+    <script src="../plugins/mixitup/dist/mixitup.min.js"></script>
+    <script src="../plugins/SyoTimer/build/jquery.syotimer.min.js"></script>
+
+
+    <!-- Form Validator -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
+
+    <script src="../js/script.js"></script>
+
+  </body>
+  </html>
