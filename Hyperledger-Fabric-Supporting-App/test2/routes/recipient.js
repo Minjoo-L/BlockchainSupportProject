@@ -40,6 +40,7 @@ router.post('/showDonateVoucher', async function(req, res){
 });
 router.get('/reci_query_result', async function(req, res){
     sess = req.session;
+    check = false;
     if(sess.auth!=1&&sess.auth!=2){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
@@ -52,11 +53,14 @@ router.get('/reci_query_result', async function(req, res){
             }
         }
         res.render('reci_query_result',{
+            check: check,
             session: sess,
             data: data
         });
     }
 });
+
+
 
 router.post('/reci_personal_info', async function(req, res){
     sess = req.session;
