@@ -30,7 +30,8 @@ router.post('/voucherUsage', async function(req, res){//바우처 내역 조회
             data: data
         });
     }
-})
+});
+// 피후원자 승인 & 피후원자 목록 공공기관에 넘겨주기
 router.post('/approveAction', async function(req, res){//피후원자 승인
     sess = req.session;
     if(sess.auth!=2){
@@ -81,7 +82,6 @@ router.post('/CancelApprove', async function(req, res){//피후원자 승인
                 data: data
             });
         });
-       
     }
 });
 

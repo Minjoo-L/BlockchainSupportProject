@@ -39,6 +39,7 @@ router.get('/SERecipients', async function(req, res){
         var recipients  = await channel3Query.query1('queryAllRecipient');
         var data = [];
         for(recipient of recipients){
+          recipient.Record.name = recipient.Record.name[0]+ "땡땡";
             data.push(recipient);
         }
         res.render('SERecipients',{
