@@ -7,14 +7,14 @@ var channel2Query = require('../channel2.js');
 router.post('/supp_reg', async function(req, res){
     var supporter=[];
     supporter[0] = req.body.sname;
-    supporter[1] = req.body.sid;
-    supporter[2] = req.body.semail;
-    supporter[3] = crypto.createHash('sha512').update(req.body.spw).digest('base64');
-    supporter[4] = req.body.saddress;
-    supporter[5] = req.body.sphoneNum;
+    supporter[1] = req.body.sid1+"-"+req.body.sid2;
+    supporter[2] = req.body.sbank + ","+req.body.saccount;
+    supporter[3] = req.body.semail;
+    supporter[4] = crypto.createHash('sha512').update(req.body.spw).digest('base64');
+    supporter[5] = req.body.saddress;
+    supporter[6] = req.body.sphoneNum;
     await channel2Query.query3('registerSupporter', supporter);
 
     res.redirect('/');
 });
-
 module.exports = router;

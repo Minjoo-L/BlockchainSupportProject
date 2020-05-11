@@ -177,17 +177,33 @@ async function query2(name, params) {
         });
 }
 async function query3(func, params){
-	var key, name, id, email, pw, address, phoneNum, story, status;
+	var key, name, id, account, email, pw, address, phoneNum, job, story, status, age, sex;
 	if (func == "registerRecipient"){
 		key = params[1]
 		name = params[0]
 		id = params[1]
-	    email = params[2]
-		pw = params[3]
-		address = params[4]
-		phoneNum = params[5]
-		story = params[6]
+		account = params[2]
+	    email = params[3]
+		pw = params[4]
+		address = params[5]
+		phoneNum = params[6]
+		job = params[7]
+		story = params[8]
 		status = 'N';
+		if(id[7]=='1' || id[7]=='3'){
+			sex='M'
+		}
+		else sex='F'
+		if(id[0]==0 || id[0]==1){
+			age=parseInt('20'+id.substring(0,2));
+		}
+		else{
+			age=parseInt('19'+id.substring(0,2));
+		}
+		var today=new Date();
+		var nowYear=today.getFullYear();
+		age=nowYear-age+1;
+		console.log("나이 : "+age+"\t 성별 : "+sex);
 		var auth = 1; //피후원자는 1번
 		connection.query("insert into usertbl values('"+name+"' , '"+id+"' , '"+email+"', '"+pw+"' , "+auth+" )", async function(err, rows, fields){
 			if(err){
@@ -245,7 +261,7 @@ async function query3(func, params){
 						chaincodeId: 'test-app-queryRE6',
 						txId: tx_id,
 						fcn: 'registerRecipient',
-						args: [name, id, email, pw, address, phoneNum, story, status],
+						args: [name, id, age, sex, account, email, pw, address, phoneNum, job, story, status],
 					};
 					break;
 

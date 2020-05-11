@@ -58,14 +58,28 @@
     <div class="container"> 
        <!--피후원자 회원가입-->
        <form action="registerRecipient/reci_reg" method="post">
-        이름: <input class="form-control" type="text" name="rname"><p>
-        주민등록번호: <input class="form-control" type="text" name="rid"><p>
-        이메일: <input class="form-control" type="text" name="remail"><p> 
-        비밀번호: <input class="form-control" type="password" name="rpw"><p>
-        주소: <input class="form-control" type="text" name="raddress"><p>
-        전화번호: <input class="form-control" type="text" name="rphoneNum"><p>
-        사유: <input class="form-control" type="text" name="rstory"><p>
-        <input id="registerRecipient" type="submit" value="회원가입"><p>
+        이름: <input class="form-control" type="text" name="rname"><br>
+        <p>주민등록번호:</p>
+        <input style="width:30%" type="text" name="rid1">&nbsp&nbsp-&nbsp&nbsp<input style="width:30%" type="text" name="rid2"><br><br>
+        계좌번호: <select name="rbank">
+          <option value="kook">국민</option>
+          <option value="ki">기업</option>
+          <option value="nong">농협</option>
+          <option value="shin">신한</option>
+          <option value="sc">SC</option>
+          <option value="ha">하나</option>
+          <option value="woo"">우리</option>
+          <option value="kakao">카카오뱅크</option>
+          <option value="etc">그 외</option>
+        </select>
+        <input class="form-control" type="text" name="raccount"><br>
+        이메일: <input class="form-control" type="text" name="remail"><br> 
+        비밀번호: <input class="form-control" type="password" name="rpw"><br>
+        주소: <input class="form-control" type="text" name="raddress"><br>
+        전화번호: <input class="form-control" type="text" name="rphoneNum"><br>
+        직업: <input class="form-control" type="text" name="rjob"><br>
+        사유: <input class="form-control" type="text" name="rstory"><br>
+        <input id="registerRecipient" type="submit" value="회원가입"><br>
        </form>
     </div>
 </section>
