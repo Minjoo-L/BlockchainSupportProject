@@ -58,6 +58,7 @@
           <th>이름</th>
           <th>주민번호</th>
           <th>사연</th>
+          <th>상세보기</th>
         </tr>
         <%for (var i = 0; i < data.length; i++) { 
           db = data[i].Record;
@@ -67,6 +68,7 @@
               <td><%=db.name%></td>
               <td><%=db.id%></td> 
               <td><%=db.story%></td>
+              <td><input class="btn btn-default" type="submit" value="상세보기"></td>
           </tr>
        <%}}%>
        </table>
