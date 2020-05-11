@@ -36,7 +36,9 @@
   <link rel="stylesheet" href="css/style.css">
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 </head>
-<%- include("header") %>
+<header class="header">
+  <% include("header") %>
+</header>
 <body ng-app="application" ng-controller="appController" id="body">
 <!-- Header Start -->
 <header class="header"></header>
@@ -57,20 +59,20 @@
 <section class="contact-form">
     <div class="container"> 
        <!--후원자 회원가입-->
-       <form action="registerSupporter/supp_reg" method="post"><p>
-        이름: <input class="form-control" type="text" name="sname"><p>
-        주민등록번호: <input class="form-control" type="text" name="sid"><p>
-        이메일: <input class="form-control" type="text" name="semail"> <p>
-        비밀번호: <input class="form-control" type="password" name="spw"><p>
-        주소: <input class="form-control" type="text" name="saddress"><p>
-        전화번호: <input class="form-control" type="text" name="sphoneNum"><p>
+       <form action="registerSupporter/supp_reg" method="post"><br>
+        이름: <input class="form-control" type="text" name="sname"><br>
+        주민등록번호: <input class="form-control" type="text" name="sid"><br>
+        이메일: <input class="form-control" type="text" name="semail"> <br>
+        비밀번호: <input class="form-control" type="password" name="spw"><br>
+        주소: <input class="form-control" type="text" name="saddress"><br>
+        전화번호: <input class="form-control" type="text" name="sphoneNum"><br>
         <input id="registerSupporter" type="submit" value="회원가입">
       </form>
     </div>
 </section>
 <!-- footer Start -->
 <footer class="footer">
-<%- include("footer") %>
+<% include("footer") %>
 </footer>
     <!-- 
     Essential Scripts

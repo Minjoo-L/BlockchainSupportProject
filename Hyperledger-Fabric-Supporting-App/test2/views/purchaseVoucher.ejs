@@ -35,8 +35,9 @@
 <body ng-app="application" ng-controller="appController" id="body">
 
 <!-- Header Start -->
-<%- include("header") %>
-<section class="page-title bg-2">
+<header class="header">
+  <% include("header") %>
+</header><section class="page-title bg-2">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
@@ -69,7 +70,7 @@
 
 <!-- footer Start -->
 <footer class="footer">
-<%- include("footer") %>
+<% include("footer") %>
 </footer>
 <!-- footer Start -->
     <!-- 
