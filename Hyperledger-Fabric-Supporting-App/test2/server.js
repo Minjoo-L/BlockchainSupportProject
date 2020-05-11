@@ -51,7 +51,6 @@ app.use(session({
     saveUninitialized: true
 }));
 
-
 // Save our port
 var port = process.env.PORT || 8000;
 
