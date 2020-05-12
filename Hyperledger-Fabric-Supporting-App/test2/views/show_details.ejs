@@ -43,7 +43,7 @@
       <div class="col-md-12">
         <div class="block">
           <h1>개인 후원 시스템</h1><br>
-          <p>후원을 기다리는 피후원자 목록 </p>
+          <p>피후원자 상세보기 </p>
         </div>
       </div>
     </div>
@@ -53,28 +53,15 @@
 <section class="portfolio-work">
   <div class="container">
     <div class="row">
-      <table class="table" align="center">
-        <tr>
-          <th>이름</th>
-          <th>사연</th>
-          <!--후원 체인코드 확인을 위한 임시 버튼! 나중에 없애기-->
-          <th>상세보기</th>
-        </tr>
-        <%for (var i = 0; i < data.length; i++) { 
-          db = data[i].Record;
-        %>
-        <form action="/supporter/show_details" method="post">
-          <tr>
-              <td><%=db.name%></td>
-              <td><%=db.story%></td>
-              <input type = "hidden" name = "name" value = <%=db.name%>>
-              <input type = "hidden" name = "ReId" value = <%=db.id%>> 
-              <input type = "hidden" name = "story" value = <%=db.story%>> 
-              <td><input class="btn btn-default" type="submit" value="상세하기"></td>
-          </tr>
+        이름: <%= name %>  <br>
+        <!-- 사연이 왜 짤리는가..-->
+        사연: <%= story %> <br>
+        주민번호: <%= ReId %> <br>
+        <form action="/supporter/donatePage" method="post">
+              <input type = "hidden" name = "name" value = <%=name%>>
+              <input type = "hidden" name = "ReId" value = <%=ReId%>> 
+              <td><input class="btn btn-default" type="submit" value="후원하기"></td>
         </form>
-       <%}%>
-       </table>
 <!-- footer Start -->
 <footer class="footer">
 <%- include("footer") %>
