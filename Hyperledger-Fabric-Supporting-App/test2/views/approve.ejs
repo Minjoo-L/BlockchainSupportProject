@@ -7,7 +7,12 @@
   <meta name="author" content="Themefisher.com">
 
   <title>개인 후원 시스템</title>
-
+  <style>
+    .td_story {
+      width: 500px;
+      padding: 10px;
+    }
+  </style>
   <!-- Mobile Specific Meta-->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Favicon -->
@@ -87,7 +92,7 @@
               <td><%=db.email%></td>
               <td><%=db.address%></td>
               <td><%=db.status%></td>
-              <td><%=db.story%></td>
+              <td class = "td_story"><%=db.story%></td>
               <input type = "hidden" name = "recipientId" value = <%=db.id%>>
               <td><input class="btn btn-default" type="submit" value="승인"></td>
               </td>
