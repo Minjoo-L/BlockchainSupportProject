@@ -194,7 +194,7 @@ router.post('/purchaseResult', async function(req, res){
         var amount= req.body.amount;
         var params = [id, amount];
         await channel1Query.query3('purchaseVoucher', params);
-        res.send('<script type="text/javascript">alert("구매 완료 되었습니다.");location.href="/supporter/purchaseVoucher";</script>')
+        res.send('<script type="text/javascript">location.href="/supporter/purchaseVoucher";</script>')
     }
 })
 

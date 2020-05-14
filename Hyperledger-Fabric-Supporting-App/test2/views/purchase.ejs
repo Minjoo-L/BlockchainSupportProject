@@ -59,14 +59,13 @@
                 pg : 'inicis', // version 1.1.0부터 지원.
                 pay_method : 'card',
                 merchant_uid : 'merchant_' + new Date().getTime(),
-                name : '주문명:결제테스트',
+                name : '주문명:후원 바우처 블록 구매',
                 amount : <%=amount*100%>,
                 buyer_email : '<%=session.email%>',
-                buyer_name : '<%=session.name%>',
+                buyer_name : '<%=session.Name%>',
                 buyer_tel : '010-1234-5678',
                 buyer_addr : '서울특별시 강남구 삼성동',
                 buyer_postcode : '123-456',
-                //m_redirect_url : '/supporter/purchaseR'
             }, function(rsp) {
                 if (rsp.success) {
                     var msg = '결제가 완료되었습니다.';
