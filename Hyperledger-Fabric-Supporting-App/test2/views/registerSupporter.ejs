@@ -57,13 +57,26 @@
 <section class="contact-form">
     <div class="container"> 
        <!--후원자 회원가입-->
-       <form action="registerSupporter/supp_reg" method="post"><p>
-        이름: <input class="form-control" type="text" name="sname"><p>
-        주민등록번호: <input class="form-control" type="text" name="sid"><p>
-        이메일: <input class="form-control" type="text" name="semail"> <p>
-        비밀번호: <input class="form-control" type="password" name="spw"><p>
-        주소: <input class="form-control" type="text" name="saddress"><p>
-        전화번호: <input class="form-control" type="text" name="sphoneNum"><p>
+       <form action="registerSupporter/supp_reg" method="post"><br>
+        이름: <input class="form-control" type="text" name="sname"><br>
+        <p>주민등록번호:</p>
+        <input style="width:30%" type="text" name="sid1">&nbsp&nbsp-&nbsp&nbsp<input style="width:30%" type="text" name="sid2"><br><br>
+        계좌번호: <select name="sbank">
+          <option value="kook">국민</option>
+          <option value="ki">기업</option>
+          <option value="nong">농협</option>
+          <option value="shin">신한</option>
+          <option value="sc">SC</option>
+          <option value="ha">하나</option>
+          <option value="woo"">우리</option>
+          <option value="kakao">카카오뱅크</option>
+          <option value="etc">그 외</option>
+        </select>
+        <input class="form-control" type="text" name="saccount"><br>
+        이메일: <input class="form-control" type="text" name="semail"> <br>
+        비밀번호: <input class="form-control" type="password" name="spw"><br>
+        주소: <input class="form-control" type="text" name="saddress"><br>
+        전화번호: <input class="form-control" type="text" name="sphoneNum"><br>
         <input id="registerSupporter" type="submit" value="회원가입">
       </form>
     </div>

@@ -58,18 +58,19 @@
           <th>이름</th>
           <th>사연</th>
           <!--후원 체인코드 확인을 위한 임시 버튼! 나중에 없애기-->
-          <th>후원하기</th>
+          <th>상세보기</th>
         </tr>
         <%for (var i = 0; i < data.length; i++) { 
           db = data[i].Record;
         %>
-        <form action="/supporter/donatePage" method="post">
+        <form action="/supporter/show_details" method="post">
           <tr>
               <td><%=db.name%></td>
               <td><%=db.story%></td>
               <input type = "hidden" name = "name" value = <%=db.name%>>
               <input type = "hidden" name = "ReId" value = <%=db.id%>> 
-              <td><input class="btn btn-default" type="submit" value="후원하기"></td>
+              <input type = "hidden" name = "story" value = <%=db.story%>> 
+              <td><input class="btn btn-default" type="submit" value="상세하기"></td>
           </tr>
         </form>
        <%}%>

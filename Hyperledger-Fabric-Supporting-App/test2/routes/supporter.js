@@ -229,7 +229,24 @@ router.post('/filter', async function(req, res){
         })
     }
 });
+// 피후원자 상세보기
+router.post('/show_details', async function(req, res){
+    sess = req.session;
+    if(sess.auth!=0){
+        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+    }else{
+        var name = req.body.name;
+        var id = req.body.ReId;
+        var story = req.body.story;
 
+        res.render('show_details', {
+            session:sess,
+            name: name,
+            ReId: id,
+            story: story
+        })
+    }
+});
 // 후원하기 버튼을 눌러서 후원하는 페이지 이동
 router.post('/donatePage', async function(req, res){
     sess = req.session;

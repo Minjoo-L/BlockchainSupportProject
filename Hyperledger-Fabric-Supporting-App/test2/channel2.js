@@ -180,18 +180,33 @@ async function query2(name, params) {
 
 async function query3(func, params) {
 	
-	var name, id, email, pw, address, phoneNum;
+	var name, id, bank,account, email, pw, address, phoneNum, sex, age;
 	if (func == "registerSupporter"){
    		console.log("register Supporter: ");
 		name = params[0]
 		id = params[1]
-		email = params[2]
-		pw = params[3]
-		address = params[4]
-		phoneNum = params[5]
+		account = params[2]
+		email = params[3]
+		pw = params[4]
+		address = params[5]
+		phoneNum = params[6]
 		var auth = 0; //후원자는 0번
 		
-		connection.query("insert into usertbl values('"+name+"' , '"+id+"' , '"+email+"', '"+pw+"' , "+auth+" )", async function(err, rows, fields){
+		if(id[7]=='1' || id[7]=='3'){
+			sex='M'
+		}
+		else sex='F'
+		if(id[0]==0 || id[0]==1){
+			age=parseInt('20'+id.substring(0,2));
+		}
+		else{
+			age=parseInt('19'+id.substring(0,2));
+		}
+		var today=new Date();
+		var nowYear=today.getFullYear();
+		age=nowYear-age+1;
+
+		connection.query("insert into usertbl values('"+name+"' , '"+id+"', '"+email+"', '"+pw+"' , "+auth+" )", async function(err, rows, fields){
 			if(err){
 				console.log(err);
 			}else{
@@ -249,16 +264,6 @@ async function query3(func, params) {
 		    tx_id = fabric_client.newTransactionID();
 		    console.log("Assigning transaction_id: ", tx_id._transaction_id);
 
-		    // recordTuna - requires 5 args, ID, vessel, location, timestamp,holder - ex: args: ['10', 'Hound', '-12.021, 28.012', '1504054225', 'Hansel'], 
-		    // send proposal to endorser
-		   /* const request = {
-		        //targets : --- letting this default to the peers assigned to the channel
-				chaincodeId: 'test-app18',
-				txId: tx_id,
-		        fcn: 'registerSupporter',
-		        args: [name, id, email, pw, address, phoneNum],
-		    };
-			*/
 			var request;
             switch (func) {
                 case 'registerSupporter':
@@ -266,7 +271,7 @@ async function query3(func, params) {
                         chaincodeId: 'test-app18',
 						txId: tx_id,
 		        		fcn: 'registerSupporter',
-		        		args: [name, id, email, pw, address, phoneNum],
+		        		args: [name, id, age, sex, account, email, pw, address, phoneNum],
                     };
 					break;
 					
