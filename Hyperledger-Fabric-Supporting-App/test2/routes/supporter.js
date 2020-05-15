@@ -6,6 +6,7 @@ var channel2Query = require('../channel2.js');
 var channel1Query = require('../channel1.js');
 var channel3Query = require('../channel3.js');
 
+
 var Sid ="";
 var DATA = [];
 // 후원자 조회
@@ -142,19 +143,27 @@ router.post('/showDonateVoucher', async function(req, res){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
         var id = req.body.id;
+        var pw = req.body.pw;
+        pw = crypto.createHash('sha512').update(pw).digest('base64');
         var params = [id];
-        var DonateVoucher = await channel1Query.query1('queryVoucher', params);
-        var voucherUsages = await channel1Query.query1('voucherUsage', params);
-        var data2 = [];
-        for(voucherUsage of voucherUsages){
-            data2.push(voucherUsage);
-        }
+        var supporter = await channel2Query.query2('querySupporter', params);
+        if(supporter != null && supporter.pw == pw && supporter.email == sess.email){
+            var DonateVoucher = await channel1Query.query1('queryVoucher', params);
+            var voucherUsages = await channel1Query.query1('voucherUsage', params);
+            var data2 = [];
+            for(voucherUsage of voucherUsages){
+                data2.push(voucherUsage);
+            }
             res.render('showDonateVoucher', {
                 session: sess,
                 data: DonateVoucher,
                 data2: data2,
                 filter: '전체'
             })
+        }else{
+            res.send('<script type="text/javascript">alert("비밀번호나 주민등록번호를 확인해주세요.");location.href="/supporter/beforeShowDoVou";</script>');
+        }
+        
     }
 });
 
@@ -176,12 +185,20 @@ router.post('/purchase', async function(req, res){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
         var id = req.body.id;
+        var pw = req.body.pw;
+        pw = crypto.createHash('sha512').update(pw).digest('base64');
         var amount= req.body.amount;
-        res.render('purchase', {
-            session: sess,
-            amount: amount,
-            id: id
-        })
+        var params = [id];
+        var supporter = await channel2Query.query2('querySupporter', params);
+        if(supporter != null && supporter.pw == pw && supporter.email == sess.email){
+            res.render('purchase', {
+                session: sess,
+                amount: amount,
+                id: id
+            })
+        }else{
+            res.send('<script type="text/javascript">alert("비밀번호나 주민등록번호를 확인해주세요.");location.href="/supporter/purchaseVoucher";</script>');
+        }
     }
 });
 
@@ -273,16 +290,24 @@ router.post('/donate', async function(req, res){
         var name = req.body.name;
         var ids = req.body.ids;
         var idr = req.body.idr;
+        var pw = req.body.pw;
+        pw = crypto.createHash('sha512').update(pw).digest('base64');
         var number = req.body.number;
-        var params = [ids, idr, number]; //바우처 번호, 피후원자 식별번호(주민번호)
-        //donateV 체인코드
-        await channel1Query.query3('donateV', params);
-
-        res.render('donateComplete', {
-            session: sess,
-            name: name,
-            number: number
-        })
+        var params2 = [ids];
+        var supporter = await channel2Query.query2('querySupporter', params2);
+        if(supporter != null && supporter.pw == pw && supporter.email == sess.email){
+            var params = [ids, idr, number]; //바우처 번호, 피후원자 식별번호(주민번호)
+            //donateV 체인코드
+            await channel1Query.query3('donateV', params);
+            res.render('donateComplete', {
+                session: sess,
+                name: name,
+                number: number
+            })
+        }
+        else{
+            res.send('<script type="text/javascript">alert("비밀번호나 주민등록번호를 확인해주세요.");location.href="/supporter/donatePage";</script>'); 
+        }
     } 
 });
 
@@ -294,7 +319,6 @@ router.get('/check_Reci', async function(req, res){
     }else{
         var recipients  = await channel3Query.query1('queryAllRecipient');
         var data = [];
-
         for(recipient of recipients){
             if(recipient.Record.status == 'Y'){
                 data.push(recipient);

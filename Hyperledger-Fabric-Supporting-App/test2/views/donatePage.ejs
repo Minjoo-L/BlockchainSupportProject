@@ -57,8 +57,8 @@
         <label><%=name%> 님께 후원</label> 
         <br>
         <form method="post" action="/supporter/donate">
-        <!-- 구매한 바우처 목록에서 바우처를 선택할 수 있도록 수정하기 -->
-        <label>주민등록번호: <input type = "text" name = "ids"></label>
+        <label>주민등록번호: <input type = "text" name = "ids"></label><br>
+        <label>비밀번호: <input type ="password" name="pw"></label>
         <label>기부할 블록 수:  <input type = "text" name = "number"></label>
         <br><br>
         <input type = "hidden" name = "idr" value = <%=id%>>
