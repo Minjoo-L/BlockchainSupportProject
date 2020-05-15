@@ -144,7 +144,14 @@ async function query2(name, params) {
                         args: [params[0]]
                     };
                     break;
-
+                case 'queryWithOtherInfo':
+                    request = {
+                        chaincodeId: 'test-app-queryRE7',
+                        txId: tx_id,
+                        fcn: 'queryWithOtherInfo',
+                        args: [params[0]]
+                    };
+                    break;
                 default:
                     break;
             }
@@ -381,9 +388,6 @@ async function query3(func, params){
 async function approveRecipient(func, params){
     console.log("Approve Recipient : ");
 
-        //var key = param;
-        //var status = "Y";
-
         var fabric_client = new Fabric_Client();
 
         // setup the fabric network
@@ -426,23 +430,23 @@ async function approveRecipient(func, params){
             tx_id = fabric_client.newTransactionID();
             console.log("Assigning transaction_id: ", tx_id._transaction_id);
 
-            // changeTunaHolder - requires 2 args , ex: args: ['1', 'Barry'],
-            // send proposal to endorser
-            /*const request = {
-                chaincodeId: 'test-app-queryRE7',
-                txId: tx_id,
-                fcn: 'approveRecipient',
-                args: [key, status]
-            };*/
             var request;
             switch (func) {
                 case 'approveRecipient':
                     request = {
-                        //targets : --- letting this default to the peers assigned to the channel
                         chaincodeId: 'test-app-queryRE7',
                         txId: tx_id,
                         fcn: 'approveRecipient',
                         args: [params[0], params[1]], //key, status
+                    };
+                    break;
+                // 피후원자 승인 보류
+                case 'pendingRecipient':
+                    request = {
+                        chaincodeId: 'test-app-queryRE7',
+                        txId: tx_id,
+                        fcn: 'pendingRecipient',
+                        args: [params[0], params[1], params[2]], // key, status, reason
                     };
                     break;
                 // 피후원자 승인 취소
@@ -455,7 +459,6 @@ async function approveRecipient(func, params){
                         args: [params[0], params[1]], // key, status
                     };
                     break;
-                
                 default:
                     break;
 

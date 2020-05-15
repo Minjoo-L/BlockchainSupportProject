@@ -45,12 +45,37 @@ router.post('/approveAction', async function(req, res){//피후원자 승인
             var recipients = await channel3Query.query1('queryAllRecipient');
 
             for(recipient of recipients){
-                if (recipient.Record.status == 'N')
+                if (recipient.Record.status == 'N' || recipient.Record.status =='P')
                 data.push(recipient);
             }
             
             res.render('approve',{
-                check: true,
+                check: 1,
+                session: sess,
+                data: data
+            });
+        });
+       
+    }
+});
+// 피후원자 보류
+router.post('/pendingAction', async function(req, res){//피후원자 승인
+    sess = req.session;
+    if(sess.auth!=2){
+        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+    }else{
+        var data = [];
+        var params = [req.body.recipientId, 'P', ''];
+       data = await channel3Query.approveRecipient('pendingRecipient', params).then(async function(){
+            var data=[];
+            var recipients = await channel3Query.query1('queryAllRecipient');
+
+            for(recipient of recipients){
+                if (recipient.Record.status == 'N'|| recipient.Record.status == 'P')
+                data.push(recipient);
+            }
+            res.render('approve',{
+                check: 2,
                 session: sess,
                 data: data
             });

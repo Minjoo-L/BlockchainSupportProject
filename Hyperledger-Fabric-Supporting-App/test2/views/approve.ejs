@@ -53,15 +53,15 @@
     </div>
   </div>
 </section>
-<% if (check == true){
-  %>
+<% if (check == 1){%>
   <script type ="text/javascript">
   alert ( "승인 처리 되었습니다");
   </script>
-  <%
-  check = false;
-}
-%>
+<%} else if (check==2){%>
+  <script type ="text/javascript">
+    alert ( "보류 처리 되었습니다");
+    </script>
+<%}check = false;%>
 <section class="portfolio-work">
   <div class="container">
     <div class="row">
@@ -80,12 +80,13 @@
           <th>승인상태</th>
           <th>사연</th>
           <th>승인하기</th>
+          <th>보류하기</th>
         </tr>
 
         <%for (var i = 0; i < data.length; i++) { 
           db = data[i].Record;
         %>
-        <form action="/government/approveAction" method="post">
+        
           <tr>
               <td><%=db.name%></td>
               <td><%=db.phoneNum%></td>
@@ -93,23 +94,24 @@
               <td><%=db.address%></td>
               <td><%=db.status%></td>
               <td class = "td_story"><%=db.story%></td>
-              <input type = "hidden" name = "recipientId" value = <%=db.id%>>
-              <td><input class="btn btn-default" type="submit" value="승인"></td>
+              <td>
+                <form action="/government/approveAction" method="post">
+                  <input type = "hidden" name = "recipientId" value = <%=db.id%>>
+                  <input class="btn btn-default" type="submit" value="승인">
+                </form>
+              </td> 
+              <td>
+                <form action="/government/pendingAction" method="post">
+                  <input type = "hidden" name = "recipientId" value = <%=db.id%>>
+                  <input class="btn btn-default" type="submit" value="보류">
+                </form>
               </td>
           </tr>
-        </form>
        <%}
       }%>
         
 </table>
 <br>
-<!--<div class="form-group">
-    <label>피후원자 등록 승인</label><br>
-    <form method="post" action="/government/approveAction">
-    후원자 ID <input name ="recipientId" type="text">
-    <input class="btn btn-primary" type="submit" value="승인">
-    </form>
-</div>-->
 <br><br>
 <!-- footer Start -->
 <footer class="footer">

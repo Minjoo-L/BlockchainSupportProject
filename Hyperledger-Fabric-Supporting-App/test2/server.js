@@ -126,7 +126,7 @@ app.get('/approve', async function(req, res){
         var data = [];
         console.log(recipients);
         for(recipient of recipients){
-            if (recipient.Record.status == 'N') 
+            if (recipient.Record.status == 'N'||recipient.Record.status == 'P') 
             data.push(recipient);
         }
         res.render('approve',{
@@ -151,12 +151,20 @@ app.post('/mypage', function(req,res){
             sess.Name = rows[0].Name;
             sess.email = rows[0].Email;
             sess.auth = rows[0].Auth;   // auth로 다시 바꿔주기
-
-            console.log('success');
-            console.log(sess.Name);
-            res.render("mypage",{
-                session: sess
-            });
+            if(sess.auth==1){
+                var recipient = await channel3Query.query2('queryWithOtherInfo', [sess.email]);
+                if(recipient != null){
+                    sess.status = recipient[0].Record.status;
+                    res.render("mypage",{
+                        session: sess
+                    });
+                }
+            }else{
+                console.log('success');
+                res.render("mypage",{
+                    session: sess
+                });
+            }
         }
         else{
             res.send('failed to login');

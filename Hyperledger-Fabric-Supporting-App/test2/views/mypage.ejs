@@ -60,20 +60,28 @@
           <tr>
             <td width="30%" border-right="1px solid black">이름</td>
             <td><%=session.Name%></td>
-            훙<%=session.auth%>
           </tr>
           <tr>
             <td width="30%" border-right="1px solid black">해당 그룹</td>
               <%if(session.auth==0){%>
                 <td>후원자</td>
+              </tr>  
               <%}else if(session.auth==1){%>
                 <td>피후원자</td>
+              </tr>
+              <tr>
+                <td width="30%" border-right="1px solid black">승인 상태</td>
+                <td>
+                  <%=session.status%>
+                </td>
+              </tr>
               <%}else if(session.auth==2){%>
                 <td>공공기관</td>
+              </tr>
               <%}else {%>
                 <td>후원기관</td>
+              </tr>
               <%}%>
-            </tr>
         </table>
       </div><br>
       <div class="form-group">

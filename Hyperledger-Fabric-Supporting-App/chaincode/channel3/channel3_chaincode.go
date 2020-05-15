@@ -32,6 +32,7 @@
 	PhoneNum string `json:"phoneNum"`
 	Story string `json:"story"`
 	Status string `json:"status"`
+	Reason string `json:"reason"`
 }
  
  /*
@@ -62,10 +63,14 @@
 		 return s.queryAllRecipient(APIstub)
 	 } else if function == "queryRecipient" {	// 내 정보 조회(피후원자)
 		return s.queryRecipient(APIstub, args)
-	 } else if function == "approveRecipient" {
+	 } else if function == "approveRecipient" { //피후원자 승인
 		 return s.approveRecipient(APIstub, args)
+	 } else if function == "pendingRecipient"{ //피후원자 승인 보류
+		return s.pendingRecipient(APIstub, args)
 	 } else if function == "changeRecipientInfo"{ // 내 정보 수정 (피후원자)
 		 return s.changeRecipientInfo(APIstub, args)
+	 } else if function == "queryWithOtherInfo"{ //주민등록번호가 아닌 이메일로 조회
+		return s.queryWithOtherInfo(APIstub, args)
 	 }
  
 	 return shim.Error("Invalid Smart Contract function name.")
@@ -78,8 +83,8 @@
   */
  func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	recipient := []Recipient{
-		Recipient{Name: "김철수", ID: "6001012234560", Email: "kim@gmail.com", Password: "1ARVn2Auq2/WAqx2gNrL+q3RNjAzXpUfCXrzkA6d4Xa22yhRLy4AC50E+6UTPoscbo31nbOoq51gvkuXzJ6B2w==", Address: "서울 살아욤", PhoneNum: "01044441234", Story: "제 아이가 많이 힘듭니다. 저는 장애3급 판정을 받았습니다..\n 공백공백공백공백공백공백공백공백공백공백공백공백공백공백공백공백", Status: "N"},
-		Recipient{Name: "김영희", ID: "9901011234567", Email: "young@gmail.com", Password: "1ARVn2Auq2/WAqx2gNrL+q3RNjAzXpUfCXrzkA6d4Xa22yhRLy4AC50E+6UTPoscbo31nbOoq51gvkuXzJ6B2w==",Address: "경기도 살아욤", PhoneNum: "01012341234", Story: "많이 힘들어요.. 제 아가들을 위해 도와주세요", Status: "Y"},
+		Recipient{Name: "김철수", ID: "6001012234560", Email: "kim@gmail.com", Password: "1ARVn2Auq2/WAqx2gNrL+q3RNjAzXpUfCXrzkA6d4Xa22yhRLy4AC50E+6UTPoscbo31nbOoq51gvkuXzJ6B2w==", Address: "서울 살아욤", PhoneNum: "01044441234", Story: "제 아이가 많이 힘듭니다. 저는 장애3급 판정을 받았습니다..\n 공백공백공백공백공백공백공백공백공백공백공백공백공백공백공백공백", Status: "N", Reason: ""},
+		Recipient{Name: "김영희", ID: "9901011234567", Email: "young@gmail.com", Password: "1ARVn2Auq2/WAqx2gNrL+q3RNjAzXpUfCXrzkA6d4Xa22yhRLy4AC50E+6UTPoscbo31nbOoq51gvkuXzJ6B2w==",Address: "경기도 살아욤", PhoneNum: "01012341234", Story: "많이 힘들어요.. 제 아가들을 위해 도와주세요", Status: "Y", Reason: ""},
 	}
 
 	recipientAsBytes, _ := json.Marshal(recipient[0])
@@ -97,7 +102,7 @@
  func (s *SmartContract) registerRecipient(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
  
  
-	var recipient = Recipient{ Name: args[0], ID: args[1], Email: args[2], Password: args[3], Address: args[4], PhoneNum: args[5], Story: args[6], Status: args[7]}
+	var recipient = Recipient{ Name: args[0], ID: args[1], Email: args[2], Password: args[3], Address: args[4], PhoneNum: args[5], Story: args[6], Status: args[7], Reason: ""}
 
 	recipientAsBytes, _ := json.Marshal(recipient)
 	err := APIstub.PutState(args[1], recipientAsBytes)
@@ -191,6 +196,30 @@ func (s *SmartContract) approveRecipient(APIstub shim.ChaincodeStubInterface, ar
 
 	return shim.Success(nil)
 }
+// 피후원자 승인 보류
+func (s *SmartContract) pendingRecipient(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 3 {
+		return shim.Error("Incorrect number of arguments. Expecting 2")
+	}
+
+	recipientAsBytes, _ := APIstub.GetState(args[0])
+	if recipientAsBytes == nil {
+		return shim.Error("Could not locate recipient")
+	}
+	recipient := Recipient{}
+
+	json.Unmarshal(recipientAsBytes, &recipient)
+	recipient.Status = args[1]
+	recipient.Reason = args[2]
+	recipientAsBytes, _ = json.Marshal(recipient)
+	err := APIstub.PutState(args[0], recipientAsBytes)
+	if err != nil {
+		return shim.Error(fmt.Sprintf("Failed to approve recipient: %s", args[0]))
+	}
+
+	return shim.Success(nil)
+}
 //내 정보 수정(피후원자)
 func (s *SmartContract) changeRecipientInfo(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
@@ -224,7 +253,53 @@ func (s *SmartContract) changeRecipientInfo(APIstub shim.ChaincodeStubInterface,
 
 	return shim.Success(nil)
 }
+//이메일로 조회
+func (s *SmartContract) queryWithOtherInfo(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+	queryString := 
+	`{
+		"selector":{
+			"email": "`+args[0]+`"
+		}
+	 }`
+	resultsIterator, err := APIstub.GetQueryResult(queryString)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	defer resultsIterator.Close()
+
+	// buffer is a JSON array containing QueryResults
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+
+	bArrayMemberAlreadyWritten := false
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return shim.Error(err.Error())
+		}
+		// Add comma before array members,suppress it for the first array member
+		if bArrayMemberAlreadyWritten == true {
+			buffer.WriteString(",")
+		}
+		buffer.WriteString("{\"Key\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(queryResponse.Key)
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"Record\":")
+		// Record is a JSON object, so we write as-is
+		buffer.WriteString(string(queryResponse.Value))
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
+	}
+	buffer.WriteString("]")
+
+	return shim.Success(buffer.Bytes())
+}
  /*
   * main function *
  calls the Start function 
