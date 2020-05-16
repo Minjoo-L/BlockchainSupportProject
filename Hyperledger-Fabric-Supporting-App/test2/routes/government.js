@@ -65,7 +65,7 @@ router.post('/pendingAction', async function(req, res){//피후원자 승인
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
         var data = [];
-        var params = [req.body.recipientId, 'P', ''];
+        var params = [req.body.recipientId, 'P', req.body.reason];
        data = await channel3Query.approveRecipient('pendingRecipient', params).then(async function(){
             var data=[];
             var recipients = await channel3Query.query1('queryAllRecipient');
@@ -109,5 +109,18 @@ router.post('/CancelApprove', async function(req, res){//피후원자 승인
         });
     }
 });
-
+router.post('/showDetails', async function(req, res){//피후원자 승인
+    sess = req.session;
+    if(sess.auth!=2){
+        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+    }else{
+        var id = req.body.RId;
+        var recipient  = await channel3Query.query2('queryRecipient',[id]);
+        res.render('showDetails', {
+            data: recipient,
+            session: sess,
+            check: 0
+        })
+    }
+});
 module.exports = router;
