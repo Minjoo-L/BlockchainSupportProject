@@ -97,7 +97,7 @@ async function query1(name, params) {
 }
 
 async function query2(name, params) {
-    console.log("getting recipient from database: ");
+    console.log("getting supporter from database: ");
 
     var fabric_client = new Fabric_Client();
     //console.log(params[0]);
@@ -180,7 +180,7 @@ async function query2(name, params) {
 
 async function query3(func, params) {
 	
-	var name, id, bank,account, email, pw, address, phoneNum, sex, age;
+	var name, id, bank, account, email, pw, address, phoneNum;
 	if (func == "registerSupporter"){
    		console.log("register Supporter: ");
 		name = params[0]
@@ -192,19 +192,19 @@ async function query3(func, params) {
 		phoneNum = params[6]
 		var auth = 0; //후원자는 0번
 		
-		if(id[7]=='1' || id[7]=='3'){
-			sex='M'
-		}
-		else sex='F'
-		if(id[0]==0 || id[0]==1){
-			age=parseInt('20'+id.substring(0,2));
-		}
-		else{
-			age=parseInt('19'+id.substring(0,2));
-		}
-		var today=new Date();
-		var nowYear=today.getFullYear();
-		age=nowYear-age+1;
+		// if(id[7]=='1' || id[7]=='3'){
+		// 	sex='M'
+		// }
+		// else sex='F'
+		// if(id[0]==0 || id[0]==1){
+		// 	age=parseInt('20'+id.substring(0,2));
+		// }
+		// else{
+		// 	age=parseInt('19'+id.substring(0,2));
+		// }
+		// var today=new Date();
+		// var nowYear=today.getFullYear();
+		// age=nowYear-age+1;
 
 		connection.query("insert into usertbl values('"+name+"' , '"+id+"', '"+email+"', '"+pw+"' , "+auth+" )", async function(err, rows, fields){
 			if(err){
@@ -271,7 +271,7 @@ async function query3(func, params) {
                         chaincodeId: 'test-app18',
 						txId: tx_id,
 		        		fcn: 'registerSupporter',
-		        		args: [name, id, age, sex, account, email, pw, address, phoneNum],
+		        		args: [name, id, account, email, pw, address, phoneNum],
                     };
 					break;
 					

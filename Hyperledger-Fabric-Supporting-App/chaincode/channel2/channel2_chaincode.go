@@ -28,6 +28,7 @@
  type Supporter struct {
 	 Name string `json:"name"`
 	 ID string `json:"id"`
+	 Account string `json:"account"`
 	 Email  string `json:"email"`
 	 Password  string `json:"pw"`
 	 Address string `json:"address"`
@@ -69,11 +70,11 @@
   */
  func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	 supporter := []Supporter{
-		 Supporter{Name:"Soyoung Yoo", ID:"9912122999999", Email:"ysy@naver.com", Password:"1ARVn2Auq2/WAqx2gNrL+q3RNjAzXpUfCXrzkA6d4Xa22yhRLy4AC50E+6UTPoscbo31nbOoq51gvkuXzJ6B2w==", Address:"Seoul", PhoneNum:"01089145587"},
+		 Supporter{Name:"Soyoung Yoo", ID:"991212-2999999",Account:"국민,12345323987" Email:"ysy@naver.com", Password:"1ARVn2Auq2/WAqx2gNrL+q3RNjAzXpUfCXrzkA6d4Xa22yhRLy4AC50E+6UTPoscbo31nbOoq51gvkuXzJ6B2w==", Address:"Seoul", PhoneNum:"01089145587"},
 	 }
  
 	supporterAsBytes, _ := json.Marshal(supporter[0])
-	APIstub.PutState( "9912122999999", supporterAsBytes)
+	APIstub.PutState( "991212-2999999", supporterAsBytes)
 
 	 return shim.Success(nil)
  }
@@ -85,7 +86,7 @@
  func (s *SmartContract) registerSupporter(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
  
  
-	var supporter = Supporter{ Name: args[0], ID: args[1], Email: args[2], Password: args[3], Address: args[4], PhoneNum: args[5]}
+	var supporter = Supporter{ Name: args[0], ID: args[1], Account:args[2], Email: args[3], Password: args[4], Address: args[5], PhoneNum: args[6]}
 
 	supporterAsBytes, _ := json.Marshal(supporter)
 	err := APIstub.PutState(args[1], supporterAsBytes)

@@ -150,7 +150,7 @@ app.post('/mypage', function(req,res){
         else if(rows.length==1){//로그인 성공
             sess.Name = rows[0].Name;
             sess.email = rows[0].Email;
-            sess.auth = rows[0].Auth;   // auth로 다시 바꿔주기
+            sess.auth = rows[0].auth;   // auth로 다시 바꿔주기
             
                 console.log('success');
                 res.render("mypage",{
@@ -158,8 +158,7 @@ app.post('/mypage', function(req,res){
                 });
         }
         else{
-            res.send('failed to login');
-            res.redirect("/login");
+            res.send('<script type="text/javascript">alert("로그인에 실패했습니다.");location.href="/login";</script>');
         }
     });
 });
