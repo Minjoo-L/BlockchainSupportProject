@@ -336,7 +336,7 @@ async function query3(func, params) {
             }
         }).catch((err) => {
             console.error('Failed to invoke successfully :: ' + err);
-        });
+        });     
 }
 
 module.exports.query1 = query1;

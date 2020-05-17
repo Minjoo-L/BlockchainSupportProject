@@ -70,6 +70,7 @@
 <section class="portfolio-work">
   <div class="container">
     <div class="row">
+      <h2>피후원자 신청자 상세 정보</h2>
       <br><br>
       <table class="table" align="center">
           <tr>
@@ -110,7 +111,7 @@
         <tr><label>보류 이유</label><br></tr>
         <tr>
         <%if(db.reason==''){%>
-        <input type = "textarea" name ="reason" value ="보류 이유를 적어주세요">
+          <textarea name ="reason" value = "보류 이유를 적어주세요">보류 이유를 적어주세요</textarea>
         <%}else{%>
             <textarea name ="reason" value =<%=data.reason%>><%=data.reason%></textarea>
         <%}%>

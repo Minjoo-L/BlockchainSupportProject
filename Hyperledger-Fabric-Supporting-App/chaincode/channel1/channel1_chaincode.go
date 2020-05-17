@@ -201,10 +201,10 @@ func (s *SmartContract) donateV(APIstub shim.ChaincodeStubInterface, args []stri
 		err1 := APIstub.PutState(args[0], voucherAsBytes)
 		err2 := APIstub.PutState(args[1], voucher2AsBytes)
 		if err1 != nil {
-			return shim.Error(fmt.Sprintf("Fail 1"))
+			return shim.Error(fmt.Sprintf("Fail"))
 		}
 		if err2 != nil {
-			return shim.Error(fmt.Sprintf("Fail 2"))
+			return shim.Error(fmt.Sprintf("Fail"))
 		}
 	}else{
 		json.Unmarshal(voucherAsBytes, &voucher)
@@ -220,10 +220,10 @@ func (s *SmartContract) donateV(APIstub shim.ChaincodeStubInterface, args []stri
 		err1 := APIstub.PutState(args[0], voucherAsBytes)
 		err2 := APIstub.PutState(args[1], voucher2AsBytes)
 		if err1 != nil {
-			return shim.Error(fmt.Sprintf("Fail 1"))
+			return shim.Error(fmt.Sprintf("Fail"))
 		}
 		if err2 != nil {
-			return shim.Error(fmt.Sprintf("Fail 2"))
+			return shim.Error(fmt.Sprintf("Fail"))
 		}
 	}
 	

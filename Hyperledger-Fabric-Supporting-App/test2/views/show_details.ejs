@@ -7,7 +7,12 @@
   <meta name="author" content="Themefisher.com">
 
   <title>개인 후원 시스템</title>
-
+  <style>
+    .td_story {
+      width: 500px;
+      padding: 10px;
+    }
+  </style>
   <!-- Mobile Specific Meta-->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Favicon -->
@@ -27,52 +32,65 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
-    
+  <script src ="../routes/government.js"></script>
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="../css/style.css">
+  <style>
+    #donate{width:100%;}
+    textarea{width:100%; height:200px;}
+  </style>
 </head>
 
 <body ng-app="application" ng-controller="appController" id="body">
 
 <!-- Header Start -->
 <%- include("header") %>
-
 <section class="page-title bg-2">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="block">
           <h1>개인 후원 시스템</h1><br>
-          <p>피후원자 상세보기 </p>
+          <p>피후원자 후원하기</p>
         </div>
       </div>
     </div>
   </div>
 </section>
-
 <section class="portfolio-work">
   <div class="container">
     <div class="row">
-        이름: <%= name %>  <br>
-        <!-- 사연이 왜 짤리는가..-->
-        사연: <%= story %> <br>
-        주민번호: <%= ReId %> <br>
-        <form action="/supporter/donatePage" method="post">
-              <input type = "hidden" name = "name" value = <%=name%>>
-              <input type = "hidden" name = "ReId" value = <%=ReId%>> 
-              <td><input class="btn btn-default" type="submit" value="후원하기"></td>
-        </form>
+      <h2>피후원자 상세 정보</h2>
+      <br><br>
+      <table class="table" align="center">
+          <tr>
+            <td width="30%" border-right="1px solid black">이름</td>
+            <td><%=data.name%></td>
+          </tr>
+          <tr>
+              <td width="30%" border-right="1px solid black">주소</td>
+              <td><%=data.address%></td>
+          </tr>
+          <tr>
+              <td width="30%" border-right="1px solid black">사연</td>
+              <td class = "td_story"><%=data.story%></td>
+          </tr>
+        </table>
+    <section class="portfolio-work">
+    <div class="container">
+      <form action="/supporter/donatePage" method="post">
+        <input type = "hidden" name = "name" value = <%=data.name%>>
+        <input type = "hidden" name = "ReId" value = <%=data.id%>> 
+        <td><input id ="donate" class="btn btn-primary" type="submit" value="후원하기"></td>
+    </form>
+    </div>
+    </section>
+<br>
+<br><br>
 <!-- footer Start -->
 <footer class="footer">
 <%- include("footer") %>
 </footer>
-    <!-- 
-    Essential Scripts
-    =====================================-->
-    
-    <!-- <script src="js/jquery.counterup.js"></script> -->
-    
-    <!-- Main jQuery -->
    
     <script src="https://code.jquery.com/jquery-git.min.js"></script>
     <!-- Bootstrap 3.1 -->
@@ -85,12 +103,10 @@
     <script src="../plugins/mixitup/dist/mixitup.min.js"></script>
     <script src="../plugins/SyoTimer/build/jquery.syotimer.min.js"></script>
 
-
     <!-- Form Validator -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
 
-    <script src="../js/script.js"></script>
 
   </body>
-</html>
+  </html>

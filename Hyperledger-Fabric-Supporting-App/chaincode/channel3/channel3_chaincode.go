@@ -71,6 +71,8 @@
 		 return s.changeRecipientInfo(APIstub, args)
 	 } else if function == "queryWithOtherInfo"{ //주민등록번호가 아닌 이메일로 조회
 		return s.queryWithOtherInfo(APIstub, args)
+	 } else if function == "changeAllRecipientInfo"{ //전체 정보 수정
+		 return s.changeAllRecipientInfo(APIstub, args)
 	 }
  
 	 return shim.Error("Invalid Smart Contract function name.")
@@ -220,7 +222,36 @@ func (s *SmartContract) pendingRecipient(APIstub shim.ChaincodeStubInterface, ar
 
 	return shim.Success(nil)
 }
-//내 정보 수정(피후원자)
+//전체 정보 수정(피후원자)
+func (s *SmartContract) changeAllRecipientInfo(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+
+	if len(args) != 5 {
+		return shim.Error("Incorrect number of arguments. Expecting 5")
+	}
+
+	userRecipientAsBytes, _ := APIstub.GetState(args[0])
+	if userRecipientAsBytes == nil {
+		return shim.Error("Could not locate Recipient")
+	}
+	userRecipient := Recipient{}
+
+	json.Unmarshal(userRecipientAsBytes, &userRecipient)
+	// Normally check that the specified argument is a valid holder of tuna
+	// we are skipping this check for this example
+	userRecipient.ID = args[0]
+	userRecipient.Email = args[1]
+	userRecipient.Address = args[2]
+	userRecipient.PhoneNum = args[3]
+	userRecipient.Story = args[4]
+
+	userRecipientAsBytes, _ = json.Marshal(userRecipient)
+	err := APIstub.PutState(args[0], userRecipientAsBytes)
+	if err != nil {
+		return shim.Error(fmt.Sprintf("Failed to change user's personal info(Recipient)"))
+	}
+
+	return shim.Success(nil)
+}
 func (s *SmartContract) changeRecipientInfo(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
 	if len(args) != 8 {

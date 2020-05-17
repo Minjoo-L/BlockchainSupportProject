@@ -252,15 +252,10 @@ router.post('/show_details', async function(req, res){
     if(sess.auth!=0){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        var name = req.body.name;
-        var id = req.body.ReId;
-        var story = req.body.story;
-
+        var jsn = JSON.parse(decodeURI(req.body.data));
         res.render('show_details', {
             session:sess,
-            name: name,
-            ReId: id,
-            story: story
+            data:jsn[0].Record
         })
     }
 });
@@ -298,12 +293,18 @@ router.post('/donate', async function(req, res){
         if(supporter != null && supporter.pw == pw && supporter.email == sess.email){
             var params = [ids, idr, number]; //바우처 번호, 피후원자 식별번호(주민번호)
             //donateV 체인코드
-            await channel1Query.query3('donateV', params);
-            res.render('donateComplete', {
-                session: sess,
-                name: name,
-                number: number
-            })
+            var voucher = await channel1Query.query2('queryVoucher', params2);
+            if(voucher.amount<number){
+                res.send('<script type="text/javascript">alert("잔액이 부족합니다.");history.back();</script>'); 
+            }else{
+                var err = await channel1Query.query3('donateV', params);
+                console.log(err);
+                res.render('donateComplete', {
+                    session: sess,
+                    name: name,
+                    number: number
+                })
+            }
         }
         else{
             res.send('<script type="text/javascript">alert("비밀번호나 주민등록번호를 확인해주세요.");location.href="/supporter/donatePage";</script>'); 

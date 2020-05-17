@@ -114,10 +114,9 @@ router.post('/showDetails', async function(req, res){//피후원자 승인
     if(sess.auth!=2){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        var id = req.body.RId;
-        var recipient  = await channel3Query.query2('queryRecipient',[id]);
+        var jsn = JSON.parse(decodeURI(req.body.data));
         res.render('showDetails', {
-            data: recipient,
+            data: jsn[0].Record,
             session: sess,
             check: 0
         })

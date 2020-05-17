@@ -121,4 +121,33 @@ router.get('/approveStatus', async function(req,res){
         });
     }
 });
+router.get('/changeInfo', async function(req,res){
+    sess = req.session;
+    if(sess.auth!=1){
+        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+    }else{
+        var params = [sess.email];
+        var recipient  = await channel3Query.query2('queryWithOtherInfo', params);
+        res.render('changeInfo',{
+            data: recipient[0].Record,
+            session: sess
+        });
+    }
+});
+
+router.post('/changeReci', async function(req,res){
+    sess = req.session;
+    if(sess.auth!=1){
+        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+    }else{
+    var address = req.body.address;
+    var phoneNum = req.body.phoneNum;
+    var story = req.body.story;
+    var id = req.body.id;
+    var email = req.body.email;
+    var params = [id, email, address, phoneNum, story];
+    await channel3Query.query3('changeAllRecipientInfo', params);
+        res.send('<script type="text/javascript">alert("정보가 수정되었습니다.");location.href="/mypage";</script>');
+    }
+});
 module.exports = router;

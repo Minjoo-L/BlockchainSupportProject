@@ -282,7 +282,15 @@ async function query3(func, params){
 						chainId: 'mychannel3'
 					};
 					break;
-
+                case 'changeAllRecipientInfo':
+                    request = {
+                        chaincodeId: 'test-app-queryRE7',
+                        txId: tx_id,
+                        fcn: 'changeAllRecipientInfo',
+                        args: [params[0], params[1], params[2], params[3], params[4]], //id, address, phoneNum
+                        chainId: 'mychannel3'
+                    };
+                        break;
 				default:
 					break;
 

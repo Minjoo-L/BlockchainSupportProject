@@ -62,15 +62,14 @@
         </tr>
         <%for (var i = 0; i < data.length; i++) { 
           db = data[i].Record;
+          var jsn = encodeURI(JSON.stringify(data));
         %>
         <form action="/supporter/show_details" method="post">
           <tr>
               <td><%=db.name%></td>
               <td><%=db.story%></td>
-              <input type = "hidden" name = "name" value = <%=db.name%>>
-              <input type = "hidden" name = "ReId" value = <%=db.id%>> 
-              <input type = "hidden" name = "story" value = <%=db.story%>> 
-              <td><input class="btn btn-default" type="submit" value="상세하기"></td>
+              <input type = "hidden" name = "data" value = <%=jsn%>> 
+              <td><input class="btn btn-default" type="submit" value="상세보기"></td>
           </tr>
         </form>
        <%}%>
