@@ -11,7 +11,7 @@ router.post('/reci_reg', async function(req, res){
     recipient[2] = req.body.rbank +","+req.body.raccount;
     recipient[3] = req.body.remail;
     recipient[4] = crypto.createHash('sha512').update(req.body.rpw).digest('base64');
-    recipient[5] = req.body.raddress;
+    recipient[5] = req.body.raddress1+"시 "+req.body.raddress2+"구 "+req.body.raddress3+"동 "+req.body.raddress4;
     recipient[6] = req.body.rphoneNum;
     recipient[7] = req.body.rjob;
     recipient[8] = req.body.rstory;

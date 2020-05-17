@@ -188,7 +188,7 @@ async function query3(func, params){
 	if (func == "registerRecipient"){
 		key = params[1]
 		name = params[0]
-		id = params[1]
+        id = params[1]
 		account = params[2]
 	    email = params[3]
 		pw = params[4]

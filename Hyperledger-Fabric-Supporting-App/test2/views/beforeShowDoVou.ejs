@@ -55,16 +55,16 @@
     <div class="row">
       <%if (session&&session.auth==0){%>
         <form class="form-register" method="post" action="/supporter/showDonateVoucher">
-            <label>주민등록번호: <input class="form-control" type="text" name="id"></label>
-            <br>
+          <label>주민등록번호:</label>
+          <input style="width:30%" type="text" name="id1">&nbsp&nbsp-&nbsp&nbsp<input style="width:30%" type="text" name="id2"><br>
             <label>비밀번호: <input class="form-control" type="password" name="pw"></label>
             <br>
             <input id="edit" class="btn btn-primary" type="submit" value="확인">
         </form>
       <%}else{%>
         <form class="form-register" method="post" action="/recipient/showDonateVoucher">
-          주민번호를 입력해 주세요 <input type = "text" class="form-control" name="id">
-          <br>
+          <label>주민등록번호:</label>
+          <input style="width:30%" type="text" name="id1">&nbsp&nbsp-&nbsp&nbsp<input style="width:30%" type="text" name="id2"><br>
           <label>비밀번호: <input class="form-control" type="password" name="pw"></label>
           <br>
           <input id="edit" class="btn btn-primary" type="submit" value="확인">

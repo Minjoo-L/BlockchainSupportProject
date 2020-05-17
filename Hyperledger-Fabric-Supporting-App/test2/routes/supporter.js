@@ -142,7 +142,7 @@ router.post('/showDonateVoucher', async function(req, res){
     if(sess.auth!=0){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        var id = req.body.id;
+        var id = req.body.id1+req.body.id2;
         var pw = req.body.pw;
         pw = crypto.createHash('sha512').update(pw).digest('base64');
         var params = [id];
@@ -184,7 +184,7 @@ router.post('/purchase', async function(req, res){
     if(sess.auth!=0){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        var id = req.body.id;
+        var id = req.body.id1+req.body.id2;
         var pw = req.body.pw;
         pw = crypto.createHash('sha512').update(pw).digest('base64');
         var amount= req.body.amount;
@@ -283,7 +283,7 @@ router.post('/donate', async function(req, res){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
         var name = req.body.name;
-        var ids = req.body.ids;
+        var ids = req.body.ids1+ids2;
         var idr = req.body.idr;
         var pw = req.body.pw;
         pw = crypto.createHash('sha512').update(pw).digest('base64');
