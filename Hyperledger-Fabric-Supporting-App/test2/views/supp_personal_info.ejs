@@ -52,21 +52,36 @@
   </div>
 </section>
 <!-- contact form start -->
-<section class="contact-form">
-    <div class="container"> 
-      <div class="form-group">
-        <label>내 정보</label><br><br>
-        <form method="post" action="/supporter/changeAl">
-        이름: <%= data.name %>  <br>
-        이메일: <%= data.email%> <br>
-        주민번호: <%= data.id%> <br>
-        주소: <input name = "address" type = "text" value = <%= data.address%>><br>
-        폰 번호: <input name = "phoneNum" type = "text" value = <%= data.phoneNum%>> <br>
-        <input id="edit" class="btn btn-default" type="submit" value="수정">
-        </form>
-      </div>
-    </div>
-</section>
+<section class="portfolio-work">
+  <div class="container">
+    <div class="row">
+      <table class="table" align="center">
+          <form method="post" action="/supporter/changeAl">
+          <tr>
+            <td width="30%" border-right="1px solid black">이름</td>
+            <td><%=data.name%></td>
+          </tr>
+          <tr>
+            <td width="30%" border-right="1px solid black">주민등록번호</td>
+            <td><%=data.id%></td>
+          </tr>
+          <tr>
+          <tr>
+              <td width="30%" border-right="1px solid black">핸드폰 번호</td>
+              <td><input type="text" name="phoneNum" value=<%=data.phoneNum%>></td>
+          </tr>
+          <tr>
+              <td width="30%" border-right="1px solid black">이메일</td>
+              <td><%=data.email%></td>
+          </tr>
+          <tr>
+              <td width="30%" border-right="1px solid black">주소</td>
+              <td><input type="text" name="address" value=<%=data.address%>></td>
+          </tr>
+          <tr><td colspan="2"><input id="send" class="btn btn-default" type="submit" value="수정"></td></tr>
+        </table>
+    </form>
+
 <!-- footer Start -->
 <footer class="footer">
 <%- include("footer") %>

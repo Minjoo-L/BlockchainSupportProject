@@ -145,7 +145,15 @@ async function query2(name, params) {
 		                args: [params[0]]
                     };
 					break;
-
+				case 'queryWithOtherInfo':
+					request = {
+						chaincodeId: 'test-app18',
+						txId: tx_id,
+						fcn: 'queryWithOtherInfo',
+						args: [params[0]]
+					};
+					break;
+					
                 default:
                     break;
             }

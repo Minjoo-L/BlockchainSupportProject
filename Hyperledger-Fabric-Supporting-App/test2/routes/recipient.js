@@ -114,21 +114,6 @@ router.post('/reci_personal_info', async function(req, res){
     }
 });
 
-router.post('/changeRI', async function(req,res){
-    sess = req.session;
-    if(sess.auth!=1){
-        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
-    }else{
-    var address = req.body.address;
-    var phoneNum = req.body.phoneNum;
-    var params = [Sid, address, phoneNum];
-    await channel2Query.query3('changeRecipientInfo', params);
-
-        res.render('changeAl',{
-            session: sess
-        });
-    }
-});
 router.post('/changePass', async function(req,res){
     sess = req.session;
     if(sess.auth!=1){
