@@ -101,19 +101,20 @@
             <label>비밀번호 수정</label><br>
             <%if (session.auth == 0){%>
               <form class="form-register" method="post" action="/supporter/supp_pass_info">
-              주민번호를 입력해 주세요 <input type = "text" class="form-control" id="id" name="id">
+              주민번호를 입력해 주세요 <input type = "text" placeholder ="'-'를 포함하여 입력해 주세요" class="form-control" id="id" name="id">
               비밀번호를 입력해 주세요 <input type="password" class="form-control" id="password" name="password">
               <input id="edit" class="btn btn-default" type="submit" value="확인">
             </form>
             <%}
-             else {%>
-              <form class="form-register" method="post" action="">
-                주민번호를 입력해 주세요 <input type = "text" class="form-control" id="id" name="id">
+             else if (session.auth == 1) {%>
+              <form class="form-register" method="post" action="/recipient/reci_pass_info">
+                주민번호를 입력해 주세요 <input type = "text" placeholder ="'-'를 포함하여 입력해 주세요" class="form-control" id="id" name="id">
                 비밀번호를 입력해 주세요 <input type="password" class="form-control" id="password" name="password">
                 <input id="edit" class="btn btn-default" type="submit" value="확인">
               </form>
               <%}%>
           </div>
+
       
 
 <!-- footer Start -->

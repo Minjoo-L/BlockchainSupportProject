@@ -220,7 +220,7 @@ async function query3(func, params) {
 			if(err){
 				console.log(err);
 			}else{
-				console.log("successfully update password of recipient!!!");
+				console.log("successfully update password of supporter!!!");
 			}
 		});
 	}

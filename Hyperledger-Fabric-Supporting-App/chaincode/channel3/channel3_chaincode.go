@@ -259,36 +259,31 @@ func (s *SmartContract) changeAllRecipientInfo(APIstub shim.ChaincodeStubInterfa
 	return shim.Success(nil)
 }
 func (s *SmartContract) changeRecipientInfo(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+    userRecipientAsBytes, _ := APIstub.GetState(args[0])
+    if userRecipientAsBytes == nil {
+        return shim.Error("Could not locate Recipient")
+    }
+    userRecipient := Recipient{}
 
-	if len(args) != 8 {
-		return shim.Error("Incorrect number of arguments. Expecting 8")
-	}
+    json.Unmarshal(userRecipientAsBytes, &userRecipient)
+    // Normally check that the specified argument is a valid holder of tuna
+    // we are skipping this check for this example
 
-	userRecipientAsBytes, _ := APIstub.GetState(args[0])
-	if userRecipientAsBytes == nil {
-		return shim.Error("Could not locate Recipient")
-	}
-	userRecipient := Recipient{}
+    if len(args) == 3 { // 주소와 폰 번호 바꾸는 경우
+        userRecipient.Address = args[1]
+        userRecipient.PhoneNum = args[2]
+    } else {    // 비밀번호 바꾸는 경우
+        userRecipient.Password = args[1]
+    }
 
-	json.Unmarshal(userRecipientAsBytes, &userRecipient)
-	// Normally check that the specified argument is a valid holder of tuna
-	// we are skipping this check for this example
-	userRecipient.ID = args[0]
-	userRecipient.Name = args[1]
-	userRecipient.Email = args[2]
-	userRecipient.Password = args[3]
-	userRecipient.Address = args[4]
-	userRecipient.PhoneNum = args[5]
-	userRecipient.Story = args[6]
-	userRecipient.Status = args[7]
+    userRecipientAsBytes, _ = json.Marshal(userRecipient)
+    err := APIstub.PutState(args[0], userRecipientAsBytes)
+    if err != nil {
+        return shim.Error(fmt.Sprintf("Failed to change user's personal info(Recipient)"))
+    }
 
-	userRecipientAsBytes, _ = json.Marshal(userRecipient)
-	err := APIstub.PutState(args[0], userRecipientAsBytes)
-	if err != nil {
-		return shim.Error(fmt.Sprintf("Failed to change user's personal info(Recipient)"))
-	}
-
-	return shim.Success(nil)
+    return shim.Success(nil)
+	
 }
 //이메일로 조회
 func (s *SmartContract) queryWithOtherInfo(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
