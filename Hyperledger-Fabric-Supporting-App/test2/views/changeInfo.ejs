@@ -71,6 +71,11 @@
             <td><%=data.id%></td>
           </tr>
           <tr>
+          <tr>
+              <td width="30%" border-right="1px solid black">계좌번호</td>
+              <td><input type="text" name="account" value=<%=data.account%>></td>
+            </tr>
+          <tr>
               <td width="30%" border-right="1px solid black">핸드폰 번호</td>
               <td><input type="text" name="phoneNum" value=<%=data.phoneNum%>></td>
           </tr>
@@ -83,6 +88,10 @@
               <td><input type="text" name="address" value=<%=data.address%>></td>
           </tr>
           <tr>
+            <td width="30%" border-right="1px solid black">직업</td>
+            <td><input type="text" name="job" value=<%=data.job%>></td>
+          </tr>
+          <tr>
             <td width="30%" border-right="1px solid black">승인 상태</td>
             <td><%=data.status%></td>
           </tr>
@@ -91,7 +100,7 @@
               <td class = "td_story"><textarea name="story" value=<%=data.story%>><%=data.story%></textarea></td>
               <input type="hidden" name="id" value=<%=data.id%>>
           </tr>
-          <tr><td colspan="2"><input id="send" class="btn btn-primary" type="submit" value="수정"></td></tr>
+          <tr><td colspan="2"><input id="send" class="btn btn-default" type="submit" value="수정"></td></tr>
         </table>
     </form>
 <br>

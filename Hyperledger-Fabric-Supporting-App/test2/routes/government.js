@@ -19,7 +19,7 @@ router.post('/voucherUsage', async function(req, res){//바우처 내역 조회
     if(sess.auth!=2){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        var params = [req.body.id]
+        var params = [req.body.id1+req.body.id2]
         var voucherUsages = await channel1Query.query1('voucherUsage', params);
         var data = [];
         for(voucherUsage of voucherUsages){

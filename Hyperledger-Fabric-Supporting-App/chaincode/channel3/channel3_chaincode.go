@@ -26,10 +26,14 @@
  type Recipient struct {
 	Name string `json:"name"`
 	ID string `json:"id"`
+	Age string `json:"age"`
+	Sex string `json:"sex"`
+	Account string `json:"account`
 	Email string `json:"email"`
 	Password string `json:"password"`
 	Address string `json:"address"`
 	PhoneNum string `json:"phoneNum"`
+	Job string `json:"job"`
 	Story string `json:"story"`
 	Status string `json:"status"`
 	Reason string `json:"reason"`
@@ -85,14 +89,14 @@
   */
  func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	recipient := []Recipient{
-		Recipient{Name: "김철수", ID: "6001012234560", Email: "kim@gmail.com", Password: "1ARVn2Auq2/WAqx2gNrL+q3RNjAzXpUfCXrzkA6d4Xa22yhRLy4AC50E+6UTPoscbo31nbOoq51gvkuXzJ6B2w==", Address: "서울 살아욤", PhoneNum: "01044441234", Story: "제 아이가 많이 힘듭니다. 저는 장애3급 판정을 받았습니다..\n 공백공백공백공백공백공백공백공백공백공백공백공백공백공백공백공백", Status: "N", Reason: ""},
-		Recipient{Name: "김영희", ID: "9901011234567", Email: "young@gmail.com", Password: "1ARVn2Auq2/WAqx2gNrL+q3RNjAzXpUfCXrzkA6d4Xa22yhRLy4AC50E+6UTPoscbo31nbOoq51gvkuXzJ6B2w==",Address: "경기도 살아욤", PhoneNum: "01012341234", Story: "많이 힘들어요.. 제 아가들을 위해 도와주세요", Status: "Y", Reason: ""},
+		Recipient{Name: "김철수", ID: "600101-2234560",Age:"61", Sex:"F",Account:"kook,12398237598741", Email: "kim@gmail.com", Password: "1ARVn2Auq2/WAqx2gNrL+q3RNjAzXpUfCXrzkA6d4Xa22yhRLy4AC50E+6UTPoscbo31nbOoq51gvkuXzJ6B2w==", Address: "서울시 중구", PhoneNum: "01044441234", Job:"무직",Story: "제 아이가 많이 힘듭니다. 저는 장애3급 판정을 받았습니다..\n 공백공백공백공백공백공백공백공백공백공백공백공백공백공백공백공백", Status: "N", Reason: ""},
+		Recipient{Name: "김영희", ID: "990101-1234567",Age:"22", Sex:"M",Account:"kakao,33301598741", Email: "young@gmail.com", Password: "1ARVn2Auq2/WAqx2gNrL+q3RNjAzXpUfCXrzkA6d4Xa22yhRLy4AC50E+6UTPoscbo31nbOoq51gvkuXzJ6B2w==",Address: "안양시 에이구", PhoneNum: "01012341234",Job:"대학생", Story: "많이 힘들어요.. 제 아가들을 위해 도와주세요", Status: "Y", Reason: ""},
 	}
 
 	recipientAsBytes, _ := json.Marshal(recipient[0])
-	APIstub.PutState("6001012234560", recipientAsBytes)
+	APIstub.PutState("600101-2234560", recipientAsBytes)
 	recipientAsBytes, _ = json.Marshal(recipient[1])
-	APIstub.PutState("9901011234567", recipientAsBytes)
+	APIstub.PutState("990101-1234567", recipientAsBytes)
 
 	return shim.Success(nil) 
  }
@@ -104,7 +108,7 @@
  func (s *SmartContract) registerRecipient(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
  
  
-	var recipient = Recipient{ Name: args[0], ID: args[1], Email: args[2], Password: args[3], Address: args[4], PhoneNum: args[5], Story: args[6], Status: args[7], Reason: ""}
+	var recipient = Recipient{ Name: args[0], ID: args[1], Age:args[2], Sex:args[3], Account:args[4], Email: args[5], Password: args[6], Address: args[7], PhoneNum: args[8],Job:args[9], Story: args[10], Status: args[11], Reason: ""}
 
 	recipientAsBytes, _ := json.Marshal(recipient)
 	err := APIstub.PutState(args[1], recipientAsBytes)
@@ -225,7 +229,7 @@ func (s *SmartContract) pendingRecipient(APIstub shim.ChaincodeStubInterface, ar
 //전체 정보 수정(피후원자)
 func (s *SmartContract) changeAllRecipientInfo(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
-	if len(args) != 5 {
+	if len(args) != 7 {
 		return shim.Error("Incorrect number of arguments. Expecting 5")
 	}
 
@@ -239,10 +243,12 @@ func (s *SmartContract) changeAllRecipientInfo(APIstub shim.ChaincodeStubInterfa
 	// Normally check that the specified argument is a valid holder of tuna
 	// we are skipping this check for this example
 	userRecipient.ID = args[0]
-	userRecipient.Email = args[1]
-	userRecipient.Address = args[2]
-	userRecipient.PhoneNum = args[3]
-	userRecipient.Story = args[4]
+	userRecipient.Account=args[1]
+	userRecipient.Email = args[2]
+	userRecipient.Address = args[3]
+	userRecipient.PhoneNum = args[4]
+	userRecipient.Job=args[5]
+	userRecipient.Story = args[6]
 
 	userRecipientAsBytes, _ = json.Marshal(userRecipient)
 	err := APIstub.PutState(args[0], userRecipientAsBytes)

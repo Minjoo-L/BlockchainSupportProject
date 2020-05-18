@@ -22,7 +22,7 @@ router.post('/showDonateVoucher', async function(req, res){
     if(sess.auth!=1){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        var id = req.body.id;
+        var id = req.body.id1+req.body.id2;
         var pw = req.body.pw;
         pw = crypto.createHash('sha512').update(pw).digest('base64');
         var params = [id];
@@ -145,7 +145,9 @@ router.post('/changeReci', async function(req,res){
     var story = req.body.story;
     var id = req.body.id;
     var email = req.body.email;
-    var params = [id, email, address, phoneNum, story];
+    var job= req.body.job;
+    var account=req.body.account;
+    var params = [id, account, email, address, phoneNum, job, story];
     await channel3Query.query3('changeAllRecipientInfo', params);
         res.send('<script type="text/javascript">alert("정보가 수정되었습니다.");location.href="/mypage";</script>');
     }
