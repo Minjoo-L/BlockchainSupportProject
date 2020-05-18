@@ -97,7 +97,11 @@
           </tr>
           <tr>
               <td width="30%" border-right="1px solid black">사연</td>
+              <%if(data.status=='Y'){%>
+                <td class = "td_story"><%=data.story%></td>
+              <%}else{%>
               <td class = "td_story"><textarea name="story" value=<%=data.story%>><%=data.story%></textarea></td>
+              <%}%>
               <input type="hidden" name="id" value=<%=data.id%>>
           </tr>
           <tr><td colspan="2"><input id="send" class="btn btn-default" type="submit" value="수정"></td></tr>
