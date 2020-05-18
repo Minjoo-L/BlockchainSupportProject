@@ -59,6 +59,8 @@
 		 return s.querySupporter(APIstub, args)
 	 } else if function == "changeSupporterInfo" { 		// 내 정보 수정 (후원자)
 		 return s.changeSupporterInfo(APIstub, args)
+	 } else if function == "queryWithOtherInfo" { //주민등록번호가 아닌 이메일로 조회
+		 return s.queryWithOtherInfo(APIstub, args)
 	 }
 	 return shim.Error("Invalid Smart Contract function name.")
  }
@@ -164,10 +166,8 @@ func (s *SmartContract) changeSupporterInfo(APIstub shim.ChaincodeStubInterface,
 	userSupporter := Supporter{}
 
 	json.Unmarshal(userSupporterAsBytes, &userSupporter)
-	// Normally check that the specified argument is a valid holder of tuna
-	// we are skipping this check for this example
 
-	if len(args) == 3{ //주소와 폰 번호 바꾸는 경우
+	if len(args) > 2{ //주소와 폰 번호 바꾸는 경우
         userSupporter.Address = args[1]
         userSupporter.PhoneNum = args[2]
     } else {
@@ -182,7 +182,53 @@ func (s *SmartContract) changeSupporterInfo(APIstub shim.ChaincodeStubInterface,
 
 	return shim.Success(nil)
 }
+//이메일로 조회
+func (s *SmartContract) queryWithOtherInfo(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
+	if len(args) != 1 {
+		return shim.Error("Incorrect number of arguments. Expecting 1")
+	}
+	queryString := 
+	`{
+		"selector":{
+			"email": "`+args[0]+`"
+		}
+	 }`
+	resultsIterator, err := APIstub.GetQueryResult(queryString)
+	if err != nil {
+		return shim.Error(err.Error())
+	}
+	defer resultsIterator.Close()
+
+	// buffer is a JSON array containing QueryResults
+	var buffer bytes.Buffer
+	buffer.WriteString("[")
+
+	bArrayMemberAlreadyWritten := false
+	for resultsIterator.HasNext() {
+		queryResponse, err := resultsIterator.Next()
+		if err != nil {
+			return shim.Error(err.Error())
+		}
+		// Add comma before array members,suppress it for the first array member
+		if bArrayMemberAlreadyWritten == true {
+			buffer.WriteString(",")
+		}
+		buffer.WriteString("{\"Key\":")
+		buffer.WriteString("\"")
+		buffer.WriteString(queryResponse.Key)
+		buffer.WriteString("\"")
+
+		buffer.WriteString(", \"Record\":")
+		// Record is a JSON object, so we write as-is
+		buffer.WriteString(string(queryResponse.Value))
+		buffer.WriteString("}")
+		bArrayMemberAlreadyWritten = true
+	}
+	buffer.WriteString("]")
+
+	return shim.Success(buffer.Bytes())
+}
  /*
   * main function *
  calls the Start function 

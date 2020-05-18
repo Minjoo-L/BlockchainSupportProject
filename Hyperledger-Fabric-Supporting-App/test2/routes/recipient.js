@@ -67,6 +67,28 @@ router.get('/reci_query_result', async function(req, res){
     }
 });
 
+ //내 비밀번호 변경(피후원자)
+ router.post('/reci_pass_info', async function(req, res){
+    sess = req.session;
+    if(sess.auth!=1){
+        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+    }else{
+        var id = req.body.id;
+        Sid = id;
+        var pw = req.body.password;
+        var params =[id];
+        var recipient = await channel3Query.query2('queryRecipient', params);
+        pw = crypto.createHash('sha512').update(pw).digest('base64');
+
+        if(recipient != null && recipient.password == pw){
+            res.render('reci_pass_info',{
+                session: sess
+            });
+        } else{
+            // 예외처리 하기
+        }
+    }
+});
 
 
 router.post('/reci_personal_info', async function(req, res){
@@ -92,19 +114,24 @@ router.post('/reci_personal_info', async function(req, res){
     }
 });
 
-router.post('/changeRI', async function(req,res){
+router.post('/changePass', async function(req,res){
     sess = req.session;
     if(sess.auth!=1){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-    var address = req.body.address;
-    var phoneNum = req.body.phoneNum;
-    var params = [Sid, address, phoneNum];
-    await channel2Query.query3('changeRecipientInfo', params);
+        var newPassword1 = req.body.newPassword1;
+        var newPassword2 = req.body.newPassword2;
+        var pw = crypto.createHash('sha512').update(newPassword1).digest('base64');
 
-        res.render('changeAl',{
-            session: sess
-        });
+        if(newPassword1 != newPassword2){
+            res.send('<script type="text/javascript">alert("비밀번호가 다릅니다");history.go(-1);</script>');
+        }else{
+        var params = [Sid, pw];
+        await channel3Query.query3('changeRecipientPass', params);
+            res.render('changeAl',{
+                session: sess
+            });
+        }
     }
 });
 

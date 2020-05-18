@@ -1,8 +1,5 @@
+
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> 
 <html class="no-js"> <!--<![endif]-->
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -15,7 +12,7 @@
   <!-- Mobile Specific Meta-->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Favicon -->
-  <link rel="shortcut icon" type="image/x-icon" href="img/favicon.png" />
+  <link rel="shortcut icon" type="image/x-icon" href="../img/favicon.png" />
   <!-- bootstrap.min css -->
   <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
   <!-- Ionic Icon Css -->
@@ -27,61 +24,54 @@
   <!-- Owl Carousel CSS -->
   <link rel="stylesheet" href="../plugins/slick-carousel/slick/slick.css">
   <link rel="stylesheet" href="../plugins/slick-carousel/slick/slick-theme.css">
-  
+ 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
-
+    
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body ng-app="application" ng-controller="appController" id="body">
+
 <!-- Header Start -->
-<%- include("header") %><!-- header close -->
+<%- include("header") %>
+
 <section class="page-title bg-2">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="block">
-          <h1>개인 후원 시스템</h1>
-          <p>내 정보 수정</p>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="block">
+            <h1>개인 후원 시스템</h1>
+            <p>비밀번호 변경</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-<!-- contact form start -->
-<section class="portfolio-work">
-  <div class="container">
-    <div class="row">
-      <table class="table" align="center">
-          <form method="post" action="/supporter/changeAl">
-          <tr>
-            <td width="30%" border-right="1px solid black">이름</td>
-            <td><%=data.name%></td>
-          </tr>
-          <tr>
-            <td width="30%" border-right="1px solid black">주민등록번호</td>
-            <td><%=data.id%></td>
-          </tr>
-          <tr>
-          <tr>
-              <td width="30%" border-right="1px solid black">핸드폰 번호</td>
-              <td><input type="text" name="phoneNum" value=<%=data.phoneNum%>></td>
-          </tr>
-          <tr>
-              <td width="30%" border-right="1px solid black">이메일</td>
-              <td><%=data.email%></td>
-          </tr>
-          <tr>
-              <td width="30%" border-right="1px solid black">주소</td>
-              <td><input type="text" name="address" value=<%=data.address%>></td>
-          </tr>
-          <tr><td colspan="2"><input id="send" class="btn btn-default" type="submit" value="수정"></td></tr>
-        </table>
-    </form>
-
+  </section>
+  
+  <!-- contact form start -->
+  <section class="contact-form">
+      <div class="container"> 
+        <!--로그인-->
+         <form action="/recipient/changePass" method="post">
+          <table align="center">
+            <tr>
+              <td>새 비밀번호:</td>
+              <td><input type="password" name="newPassword1"></td>
+            </tr>
+            <tr>
+                <td>새 비밀번호 확인:</td>
+                <td><input type="password" name="newPassword2"></td>
+              </tr>
+            <tr>
+              <td colspan="2"><input class="btn btn-default" id="okay" type="submit" value="변경"></td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </section>
 <!-- footer Start -->
 <footer class="footer">
 <%- include("footer") %>
@@ -96,20 +86,23 @@
    
     <script src="https://code.jquery.com/jquery-git.min.js"></script>
     <!-- Bootstrap 3.1 -->
-    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
     <!-- Owl Carousel -->
-    <script src="plugins/slick-carousel/slick/slick.min.js"></script>
+    <script src="../plugins/slick-carousel/slick/slick.min.js"></script>
     <!--  -->
-    <script src="plugins/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+    <script src="../plugins/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
     <!-- Mixit Up JS -->
-    <script src="plugins/mixitup/dist/mixitup.min.js"></script>
-    <script src="plugins/SyoTimer/build/jquery.syotimer.min.js"></script>
-
+    <script src="../plugins/mixitup/dist/mixitup.min.js"></script>
+    <script src="../plugins/SyoTimer/build/jquery.syotimer.min.js"></script>
 
     <!-- Form Validator -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
 
-    <script src="js/script.js"></script>
+    <script src="../js/script.js"></script>
+
   </body>
   </html>
+
+
+

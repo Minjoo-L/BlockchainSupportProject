@@ -219,7 +219,18 @@ async function query3(func, params){
 				console.log("successfully registered!!!");
 			}
 		});
-	}
+	} else if (func == "changeRecipientPass"){
+        id = params[0];
+        var password = params[1];
+        connection.query("update usertbl set Password = '"+password+"' where id = '"+id+"'", async function(err, rows, fields){
+            if(err){
+                console.log(err);
+            }else{
+                console.log("successfully update password of recipient!!!");
+            }
+        });
+    }
+
 		var fabric_client = new Fabric_Client();
 
 		// setup the fabric network
@@ -291,6 +302,17 @@ async function query3(func, params){
                         chainId: 'mychannel3'
                     };
                         break;
+                case 'changeRecipientPass':
+                    request ={
+                        chaincodeId: 'test-app-queryRE7',
+                        fcn: 'changeRecipientInfo',
+                        args: [params[0], params[1]], // id, password
+                        chainId: 'mychannel3',
+                        txId: tx_id
+                    };
+                    break;
+                    
+
 				default:
 					break;
 

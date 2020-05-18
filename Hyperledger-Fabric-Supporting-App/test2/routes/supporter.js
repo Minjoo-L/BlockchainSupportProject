@@ -29,27 +29,19 @@ router.get('/supp_query_result', async function(req, res){
 });
 
 //내 정보 조회(후원자)
-router.post('/supp_personal_info', async function(req, res){
+router.get('/supp_personal_info', async function(req, res){
     sess = req.session;
     if(sess.auth!=0){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        var id = req.body.id;
-        Sid = id;
-        var pw = req.body.password;
-        var params =[id];
-        var supporter = await channel2Query.query2('querySupporter', params);
-        pw = crypto.createHash('sha512').update(pw).digest('base64');
-
-        if(supporter != null && supporter.pw == pw){
+            var params = [sess.email];
+            var supporter = await channel2Query.query2('queryWithOtherInfo', params);
+            Sid = supporter[0].Record.id;
             res.render('supp_personal_info',{
                 session: sess,
-                data: supporter
+                data: supporter[0].Record
             });
-        } else{
-            // 예외처리 하기
-        }
-    }
+        } 
 });
 
 //내 비밀번호 변경(후원자)
@@ -82,6 +74,7 @@ router.post('/changeAl', async function(req,res){
     }else{
         var address = req.body.address;
         var phoneNum = req.body.phoneNum;
+        console.log("주소는 무엇인가",req.body.address);
         var params = [Sid, address, phoneNum];
         await channel2Query.query3('changeSupporterInfo', params);
 
