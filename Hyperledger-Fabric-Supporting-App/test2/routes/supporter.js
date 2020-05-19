@@ -323,4 +323,36 @@ router.get('/check_Reci', async function(req, res){
     }
 });
 
+// 피후원자 추천 조건 선택
+router.get('/before_recom', async function(req, res){
+    sess = req.session;
+    if(sess.auth!=0){
+        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+    }else{
+            res.render('before_recom',{
+                session: sess
+            });
+        } 
+});
+// 피후원자 추천
+router.post('/recommendation', async function(req, res){
+    sess = req.session;
+    if(sess.auth!=0){
+        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+    }else{
+        // 임시코드
+        var recipients  = await channel3Query.query1('queryAllRecipient');
+        var data = [];
+        for(recipient of recipients){
+            if(recipient.Record.status == 'Y'){
+                data.push(recipient);
+            }
+        }
+        res.render('recommendation',{
+            session: sess,
+            data: data
+        });
+    }
+});
+
 module.exports = router;
