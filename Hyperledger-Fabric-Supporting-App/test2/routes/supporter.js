@@ -74,10 +74,8 @@ router.post('/changeAl', async function(req,res){
     }else{
         var address = req.body.address;
         var phoneNum = req.body.phoneNum;
-        console.log("주소는 무엇인가",req.body.address);
         var params = [Sid, address, phoneNum];
         await channel2Query.query3('changeSupporterInfo', params);
-
             res.render('changeAl',{
                 session: sess
             });

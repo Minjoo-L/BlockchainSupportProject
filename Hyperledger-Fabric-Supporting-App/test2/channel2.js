@@ -271,7 +271,6 @@ async function query3(func, params) {
 		    // get a transaction id object based on the current user assigned to fabric client
 		    tx_id = fabric_client.newTransactionID();
 		    console.log("Assigning transaction_id: ", tx_id._transaction_id);
-
 			var request;
             switch (func) {
                 case 'registerSupporter':
@@ -289,7 +288,7 @@ async function query3(func, params) {
 						fcn: 'changeSupporterInfo',
 						args: [params[0], params[1], params[2]], // id, address, phoneNum
 						chainId: 'mychannel2',
-						txId: tx_id
+						txId: tx_id,
 					};
 					break;
 				
@@ -299,7 +298,7 @@ async function query3(func, params) {
 						fcn: 'changeSupporterInfo',
 						args: [params[0], params[1]], // id, password
 						chainId: 'mychannel2',
-						txId: tx_id
+						txId: tx_id,
 					};
 					break;
 

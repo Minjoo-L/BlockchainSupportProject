@@ -76,7 +76,7 @@
 	 }
  
 	supporterAsBytes, _ := json.Marshal(supporter[0])
-	APIstub.PutState( "9912122999999", supporterAsBytes)
+	APIstub.PutState( "991212-2999999", supporterAsBytes)
 
 	 return shim.Success(nil)
  }
@@ -167,10 +167,13 @@ func (s *SmartContract) changeSupporterInfo(APIstub shim.ChaincodeStubInterface,
 
 	json.Unmarshal(userSupporterAsBytes, &userSupporter)
 
-	if len(args) > 2{ //주소와 폰 번호 바꾸는 경우
+	if len(args) == 3{ //주소와 폰 번호 바꾸는 경우
+		fmt.Sprintf("주소와 폰 번호 변경", args[1], args[2])
+
         userSupporter.Address = args[1]
         userSupporter.PhoneNum = args[2]
     } else {
+		fmt.Sprintf("비밀번호 변경", args[1])
         userSupporter.Password = args[1]
     }
 
