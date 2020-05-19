@@ -336,23 +336,45 @@ router.get('/before_recom', async function(req, res){
 });
 // 피후원자 추천
 router.post('/recommendation', async function(req, res){
-    sess = req.session;
-    if(sess.auth!=0){
-        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
-    }else{
-        // 임시코드
-        var recipients  = await channel3Query.query1('queryAllRecipient');
-        var data = [];
-        for(recipient of recipients){
-            if(recipient.Record.status == 'Y'){
-                data.push(recipient);
+    // 0~20 cyoung 20~45 cmid_y 45~65 cmin_o 65이상 cold_o
+        sess = req.session;
+        var age = req.body.age;
+        console.log("선택한 age는", age);
+       /* var length = age.length;
+        // 한 가지 선택할 경우
+        if (length == 6){ 
+            age = age[0]+age[1]+age[2]+age[3]+age[4]+age[5];
+            console.log('age[0]', age);
+        } else{
+            for (var i =0; i< length; i++){
+                console.log('age['+i+'] : ' + age[i]);
             }
+        }*/
+        if(sess.auth!=0){
+            res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
+        }else{
+            // 임시코드
+            var recipients  = await channel3Query.query1('queryAllRecipient');
+            var data = [];
+            for(recipient of recipients){
+                if(recipient.Record.status == 'Y'){
+                    if (age == "cyoung" && recipient.Record.age >= 0 && recipient.Record.age <= 20 ){
+                        data.push(recipient);
+                    } else if (age == "cmid_y" && recipient.Record.age >= 20 && recipient.Record.age <= 45 ){
+                        data.push(recipient);
+                    } else if (age == "cmid_o" && recipient.Record.age >= 45 && recipient.Record.age <= 65 ){
+                        data.push(recipient);
+                    } else if (age == "cold_o" && recipient.Record.age >= 65){
+                        data.push(recipient);
+                    } 
+                }
+            }
+            res.render('recommendation',{
+                session: sess,
+                data: data
+            });
         }
-        res.render('recommendation',{
-            session: sess,
-            data: data
-        });
-    }
-});
+    });
+    
 
 module.exports = router;
