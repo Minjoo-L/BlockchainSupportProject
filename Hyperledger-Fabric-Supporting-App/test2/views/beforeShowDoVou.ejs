@@ -56,29 +56,25 @@
       <%if (session&&session.auth==0){%>
         <form class="form-register" method="post" action="/supporter/showDonateVoucher">
           <label>주민등록번호:</label>
-          <input style="width:30%" type="text" name="id1">&nbsp&nbsp-&nbsp&nbsp<input style="width:30%" type="text" name="id2"><br>
+          <input style="width:30%" type="text" name="id1">&nbsp&nbsp-&nbsp&nbsp<input style="width:30%" type="text" name="id2"><br><br>
             <label>비밀번호: <input class="form-control" type="password" name="pw"></label>
             <br>
-            <input id="edit" class="btn btn-primary" type="submit" value="확인">
+            <input id="edit" class="btn btn-default" type="submit" value="확인">
         </form>
       <%}else{%>
         <form class="form-register" method="post" action="/recipient/showDonateVoucher">
           <label>주민등록번호:</label>
-          <input style="width:30%" type="text" name="id1">&nbsp&nbsp-&nbsp&nbsp<input style="width:30%" type="text" name="id2"><br>
+          <input style="width:30%" type="text" name="id1">&nbsp&nbsp-&nbsp&nbsp<input style="width:30%" type="text" name="id2"><br><br>
           <label>비밀번호: <input class="form-control" type="password" name="pw"></label>
           <br>
-          <input id="edit" class="btn btn-primary" type="submit" value="확인">
+          <input id="edit" class="btn btn-default" type="submit" value="확인">
       </form>
       <%}%>
     </div>
   </div>
 </section>
 
-<!-- footer Start -->
-<footer class="footer">
-<%- include("footer") %>
-</footer>
-<!-- footer Start -->
+
     <!-- 
     Essential Scripts
     =====================================-->

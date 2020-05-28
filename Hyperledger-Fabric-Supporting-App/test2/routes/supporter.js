@@ -103,19 +103,7 @@ router.post('/changePass', async function(req,res){
     }
 });
 
-// 기부기부
-router.get('/beforeShowDoVou', async function(req, res){
-    sess = req.session;
-    if(sess.auth!=0){
-        res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
-    }else{
-        res.render('beforeShowDoVou', {
-            session: sess
-        })
-    }
-});
-
-// 기부한 바우처 내역 조회를 위한 비밀번호 입력 창
+// 기부한 바우처 내역 조회를 위한 비밀번호 입력 창 --> 삭제
 router.get('/beforeShowDoVou', async function(req, res){
     sess = req.session;
     if(sess.auth!=0){
@@ -133,7 +121,7 @@ router.post('/showDonateVoucher', async function(req, res){
     if(sess.auth!=0){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        var id = req.body.id1+req.body.id2;
+        var id = req.body.id;
         var pw = req.body.pw;
         pw = crypto.createHash('sha512').update(pw).digest('base64');
         var params = [id];
@@ -152,13 +140,13 @@ router.post('/showDonateVoucher', async function(req, res){
                 filter: '전체'
             })
         }else{
-            res.send('<script type="text/javascript">alert("비밀번호나 주민등록번호를 확인해주세요.");location.href="/supporter/beforeShowDoVou";</script>');
+            res.send('<script type="text/javascript">alert("비밀번호나 주민등록번호를 확인해주세요.");location.href="/mypage";</script>');
         }
         
     }
 });
 
-// 바우처 구매
+// 바우처 구매 --> 삭제
 router.get('/purchaseVoucher', async function(req, res){
     sess = req.session;
     if(sess.auth!=0){
@@ -175,7 +163,7 @@ router.post('/purchase', async function(req, res){
     if(sess.auth!=0){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        var id = req.body.id1+"-"+req.body.id2;
+        var id = req.body.idr;
         var pw = req.body.pw;
         pw = crypto.createHash('sha512').update(pw).digest('base64');
         var amount= req.body.amount;
@@ -188,7 +176,7 @@ router.post('/purchase', async function(req, res){
                 id: id
             })
         }else{
-            res.send('<script type="text/javascript">alert("비밀번호나 주민등록번호를 확인해주세요.");location.href="/supporter/purchaseVoucher";</script>');
+            res.send('<script type="text/javascript">alert("비밀번호나 주민등록번호를 확인해주세요.");location.href="/mypage";</script>');
         }
     }
 });
@@ -202,7 +190,7 @@ router.post('/purchaseResult', async function(req, res){
         var amount= req.body.amount;
         var params = [id, amount];
         await channel1Query.query3('purchaseVoucher', params);
-        res.send('<script type="text/javascript">location.href="/supporter/purchaseVoucher";</script>')
+        res.send('<script type="text/javascript">location.href="/mypage";</script>');
     }
 })
 
@@ -274,7 +262,7 @@ router.post('/donate', async function(req, res){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
         var name = req.body.name;
-        var ids = req.body.ids1+ids2;
+        var ids = req.body.ids1+"-"+ids2;
         var idr = req.body.idr;
         var pw = req.body.pw;
         pw = crypto.createHash('sha512').update(pw).digest('base64');
@@ -290,11 +278,12 @@ router.post('/donate', async function(req, res){
             }else{
                 var err = await channel1Query.query3('donateV', params);
                 console.log(err);
-                res.render('donateComplete', {
-                    session: sess,
-                    name: name,
-                    number: number
-                })
+                // res.render('donateComplete', {
+                //     session: sess,
+                //     name: name,
+                //     number: number
+                // })
+                res.send('<script type="text/javascript">alert(name+"님께 후원 완료"); location.href="/mypage";</script>'); // 확인 필요
             }
         }
         else{

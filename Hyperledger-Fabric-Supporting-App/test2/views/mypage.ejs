@@ -85,19 +85,51 @@
             <%if (session.auth == 0){%>
               <form class="form-register" method="post" action="/supporter/supp_pass_info">
               주민번호를 입력해 주세요 <input type = "text" placeholder ="'-'를 포함하여 입력해 주세요" class="form-control" id="id" name="id">
-              비밀번호를 입력해 주세요 <input type="password" class="form-control" id="password" name="password">
+              비밀번호를 입력해 주세요 <input type="password" class="form-control" id="password" name="password"><br>
               <input id="edit" class="btn btn-default" type="submit" value="확인">
             </form>
             <%}
              else if (session.auth == 1) {%>
               <form class="form-register" method="post" action="/recipient/reci_pass_info">
                 주민번호를 입력해 주세요 <input type = "text" placeholder ="'-'를 포함하여 입력해 주세요" class="form-control" id="id" name="id">
-                비밀번호를 입력해 주세요 <input type="password" class="form-control" id="password" name="password">
+                비밀번호를 입력해 주세요 <input type="password" class="form-control" id="password" name="password"> <br>
                 <input id="edit" class="btn btn-default" type="submit" value="확인">
               </form>
               <%}%>
-          </div>
+          </div><br><br>
 
+          <%if(session.auth==0){%>
+          
+            <div class="form-group">
+                <form class="form-register" method="post" action="/supporter/purchase">
+                  <label>바우처 구매</label><br>
+                  주민번호를 입력해 주세요 <input type = "text" placeholder ="'-'를 포함하여 입력해 주세요" class="form-control" id="id" name="id">
+                  비밀번호를 입력해 주세요 <input type="password" class="form-control" id="password" name="pw">
+                  <label>구매할 블록 수:
+                  블록은 1개당 100원입니다. &nbsp &nbsp
+                  <input type="text" name="amount" style="width:25%; height:33px; margin:5px;">개</label><br>
+                  <input id="edit" class="btn btn-default" type="submit" value="구매">
+                  </form>
+            </div>
+          <br><br>
+          <%}%>
+
+          <div class="form-group">
+            <label>바우처 내역 조회</label><br>
+              <%if (session&&session.auth==0){%>
+                <form class="form-register" method="post" action="/supporter/showDonateVoucher">
+                  주민번호를 입력해 주세요 <input type = "text" placeholder ="'-'를 포함하여 입력해 주세요" class="form-control" id="id" name="id">
+                  비밀번호를 입력해 주세요 <input type="password" class="form-control" id="password" name="pw"><br>
+                    <input id="edit" class="btn btn-default" type="submit" value="확인">
+                </form>
+              <%}else{%>
+                <form class="form-register" method="post" action="/recipient/showDonateVoucher">
+                  주민번호를 입력해 주세요 <input type = "text" placeholder ="'-'를 포함하여 입력해 주세요" class="form-control" id="id" name="id">
+                  비밀번호를 입력해 주세요 <input type="password" class="form-control" id="password" name="pw"><br>
+                  <input id="edit" class="btn btn-default" type="submit" value="확인">
+              </form>
+              <%}%>
+          </div>
       
 
 <!-- footer Start -->
