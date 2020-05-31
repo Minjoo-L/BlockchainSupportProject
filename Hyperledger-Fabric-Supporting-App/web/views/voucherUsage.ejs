@@ -43,46 +43,49 @@
       <div class="col-md-12">
         <div class="block">
           <h1>개인 후원 시스템</h1><br>
-          <p>바우처 내역 조회</p>
+          <p>바우처 사용내역</p>
         </div>
       </div>
     </div>
   </div>
 </section>
-
+<!--바우처 사용내역-->
 <section class="portfolio-work">
   <div class="container">
     <div class="row">
-      <%if (session&&session.auth==0){%>
-        <form class="form-register" method="post" action="/supporter/showDonateVoucher">
-          <label>주민등록번호:</label>
-          <input style="width:30%" type="text" name="id1">&nbsp&nbsp-&nbsp&nbsp<input style="width:30%" type="text" name="id2"><br>
-            <label>비밀번호: <input class="form-control" type="password" name="pw"></label>
-            <br>
-            <input id="edit" class="btn btn-primary" type="submit" value="확인">
-        </form>
-      <%}else{%>
-        <form class="form-register" method="post" action="/recipient/showDonateVoucher">
-          <label>주민등록번호:</label>
-          <input style="width:30%" type="text" name="id1">&nbsp&nbsp-&nbsp&nbsp<input style="width:30%" type="text" name="id2"><br>
-          <label>비밀번호: <input class="form-control" type="password" name="pw"></label>
-          <br>
-          <input id="edit" class="btn btn-primary" type="submit" value="확인">
-      </form>
-      <%}%>
-    </div>
-  </div>
-</section>
+      <table class="table" align="center">
+        <tr>
+          <th>블록 수</th>
+          <th>+/-</th>
+          <th>거래 시간</th>
+          <th>트랜잭션 ID</th>
+        </tr>
+        <%for (var i = data.length-1; i >=0; i--) { 
+          db = data[i];
+          if(db.Value.giveget>0){
+        %>
+          <tr>
+              <td><%=db.Value.amount%></td>
+              <td>+<%=db.Value.giveget%></td>
+              <td><%=db.Timestamp%></td>
+              <td><%=db.TxId%></td>
+          </tr>
+       <%}else{%>
+        <tr>
+            <td><%=db.Value.amount%></td>
+            <td><%=db.Value.giveget%></td>
+            <td><%=db.Timestamp%></td>
+            <td><%=db.TxId%></td>
+        </tr>
+        <%}}%>
+       </table>
 
-<!-- footer Start -->
-<footer class="footer">
-<%- include("footer") %>
-</footer>
-<!-- footer Start -->
     <!-- 
     Essential Scripts
     =====================================-->
-
+    
+    <!-- <script src="js/jquery.counterup.js"></script> -->
+    
     <!-- Main jQuery -->
    
     <script src="https://code.jquery.com/jquery-git.min.js"></script>
@@ -102,5 +105,6 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
 
     <script src="../js/script.js"></script>
+
   </body>
-  </html>
+</html>

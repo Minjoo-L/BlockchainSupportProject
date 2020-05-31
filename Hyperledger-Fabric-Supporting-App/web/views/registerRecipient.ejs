@@ -34,19 +34,19 @@
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="css/style.css">
-  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 </head>
 <%- include("header") %>
 <body ng-app="application" ng-controller="appController" id="body">
 <!-- Header Start -->
 <header class="header"></header>
+<!-- header close -->
 <section class="page-title bg-2">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="block">
           <h1>개인 후원 시스템</h1><br>
-          <p>후원자 회원가입</p>
+          <p>피후원자 회원가입</p>
         </div>
       </div>
     </div>
@@ -56,12 +56,12 @@
 <!-- contact form start -->
 <section class="contact-form">
     <div class="container"> 
-       <!--후원자 회원가입-->
-       <form action="registerSupporter/supp_reg" method="post"><br>
-        이름: <input class="form-control" type="text" name="sname"><br>
-        <p>주민등록번호:</p>
-        <input style="width:30%" type="text" name="sid1">&nbsp&nbsp-&nbsp&nbsp<input style="width:30%" type="text" name="sid2"><br><br>
-        계좌번호: <select name="sbank">
+       <!--피후원자 회원가입-->
+       <form action="registerRecipient/reci_reg" method="post">
+        이름: <input class="form-control" type="text" name="rname"><br>
+        주민등록번호:<br>
+        <input style="width:30%" type="text" name="rid1">&nbsp&nbsp-&nbsp&nbsp<input style="width:30%" type="text" name="rid2"><br><br>
+        계좌번호: <select name="rbank">
           <option value="kook">국민</option>
           <option value="ki">기업</option>
           <option value="nong">농협</option>
@@ -72,14 +72,16 @@
           <option value="kakao">카카오뱅크</option>
           <option value="etc">그 외</option>
         </select>
-        <input class="form-control" type="text" name="saccount"><br>
-        이메일: <input class="form-control" type="text" name="semail"> <br>
-        비밀번호: <input class="form-control" type="password" name="spw"><br>
-        주소:<br><input style="width:15%" type="text" name="saddress1">&nbsp시&nbsp&nbsp&nbsp&nbsp <input style="width:15%"type="text" name="saddress2">&nbsp구&nbsp&nbsp&nbsp&nbsp
-        <input style="width:15%" type="text" name="saddress3">&nbsp동&nbsp&nbsp&nbsp&nbsp <input style="width:35%"type="text" name="saddress4">&nbsp(기타)<br><br>
-        전화번호: <input class="form-control" type="text" name="sphoneNum"><br>
-        <input id="registerSupporter" type="submit" value="회원가입">
-      </form>
+        <input class="form-control" type="text" name="raccount"><br>
+        이메일: <input class="form-control" type="text" name="remail"><br> 
+        비밀번호: <input class="form-control" type="password" name="rpw"><br>
+        주소:<br><input style="width:15%" type="text" name="raddress1">&nbsp시&nbsp&nbsp&nbsp&nbsp <input style="width:15%"type="text" name="raddress2">&nbsp구&nbsp&nbsp&nbsp&nbsp
+        <input style="width:15%" type="text" name="raddress3">&nbsp동&nbsp&nbsp&nbsp&nbsp <input style="width:35%"type="text" name="raddress4">&nbsp(기타)<br><br>
+        전화번호: <input class="form-control" type="text" name="rphoneNum"><br>
+        직업: <input class="form-control" type="text" name="rjob"><br>
+        사유: <input class="form-control" type="text" name="rstory"><br>
+        <input class="btn btn-default" id="registerRecipient" type="submit" value="회원가입"><br>
+       </form>
     </div>
 </section>
 <!-- footer Start -->
@@ -89,6 +91,8 @@
     <!-- 
     Essential Scripts
     =====================================-->
+    
+    <!-- <script src="js/jquery.counterup.js"></script> -->
     
     <!-- Main jQuery -->
    

@@ -6,7 +6,7 @@
   
   <meta name="author" content="Themefisher.com">
 
-  <title>Airspace | Creative Agency Bootstrap template</title>
+  <title>개인 후원 시스템</title>
 
   <!-- Mobile Specific Meta-->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,33 +38,31 @@
 <%- include("header") %>
 
 <section class="page-title bg-2">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="block">
-            <h1>Hyperledger Fabric Supporting Application</h1>
-            <p>후원하기</p>
-          </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="block">
+          <h1>개인 후원 시스템</h1><br>
+          <p>받은 바우처 내역 조회</p>
         </div>
       </div>
     </div>
+  </div>
 </section>
 
 <section class="portfolio-work">
-    <div class="container">
-      <div class="row">
-        <h3>바우처 후원 완료 내역</h3><br><br>	
-        <label><%=name%>님께 후원 완료</label> 
-        <br>
-        <br><br>
-      </div>
+  <div class="container">
+    <div class="row">
+        <form class="form-register" method="post" action="/recipient/recievedVoucher">
+          <label>주민등록번호:</label>
+          <input style="width:30%" type="text" name="id1">&nbsp&nbsp-&nbsp&nbsp<input style="width:30%" type="text" name="id2"><br>
+            <input id="edit" class="btn btn-default" type="submit" value="확인">
+          </form>
     </div>
+  </div>
 </section>
 
-<!-- footer Start -->
-<footer class="footer">
-<%- include("footer") %>
-</footer>
+
     <!-- 
     Essential Scripts
     =====================================-->
@@ -82,16 +80,12 @@
     <script src="../plugins/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
     <!-- Mixit Up JS -->
     <script src="../plugins/mixitup/dist/mixitup.min.js"></script>
-    <!-- <script src="plugins/count-down/jquery.lwtCountdown-1.0.js"></script> -->
     <script src="../plugins/SyoTimer/build/jquery.syotimer.min.js"></script>
-
 
     <!-- Form Validator -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
 
     <script src="../js/script.js"></script>
-    <script type="text/javascript" src="app.js"> </script>
-
   </body>
   </html>

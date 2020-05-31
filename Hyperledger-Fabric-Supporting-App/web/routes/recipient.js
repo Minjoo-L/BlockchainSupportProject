@@ -22,7 +22,7 @@ router.post('/showDonateVoucher', async function(req, res){
     if(sess.auth!=1){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        var id = req.body.id1+req.body.id2;
+        var id = req.body.id;
         var pw = req.body.pw;
         pw = crypto.createHash('sha512').update(pw).digest('base64');
         var params = [id];
@@ -41,7 +41,7 @@ router.post('/showDonateVoucher', async function(req, res){
                 filter: '전체'
             })
         }else{
-            res.send('<script type="text/javascript">alert("비밀번호나 주민등록번호를 확인해주세요.");location.href="/recipient/beforeShowDoVou";</script>');
+            res.send('<script type="text/javascript">alert("비밀번호나 주민등록번호를 확인해주세요.");location.href="/mypage";</script>');
         }
     }
 });

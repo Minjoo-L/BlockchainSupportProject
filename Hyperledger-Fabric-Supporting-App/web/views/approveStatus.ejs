@@ -7,7 +7,12 @@
   <meta name="author" content="Themefisher.com">
 
   <title>개인 후원 시스템</title>
-
+  <style>
+    .td_story {
+      width: 500px;
+      padding: 10px;
+    }
+  </style>
   <!-- Mobile Specific Meta-->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Favicon -->
@@ -27,7 +32,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
-    
+  <script src ="../routes/government.js"></script>
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -36,51 +41,58 @@
 
 <!-- Header Start -->
 <%- include("header") %>
-
 <section class="page-title bg-2">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="block">
           <h1>개인 후원 시스템</h1><br>
-          <p>후원하기</p>
+          <p>승인 여부 확인</p>
         </div>
       </div>
     </div>
   </div>
 </section>
-
+<%data = data[0].Record;%>
 <section class="portfolio-work">
-    <div class="container">
-      <div class="row">
-        <h3>바우처 후원</h3><br><br>	
-        <label><%=name%> 님께 후원</label> 
-        <br>
-        <form method="post" action="/supporter/donate">
-         <label>주민등록번호:</label> <br>
-          <input style="width:30%" type="text" name="ids1">&nbsp&nbsp-&nbsp&nbsp<input style="width:30%" type="text" name="ids2"><br>
-        <label>비밀번호: <input type ="password" name="pw"></label><br>
-        <label>기부할 블록 수:  <input type = "text" name = "number"></label>
-        <br><br>
-        <input type = "hidden" name = "idr" value = <%=id%>>
-        <input type = "hidden" name = "name" value = <%=name%>>
-        <input class="btn btn-default" type="submit" value="후원하기">
-        </form>
-      </div>
-    </div>
-</section>
+  <div class="container">
+    <div class="row">
+      <br><br>
+      <h2>피후원자 승인 여부 조회 결과</h2>
+      <br><br><br>
+      <table class="table" align="center">
+          <tr>
+              <td width="30%" border-right="1px solid black">이름</td>
+              <td><%=session.Name%></td>
+          </tr>
+          <tr>
+            <td width="30%" border-right="1px solid black">승인 상태</td>
+            <td>
+                
+                <%if(data.status=='Y'){%>승인
+                <%}else if(data.status=='N'){%>처리중
+                <%}else{%>보류<%}%>
+            </td>
+          </tr>
+          <%if(data.status=='P'){%>
+          <tr>
+              <td width="30%" border-right="1px solid black">보류 이유</td>
+              <td><%=data.reason%></td>
+          </tr>
+          <tr>
+            <td colspan="2"><br><p color="blue">피후원자 신청이 보류되었습니다. 보류 이유를 확인하여 정보를 수정해주세요.</p></td>
+          </tr>
+          <%}else if(data.status=='Y'){%>
+            <tr>
+                <td colspan="2"><br><p color="blue">피후원자 신청이 승인되었습니다. 개인정보가 비식별화되어 후원자에게 공개되며 후원을 받는 것이 가능합니다.</p></td>
+            </tr>
+          <%}else{%>
+            <tr>
+                <td colspan="2"><br><p color="blue">피후원자 신청이 처리중입니다.</p></td>
+            </tr>
+          <%}%>
+        </table>
 
-<!-- footer Start -->
-<footer class="footer">
-<%- include("footer") %>
-</footer>
-    <!-- 
-    Essential Scripts
-    =====================================-->
-    
-    <!-- <script src="js/jquery.counterup.js"></script> -->
-    
-    <!-- Main jQuery -->
    
     <script src="https://code.jquery.com/jquery-git.min.js"></script>
     <!-- Bootstrap 3.1 -->
@@ -93,12 +105,10 @@
     <script src="../plugins/mixitup/dist/mixitup.min.js"></script>
     <script src="../plugins/SyoTimer/build/jquery.syotimer.min.js"></script>
 
-
     <!-- Form Validator -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
 
-    <script src="../js/script.js"></script>
 
   </body>
   </html>

@@ -27,7 +27,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
-    
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="../css/style.css">
 </head>
@@ -36,37 +35,37 @@
 
 <!-- Header Start -->
 <%- include("header") %>
-
 <section class="page-title bg-2">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="block">
           <h1>개인 후원 시스템</h1><br>
-          <p>받은 바우처 내역 조회</p>
+          <p>바우처 구매</p>
         </div>
       </div>
     </div>
   </div>
 </section>
-
 <section class="portfolio-work">
-  <div class="container">
-    <div class="row">
-        <form class="form-register" method="post" action="/recipient/recievedVoucher">
-          <label>주민등록번호:</label>
+    <div class="container">
+      <div class="row">
+        <form class="form-register" method="post" action="/supporter/purchase">
+          <h3>후원자 바우처 구매</h3><br><br>	
+          <label>주민등록번호:</label><br>
           <input style="width:30%" type="text" name="id1">&nbsp&nbsp-&nbsp&nbsp<input style="width:30%" type="text" name="id2"><br>
-            <input id="edit" class="btn btn-default" type="submit" value="확인">
+          <label>비밀번호: <input class="form-control" type="password" name="pw"></label>
+          <br>
+          <label>구매할 블록 수:
+          블록은 1개당 100원입니다. 
+          <input type="text" name="amount">개</label>
+          <br><br>
+          <input id="edit" class="btn btn-default" type="submit" value="구매">
           </form>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- footer Start -->
-<footer class="footer">
-<%- include("footer") %>
-</footer>
-<!-- footer Start -->
     <!-- 
     Essential Scripts
     =====================================-->
@@ -86,10 +85,12 @@
     <script src="../plugins/mixitup/dist/mixitup.min.js"></script>
     <script src="../plugins/SyoTimer/build/jquery.syotimer.min.js"></script>
 
+
     <!-- Form Validator -->
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.32/jquery.form.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
 
     <script src="../js/script.js"></script>
+
   </body>
   </html>

@@ -43,46 +43,38 @@
       <div class="col-md-12">
         <div class="block">
           <h1>개인 후원 시스템</h1><br>
-          <p>바우처 사용내역</p>
+          <p>후원을 기다리는 피후원자 목록 </p>
         </div>
       </div>
     </div>
   </div>
 </section>
-<!--바우처 사용내역-->
+
 <section class="portfolio-work">
   <div class="container">
     <div class="row">
       <table class="table" align="center">
         <tr>
-          <th>블록 수</th>
-          <th>+/-</th>
-          <th>거래 시간</th>
-          <th>트랜잭션 ID</th>
+          <th>이름</th>
+          <th>사연</th>
+          <!--후원 체인코드 확인을 위한 임시 버튼! 나중에 없애기-->
+          <th>상세보기</th>
         </tr>
-        <%for (var i = data.length-1; i >=0; i--) { 
-          db = data[i];
-          if(db.Value.giveget>0){
+        <%for (var i = 0; i < data.length; i++) { 
+          db = data[i].Record;
+          var jsn = encodeURI(JSON.stringify(data));
         %>
+        <form action="/supporter/show_details" method="post">
           <tr>
-              <td><%=db.Value.amount%></td>
-              <td>+<%=db.Value.giveget%></td>
-              <td><%=db.Timestamp%></td>
-              <td><%=db.TxId%></td>
+              <td><%=db.name%></td>
+              <td><%=db.story%></td>
+              <input type = "hidden" name = "data" value = <%=jsn%>> 
+              <td><input class="btn btn-default" type="submit" value="상세보기"></td>
           </tr>
-       <%}else{%>
-        <tr>
-            <td><%=db.Value.amount%></td>
-            <td><%=db.Value.giveget%></td>
-            <td><%=db.Timestamp%></td>
-            <td><%=db.TxId%></td>
-        </tr>
-        <%}}%>
+        </form>
+       <%}%>
        </table>
-<!-- footer Start -->
-<footer class="footer">
-<%- include("footer") %>
-</footer>
+
     <!-- 
     Essential Scripts
     =====================================-->
