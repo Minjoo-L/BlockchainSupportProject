@@ -328,7 +328,8 @@ router.post('/recommendation', async function(req, res){
     // 0~20 cyoung 20~45 cmid_y 45~65 cmin_o 65이상 cold_o
         sess = req.session;
         var age = req.body.age;
-        console.log("선택한 age는", age);
+        var job = req.body.job;
+        //console.log("선택한 age는", age);
        /* var length = age.length;
         // 한 가지 선택할 경우
         if (length == 6){ 
@@ -348,13 +349,29 @@ router.post('/recommendation', async function(req, res){
             for(recipient of recipients){
                 if(recipient.Record.status == 'Y'){
                     if (age == "cyoung" && recipient.Record.age >= 0 && recipient.Record.age <= 20 ){
-                        data.push(recipient);
+                        if(job == "no" && recipient.Record.job == "무직"){
+                            data.push(recipient);
+                        } else if (job == "yes"  && recipient.Record.job != "무직"){
+                            data.push(recipient);
+                        }
                     } else if (age == "cmid_y" && recipient.Record.age >= 20 && recipient.Record.age <= 45 ){
-                        data.push(recipient);
+                        if(job == "no" && recipient.Record.job == "무직"){
+                            data.push(recipient);
+                        } else if (job == "yes"  && recipient.Record.job != "무직"){
+                            data.push(recipient);
+                        }
                     } else if (age == "cmid_o" && recipient.Record.age >= 45 && recipient.Record.age <= 65 ){
-                        data.push(recipient);
+                        if(job == "no" && recipient.Record.job == "무직"){
+                            data.push(recipient);
+                        } else if (job == "yes"  && recipient.Record.job != "무직"){
+                            data.push(recipient);
+                        }
                     } else if (age == "cold_o" && recipient.Record.age >= 65){
-                        data.push(recipient);
+                        if(job == "no" && recipient.Record.job == "무직"){
+                            data.push(recipient);
+                        } else if (job == "yes"  && recipient.Record.job != "무직"){
+                            data.push(recipient);
+                        }
                     } 
                 }
             }
