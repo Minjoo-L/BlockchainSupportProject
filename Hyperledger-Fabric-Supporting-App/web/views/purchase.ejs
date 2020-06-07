@@ -45,9 +45,14 @@
       form.appendChild(objs);
       objs2 = document.createElement('input');
       objs2.setAttribute('type', 'hidden');
-      objs2.setAttribute('name', 'id');
-      objs2.setAttribute('value', <%=id%>);
+      objs2.setAttribute('name', 'id1');
+      objs2.setAttribute('value', <%=id1%>);
       form.appendChild(objs2);
+      objs3 = document.createElement('input');
+      objs3.setAttribute('type', 'hidden');
+      objs3.setAttribute('name', 'id2');
+      objs3.setAttribute('value', <%=id2%>);
+      form.appendChild(objs3);
       form.setAttribute('method', 'post');
       form.setAttribute('action', "/supporter/purchaseResult");
       document.body.appendChild(form);

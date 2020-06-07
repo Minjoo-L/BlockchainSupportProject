@@ -3,6 +3,7 @@ var router = express.Router();
 var session = require('express-session');
 var crypto = require('crypto'); //비밀번호 해시화
 var channel2Query = require('../channel2.js');
+var channel4Query = require('../channel4.js');
 var channel1Query = require('../channel1.js');
 var channel3Query = require('../channel3.js');
 
@@ -121,7 +122,7 @@ router.post('/showDonateVoucher', async function(req, res){
     if(sess.auth!=0){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        var id = req.body.id;
+        var id = req.body.id1+"-"+req.body.id2;
         var pw = req.body.pw;
         pw = crypto.createHash('sha512').update(pw).digest('base64');
         var params = [id];
@@ -163,7 +164,7 @@ router.post('/purchase', async function(req, res){
     if(sess.auth!=0){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        var id = req.body.idr;
+        var id = req.body.id1+"-"+req.body.id2;
         var pw = req.body.pw;
         pw = crypto.createHash('sha512').update(pw).digest('base64');
         var amount= req.body.amount;
@@ -173,7 +174,8 @@ router.post('/purchase', async function(req, res){
             res.render('purchase', {
                 session: sess,
                 amount: amount,
-                id: id
+                id1: req.body.id1,
+                id2: req.body.id2
             })
         }else{
             res.send('<script type="text/javascript">alert("비밀번호나 주민등록번호를 확인해주세요.");location.href="/mypage";</script>');
@@ -186,11 +188,13 @@ router.post('/purchaseResult', async function(req, res){
     if(sess.auth!=0){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        var id = req.body.id;
+        var id = req.body.id1+"-"+req.body.id2;
         var amount= req.body.amount;
+        console.log(id);
+        console.log(amount);
         var params = [id, amount];
         await channel1Query.query3('purchaseVoucher', params);
-        res.send('<script type="text/javascript">location.href="/mypage";</script>');
+        res.send('<script type="text/javascript">location.href="/supporter/purchaseVoucher";</script>');
     }
 })
 
@@ -262,7 +266,7 @@ router.post('/donate', async function(req, res){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
         var name = req.body.name;
-        var ids = req.body.ids1+"-"+ids2;
+        var ids = req.body.ids1+"-"+req.body.ids2;
         var idr = req.body.idr;
         var pw = req.body.pw;
         pw = crypto.createHash('sha512').update(pw).digest('base64');
@@ -298,7 +302,7 @@ router.get('/check_Reci', async function(req, res){
     if(sess.auth!=0){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        var recipients  = await channel3Query.query1('queryAllRecipient');
+        var recipients  = await channel4Query.query1('queryAllRecipient');
         var data = [];
         for(recipient of recipients){
             if(recipient.Record.status == 'Y'){

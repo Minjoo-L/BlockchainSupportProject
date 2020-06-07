@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();  
 var session = require('express-session');
-var channel3Query = require('../channel3.js');
 var channel1Query = require('../channel1.js');
+var channel4Query = require('../channel4.js');
 
 router.get('/QueryVoucherUsageGov', async function(req, res){
     sess = req.session;
@@ -36,10 +36,9 @@ router.get('/SERecipients', async function(req, res){
     if(sess.auth!=3){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        var recipients  = await channel3Query.query1('queryAllRecipient');
+        var recipients  = await channel4Query.query1('queryAllRecipient');
         var data = [];
         for(recipient of recipients){
-          recipient.Record.name = recipient.Record.name[0]+ "블록";
             data.push(recipient);
         }
         res.render('SERecipients',{

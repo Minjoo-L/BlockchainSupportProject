@@ -120,7 +120,8 @@
     </form>
     <br><br><br>
     <form action="/government/approveAction" method="post">
-        <input type = "hidden" name = "recipientId" value = <%=data.id%>>
+     <% var jsn = encodeURI(JSON.stringify(data)); %>
+        <input type = "hidden" name = "data" value = <%=jsn%>>
         <tr><input id="approve" class="btn btn-primary" type="submit" value="승인"></tr>
     </form>
     </table>

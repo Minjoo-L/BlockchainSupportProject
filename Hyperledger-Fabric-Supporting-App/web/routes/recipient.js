@@ -22,7 +22,7 @@ router.post('/showDonateVoucher', async function(req, res){
     if(sess.auth!=1){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
-        var id = req.body.id;
+        var id = req.body.id1+"-"+req.body.id2;
         var pw = req.body.pw;
         pw = crypto.createHash('sha512').update(pw).digest('base64');
         var params = [id];

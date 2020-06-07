@@ -3,6 +3,7 @@ var router = express.Router();
 var session = require('express-session');
 var channel3Query = require('../channel3.js');
 var channel1Query = require('../channel1.js');
+var channel4Query = require('../channel4.js');
 
 router.get('/QueryVoucherUsageGov', async function(req, res){
     sess = req.session;
@@ -38,24 +39,26 @@ router.post('/approveAction', async function(req, res){//피후원자 승인
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
         var data = [];
-        var params = [req.body.recipientId, 'Y'];
-        //var rid = req.body.recipientId;
-       data = await channel3Query.approveRecipient('approveRecipient', params).then(async function(){
+        var jsn = JSON.parse(decodeURI(req.body.data));
+        var params = [jsn.id, 'Y'];
+        var newName = jsn.name[0]+'블록'
+        var params2 = [newName, jsn.age, jsn.sex, jsn.id, jsn.address, jsn.job, jsn.story, 'Y']
+        await channel4Query.query3('recipientNonIdent', params2);
+        
+        data = await channel3Query.approveRecipient('approveRecipient', params).then(async function(){
             var data=[];
             var recipients = await channel3Query.query1('queryAllRecipient');
-
+                
             for(recipient of recipients){
                 if (recipient.Record.status == 'N' || recipient.Record.status =='P')
                 data.push(recipient);
             }
-            
             res.render('approve',{
                 check: 1,
                 session: sess,
                 data: data
-            });
-        });
-       
+            })
+        })
     }
 });
 // 피후원자 보류
@@ -65,7 +68,8 @@ router.post('/pendingAction', async function(req, res){//피후원자 승인
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
         var data = [];
-        var params = [req.body.recipientId, 'P', req.body.reason];
+        
+       var params = [req.body.recipientId, 'P', req.body.reason];
        data = await channel3Query.approveRecipient('pendingRecipient', params).then(async function(){
             var data=[];
             var recipients = await channel3Query.query1('queryAllRecipient');
@@ -115,8 +119,9 @@ router.post('/showDetails', async function(req, res){//피후원자 승인
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
     }else{
         var jsn = JSON.parse(decodeURI(req.body.data));
+        jsn = jsn[0].Record;
         res.render('showDetails', {
-            data: jsn[0].Record,
+            data: jsn,
             session: sess,
             check: 0
         })
