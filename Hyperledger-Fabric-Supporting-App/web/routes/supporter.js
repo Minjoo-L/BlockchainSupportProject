@@ -348,7 +348,7 @@ router.post('/recommendation', async function(req, res){
             res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
         }else{
             // 임시코드
-            var recipients  = await channel3Query.query1('queryAllRecipient');
+            var recipients  = await channel4Query.query1('queryAllRecipient');
             var data = [];
             for(recipient of recipients){
                 if(recipient.Record.status == 'Y'){
