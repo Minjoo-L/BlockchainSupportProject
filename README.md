@@ -30,9 +30,9 @@ Hyperledger Fabric을 이용한 개인 후원 시스템 by 이민주, 유소영,
 6. npm (v5.6.0 이상)
 7. node (v8.4.0 이상 / v10 이상은 오류가 많이 남)
 ```
-<br>
+
 아래의 명령어들을 실행하면 기본 환경 설정을 완료할 수 있다.
-<br>
+
 ```
 $ sudo su
 $ apt-get update -y
@@ -52,7 +52,7 @@ $ nvm install v9.4.0
 $ nvm use v9.4.0
 $ source ~/.bashrc
 ```
-<br>
+
 버전 확인을 통해 모두 잘 설치되었는지 확인해볼 수 있다.
 
 ### 1-3. MySQL 설치 및 테이블 생성
@@ -67,10 +67,10 @@ $ sudo apt-get update
 $ sudo apt-get install mysql-server
 $ mysql_secure_installation
 ```
-<br>
+
 설치가 완료되면 mysql -u root -p 의 명령어를 통해 mysql에 로그인하여 사용할 수 있다. <br>
 mysql 설치 이후, 사용자 데이터베이스 userdb와 사용자 테이블 usertbl을 생성해주어야 한다. usertbl은 아래와 같은 형태이다.
-<br>
+
 |컬럼명|자료형|기타|
 |---|---|---|
 |Name|varchar(10)|not null|
@@ -78,7 +78,7 @@ mysql 설치 이후, 사용자 데이터베이스 userdb와 사용자 테이블 
 |Email|varchar(100)|not null|
 |Password|varchar(150)|not null|
 |Auth|int|not null|
-<br>
-이후, 초기 데이터를 아래와 같이 넣어준다. <br>
+
+이후, 초기 데이터를 아래와 같이 넣어준다. <br><br>
 auth가 0인 경우는 후원자, 1인 경우는 피후원자, 2인 경우는 공공기관, 3인 경우는 후원기관을 의미한다.
 
