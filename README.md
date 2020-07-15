@@ -82,4 +82,4 @@ mysql 설치 이후, 사용자 데이터베이스 userdb와 사용자 테이블 
 이후, 초기 데이터를 아래와 같이 넣어준다. <br><br>
 auth가 0인 경우는 후원자, 1인 경우는 피후원자, 2인 경우는 공공기관, 3인 경우는 후원기관을 의미한다.
 
-![usertbl](https://user-images.githubusercontent.com/43545606/73593203-be3d4300-4544-11ea-8a98-600136f49933.png)
+![usertbl](https://user-images.githubusercontent.com/43545606/76099454-7bbcc980-600e-11ea-950d-8b8395a8bb56.png)
