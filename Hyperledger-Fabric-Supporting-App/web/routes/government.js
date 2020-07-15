@@ -96,6 +96,7 @@ router.post('/CancelApprove', async function(req, res){//피후원자 승인
         var params = [req.body.recipientId, 'N'];
         console.log(params);
         //var rid = req.body.recipientId;
+	await channel4Query.query4('CancelApprove', params);
        data = await channel3Query.approveRecipient('CancelApprove', params).then(async function(){
             var data=[];
             var recipients = await channel3Query.query1('queryAllRecipient');
