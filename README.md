@@ -90,8 +90,8 @@ auth가 0인 경우는 후원자, 1인 경우는 피후원자, 2인 경우는 �
 ```
 $ git clone https://github.com/Minjoo-L/BlockchainSupportProject.git
 ```
-2. BlockchainSupportProject/Hyperledger-Fabric-Supporting-App/supporting-app 폴더로 이동한다.<br>
-3.다음의 명령어를 실행하여 하이퍼레저 패브릭 네트워크를 실행한다.
+2. BlockchainSupportProject/Hyperledger-Fabric-Supporting-App/supporting-app 폴더로 이동한다.  
+3. 다음의 명령어를 실행하여 하이퍼레저 패브릭 네트워크를 실행한다.
 ```
 $ ./startFabric.sh
 ```
