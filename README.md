@@ -83,3 +83,34 @@ mysql 설치 이후, 사용자 데이터베이스 userdb와 사용자 테이블 
 auth가 0인 경우는 후원자, 1인 경우는 피후원자, 2인 경우는 공공기관, 3인 경우는 후원기관을 의미한다.
 
 ![usertbl](https://user-images.githubusercontent.com/43545606/76099454-7bbcc980-600e-11ea-950d-8b8395a8bb56.png)
+
+## 2. 실행 방법
+### 2-1. Set up
+1. 다음의 명령어를 실행하여 코드를 클론한다.
+```
+$ git clone https://github.com/Minjoo-L/BlockchainSupportProject.git
+```
+<br>
+2. BlockchainSupportProject/Hyperledger-Fabric-Supporting-App/supporting-app 폴더로 이동한다.<br>
+3.다음의 명령어를 실행하여 하이퍼레저 패브릭 네트워크를 실행한다.
+```
+$ ./startFabric.sh
+```
+<br>
+4. 다음의 명령어를 실행하여 package.json file의 필요한 라이브러리들을 설치해준다.
+```
+$ npm install
+```
+<br>
+5. 다음의 명령어를 실행하여 네트워크에 Admin과 User component를 등록한다.
+```
+$ node registerAdmin.js
+$ node registerUser.js
+```
+<br>
+6.BlockchainSupportProject/Hyperledger-Fabric-Supporting-App/web 폴더로 이동하여 아래의 명령어를 실행하여 client application을 시작한다.
+```
+$ node server.js
+```
+<br>
+이 과정을 모두 마치면, 포트 8000번에 client application의 네트워크가 세팅되며, localhost:8000을 통해 접속할 수 있다.
