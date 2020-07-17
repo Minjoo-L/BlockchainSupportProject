@@ -105,8 +105,42 @@ $ npm install
 $ node registerAdmin.js
 $ node registerUser.js
 ```
-6.BlockchainSupportProject/Hyperledger-Fabric-Supporting-App/web 폴더로 이동하여 아래의 명령어를 실행하여 client application을 시작한다.
+6. BlockchainSupportProject/Hyperledger-Fabric-Supporting-App/web 폴더로 이동하여 아래의 명령어를 실행하여 client application을 시작한다.
 ```
 $ node server.js
 ```
-이 과정을 모두 마치면, 포트 8000번에 client application의 네트워크가 세팅되며, localhost:8000을 통해 접속할 수 있다.
+이 과정을 모두 마치면, 포트 8000번에 client application의 네트워크가 세팅되며, localhost:8000을 통해 접속할 수 있다.  
+
+### 2-2. 대표적인 실행 오류와 해결 방법
+  
+1. admin 등록 실패  
+  
+$ rm -rf ~/.hfc-key-store/* 실행 후 다시  $ ./startFabric.sh 부터 순서대로 실행  
+  
+2. 올바르게 체인코드 추가 또는 수정하였는데 체인코드 실행 오류가 나거나 변경 사항이 반영되지 않은 경우  
+  
+- 첫번째 방법
+```
+$ docker rm -f $(docker ps -aq)	
+$ docker rmi -f $(docker images -a -q)
+```
+도커 컨테이너 삭제, 도커 이미지 삭제 후 다시 $ ./startFabric.sh 부터 실행  
+  
+- 두번째 방법  
+  
+/supporting-app/startFabric.sh에서 체인코드 이름 변경 또는 버전 변경 후 실행  
+  
+3. ./startFabric.sh를 실행했을때, ERROR: manifest for hyperledger/fabric-ca:latest not found가 발생하는 경우  
+```
+$ curl -sSL http://bit.ly/2ysbOFE | bash -s 1.4.4
+```
+4. ./startFabric 실행 시 권한 문제가 발생하는 경우  
+```
+$ chmod a+x startFabric.sh
+```
+5. User, Admin Component 등록 시 오류가 발생하는 경우  
+```
+$ rm -rf ~/.hfc-key-store
+$ node registerAdmin.js
+$ node registerUser.js
+```
