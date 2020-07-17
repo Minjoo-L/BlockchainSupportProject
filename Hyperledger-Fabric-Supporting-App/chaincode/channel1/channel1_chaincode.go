@@ -2,11 +2,6 @@
 
  package main
 
- /* Imports  
- * 4 utility libraries for handling bytes, reading and writing JSON, 
- formatting, and string manipulation  
- * 2 specific Hyperledger Fabric specific libraries for Smart Contracts  
- */ 
  import (
 	 "bytes"
 	 "encoding/json"
@@ -21,7 +16,7 @@
  type SmartContract struct {
  }
  
- /* Define Supporter structure, with 6 properties.  
+ /* Define Voucher structure, with 2 properties.  
  Structure tags are used by encoding/json library
  */
 
@@ -34,7 +29,7 @@
 
  /*
   * The Init method *
-  called when the Smart Contract "tuna-chaincode" is instantiated by the network
+  called when the Smart Contract "channel1-chaincode" is instantiated by the network
   * Best practice is to have any Ledger initialization in separate function 
   -- see initLedger()
   */
@@ -44,7 +39,7 @@
  
  /*
   * The Invoke method *
-  called when an application requests to run the Smart Contract "supporting-chaincode"
+  called when an application requests to run the Smart Contract "channel1-chaincode"
   The app also specifies the specific smart contract function to call with args
   */
  func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response {
@@ -68,7 +63,6 @@
  
 	 return shim.Error("Invalid Smart Contract function name.")
  }
- 
 
  /*
   * The initLedger method *
@@ -77,11 +71,6 @@
 	 return shim.Success(nil)
  }
  
- /*
-  * The registerSupporter method *
- This method takes in seven arguments (attributes to be saved in the ledger). 
-  */
-
 // 후원자 바우처 구매 
 func (s *SmartContract) purchaseVoucher(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 	// DApp에서 Id를 입력 받으니까 id랑 amount를 매개변수로 받는다.

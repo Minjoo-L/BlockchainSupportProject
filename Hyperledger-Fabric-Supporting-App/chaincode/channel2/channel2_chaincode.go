@@ -2,11 +2,6 @@
 
  package main
 
- /* Imports  
- * 4 utility libraries for handling bytes, reading and writing JSON, 
- formatting, and string manipulation  
- * 2 specific Hyperledger Fabric specific libraries for Smart Contracts  
- */ 
  import (
 	 "bytes"
 	 "encoding/json"
@@ -20,7 +15,7 @@
  type SmartContract struct {
  }
  
- /* Define Supporter structure, with 6 properties.  
+ /* Define Supporter structure, with 7 properties.  
  Structure tags are used by encoding/json library
  */
 
@@ -41,7 +36,7 @@
  
  /*
   * The Invoke method *
-  called when an application requests to run the Smart Contract "supporting-chaincode"
+  called when an application requests to run the Smart Contract "channel2-chaincode"
   The app also specifies the specific smart contract function to call with args
   */
  func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response {

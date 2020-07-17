@@ -2,16 +2,10 @@
 
  package main
 
- /* Imports  
- * 4 utility libraries for handling bytes, reading and writing JSON, 
- formatting, and string manipulation  
- * 2 specific Hyperledger Fabric specific libraries for Smart Contracts  
- */ 
  import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 	sc "github.com/hyperledger/fabric/protos/peer"
  )
@@ -31,7 +25,7 @@
 } 
  /*
   * The Init method *
-  called when the Smart Contract "tuna-chaincode" is instantiated by the network
+  called when the Smart Contract "channel4-chaincode" is instantiated by the network
   * Best practice is to have any Ledger initialization in separate function 
   -- see initLedger()
   */
@@ -41,7 +35,7 @@
  
  /*
   * The Invoke method *
-  called when an application requests to run the Smart Contract "supporting-chaincode"
+  called when an application requests to run the Smart Contract "channel4-chaincode"
   The app also specifies the specific smart contract function to call with args
   */
  func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response {
@@ -63,10 +57,6 @@
 	 return shim.Error("Invalid Smart Contract function name.")
  }
  
- /*
-  * The initLedger method *
- Will add test data (1 Supporter)to our network
-  */
  func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	recipient := []Recipient{
 		Recipient{ Name: "김블록", Age:"22", Sex:"M", ID: "990101-1234567", Address: "안양시 에이구",Job:"대학생", Story: "많이 힘들어요.. 제 아가들을 위해 도와주세요", Status:"Y"},
@@ -158,8 +148,7 @@ func (s *SmartContract) cancelApprove(APIstub shim.ChaincodeStubInterface, args 
 	recipient := Recipient{}
 
 	json.Unmarshal(recipientAsBytes, &recipient)
-	// Normally check that the specified argument is a valid holder of tuna
-	// we are skipping this check for this example
+
 	recipient.Status = args[1]
 
 	recipientAsBytes, _ = json.Marshal(recipient)
@@ -176,7 +165,6 @@ func (s *SmartContract) cancelApprove(APIstub shim.ChaincodeStubInterface, args 
  The main function starts the chaincode in the container during instantiation.
   */
  func main() {
- 
 	 // Create a new Smart Contract
 	 err := shim.Start(new(SmartContract))
 	 if err != nil {

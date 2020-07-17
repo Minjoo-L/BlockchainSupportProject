@@ -2,16 +2,10 @@
 
  package main
 
- /* Imports  
- * 4 utility libraries for handling bytes, reading and writing JSON, 
- formatting, and string manipulation  
- * 2 specific Hyperledger Fabric specific libraries for Smart Contracts  
- */ 
  import (
 	 "bytes"
 	 "encoding/json"
 	 "fmt"
- 
 	 "github.com/hyperledger/fabric/core/chaincode/shim"
 	 sc "github.com/hyperledger/fabric/protos/peer"
  )
@@ -20,7 +14,7 @@
  type SmartContract struct {
  }
  
- /* Define Supporter structure, with 6 properties.  
+ /* Define Recipient structure, with 13 properties.  
  Structure tags are used by encoding/json library
  */
  type Recipient struct {
@@ -41,7 +35,7 @@
  
  /*
   * The Init method *
-  called when the Smart Contract "tuna-chaincode" is instantiated by the network
+  called when the Smart Contract "channel3-chaincode" is instantiated by the network
   * Best practice is to have any Ledger initialization in separate function 
   -- see initLedger()
   */
@@ -51,7 +45,7 @@
  
  /*
   * The Invoke method *
-  called when an application requests to run the Smart Contract "supporting-chaincode"
+  called when an application requests to run the Smart Contract "channel3-chaincode"
   The app also specifies the specific smart contract function to call with args
   */
  func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response {
@@ -82,10 +76,9 @@
 	 return shim.Error("Invalid Smart Contract function name.")
  }
  
-
  /*
   * The initLedger method *
- Will add test data (1 Supporter)to our network
+ Will add test data (2 Recipient)to our network
   */
  func (s *SmartContract) initLedger(APIstub shim.ChaincodeStubInterface) sc.Response {
 	recipient := []Recipient{
@@ -103,7 +96,7 @@
  
  /*
   * The registerRecipient method *
- This method takes in seven arguments (attributes to be saved in the ledger). 
+ This method takes in 13 arguments (attributes to be saved in the ledger). 
   */
  func (s *SmartContract) registerRecipient(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
  
@@ -190,8 +183,6 @@ func (s *SmartContract) approveRecipient(APIstub shim.ChaincodeStubInterface, ar
 	recipient := Recipient{}
 
 	json.Unmarshal(recipientAsBytes, &recipient)
-	// Normally check that the specified argument is a valid holder of tuna
-	// we are skipping this check for this example
 	recipient.Status = args[1]
 
 	recipientAsBytes, _ = json.Marshal(recipient)
@@ -240,8 +231,7 @@ func (s *SmartContract) changeAllRecipientInfo(APIstub shim.ChaincodeStubInterfa
 	userRecipient := Recipient{}
 
 	json.Unmarshal(userRecipientAsBytes, &userRecipient)
-	// Normally check that the specified argument is a valid holder of tuna
-	// we are skipping this check for this example
+
 	userRecipient.ID = args[0]
 	userRecipient.Account=args[1]
 	userRecipient.Email = args[2]
@@ -266,8 +256,6 @@ func (s *SmartContract) changeRecipientInfo(APIstub shim.ChaincodeStubInterface,
     userRecipient := Recipient{}
 
     json.Unmarshal(userRecipientAsBytes, &userRecipient)
-    // Normally check that the specified argument is a valid holder of tuna
-    // we are skipping this check for this example
 
     if len(args) == 3 { // 주소와 폰 번호 바꾸는 경우
         userRecipient.Address = args[1]
@@ -283,8 +271,8 @@ func (s *SmartContract) changeRecipientInfo(APIstub shim.ChaincodeStubInterface,
     }
 
     return shim.Success(nil)
-	
 }
+
 //이메일로 조회
 func (s *SmartContract) queryWithOtherInfo(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
 
