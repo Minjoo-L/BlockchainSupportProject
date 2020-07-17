@@ -118,14 +118,14 @@ auth가 0인 경우는 후원자, 1인 경우는 피후원자, 2인 경우는 �
   
 2. 올바르게 체인코드 추가 또는 수정하였는데 체인코드 실행 오류가 나거나 변경 사항이 반영되지 않은 경우  
   
-  - 첫번째 방법
+- 첫번째 방법
   ```
   $ docker rm -f $(docker ps -aq)	
   $ docker rmi -f $(docker images -a -q)
   ```
   도커 컨테이너 삭제, 도커 이미지 삭제 후 다시 $ ./startFabric.sh 부터 실행  
   
-  - 두번째 방법  
+- 두번째 방법  
   
   /supporting-app/startFabric.sh에서 체인코드 이름 변경 또는 버전 변경 후 실행  
   
