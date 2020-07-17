@@ -87,60 +87,60 @@ auth가 0인 경우는 후원자, 1인 경우는 피후원자, 2인 경우는 �
 ## 2. 실행 방법
 ### 2-1. Set up
 1. 다음의 명령어를 실행하여 코드를 클론한다.
-```
-$ git clone https://github.com/Minjoo-L/BlockchainSupportProject.git
-```
+  ```
+  $ git clone https://github.com/Minjoo-L/BlockchainSupportProject.git
+  ```
 2. BlockchainSupportProject/Hyperledger-Fabric-Supporting-App/supporting-app 폴더로 이동한다.  
   
 3. 다음의 명령어를 실행하여 하이퍼레저 패브릭 네트워크를 실행한다.
-```
-$ ./startFabric.sh
-```
+  ```
+  $ ./startFabric.sh
+  ```
 4. 다음의 명령어를 실행하여 package.json file의 필요한 라이브러리들을 설치해준다.
-```
-$ npm install
-```
+  ```
+  $ npm install
+  ```
 5. 다음의 명령어를 실행하여 네트워크에 Admin과 User component를 등록한다.
-```
-$ node registerAdmin.js
-$ node registerUser.js
-```
+  ```
+  $ node registerAdmin.js
+  $ node registerUser.js
+  ```
 6. BlockchainSupportProject/Hyperledger-Fabric-Supporting-App/web 폴더로 이동하여 아래의 명령어를 실행하여 client application을 시작한다.
-```
-$ node server.js
-```
-이 과정을 모두 마치면, 포트 8000번에 client application의 네트워크가 세팅되며, localhost:8000을 통해 접속할 수 있다.  
-
+  ```
+  $ node server.js
+  ```
+  이 과정을 모두 마치면, 포트 8000번에 client application의 네트워크가 세팅되며, localhost:8000을 통해 접속할 수 있다.  
+  
 ### 2-2. 대표적인 실행 오류와 해결 방법
   
 1. admin 등록 실패  
   
-$ rm -rf ~/.hfc-key-store/* 실행 후 다시  $ ./startFabric.sh 부터 순서대로 실행  
+  $ rm -rf ~/.hfc-key-store/* 실행 후 다시  $ ./startFabric.sh 부터 순서대로 실행  
   
 2. 올바르게 체인코드 추가 또는 수정하였는데 체인코드 실행 오류가 나거나 변경 사항이 반영되지 않은 경우  
   
 - 첫번째 방법
-```
-$ docker rm -f $(docker ps -aq)	
-$ docker rmi -f $(docker images -a -q)
-```
-도커 컨테이너 삭제, 도커 이미지 삭제 후 다시 $ ./startFabric.sh 부터 실행  
+  ```
+  $ docker rm -f $(docker ps -aq)	
+  $ docker rmi -f $(docker images -a -q)
+  ```
+  도커 컨테이너 삭제, 도커 이미지 삭제 후 다시 $ ./startFabric.sh 부터 실행  
   
 - 두번째 방법  
   
-/supporting-app/startFabric.sh에서 체인코드 이름 변경 또는 버전 변경 후 실행  
+  /supporting-app/startFabric.sh에서 체인코드 이름 변경 또는 버전 변경 후 실행  
   
 3. ./startFabric.sh를 실행했을때, ERROR: manifest for hyperledger/fabric-ca:latest not found가 발생하는 경우  
-```
-$ curl -sSL http://bit.ly/2ysbOFE | bash -s 1.4.4
-```
+  ```
+  $ curl -sSL http://bit.ly/2ysbOFE | bash -s 1.4.4
+  ```
 4. ./startFabric 실행 시 권한 문제가 발생하는 경우  
-```
-$ chmod a+x startFabric.sh
-```
+  ```
+  $ chmod a+x startFabric.sh
+  ```
 5. User, Admin Component 등록 시 오류가 발생하는 경우  
-```
-$ rm -rf ~/.hfc-key-store
-$ node registerAdmin.js
-$ node registerUser.js
-```
+  ```
+  $ rm -rf ~/.hfc-key-store
+  $ node registerAdmin.js
+  $ node registerUser.js
+  ```
