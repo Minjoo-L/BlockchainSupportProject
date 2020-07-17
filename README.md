@@ -151,18 +151,17 @@ auth가 0인 경우는 후원자, 1인 경우는 피후원자, 2인 경우는 �
   
 ## 3. 디렉토리 구조
 ### 3-1. basic-network/
-  
-  (1) config/  
+  1. config/  
     generate.sh 실행으로 생성된 genesis Block과 channel Tx 파일이 존재한다.  
-  (2) crypto-config/  
+  2. crypto-config/  
     generate.sh 실행으로 생성된 crypto material이 존재한다.  
-  (3) configtx.yaml  
+  3. configtx.yaml  
     각 조직들과 채널들의 config를 설정하는 파일로, genesis Block과 channel Tx 생성에 사용되는 profile을 정의한다.  
-  (4) crypto-config.yaml  
+  4. crypto-config.yaml  
     블록체인 네트워크에 참여하는 orderer 조직과 peer 조직을 설정하는 파일이다.  
-  (5) docker-compose.yml  
+  5. docker-compose.yml  
     다운로드 받은 도커 이미지를 사용하여 각 조직의 ca 서버, peer, couch db, cli 컨테이너에 대한 설정을 하고 도커 컨테이너로 띄워주는 역할을 하는 파일이다. 즉, 도커 네트워크를 설정해주는 파일이다.  
-  (6) generate.sh 
-configtxgen 바이너리를 사용해 fabric 블록체인 네트워크에 기본이 되는 파일인 genesis Block과 channel Tx를 생성하는 파일이다.
-  (7) start.sh  
+  6. generate.sh  
+configtxgen 바이너리를 사용해 fabric 블록체인 네트워크에 기본이 되는 파일인 genesis Block과 channel Tx를 생성하는 파일이다.  
+  7. start.sh  
     4개의 채널을 생성하고, 각각의 채널에 피어들을 조인시켜 블록체인 네트워크를 생성하는 파일이다.  
