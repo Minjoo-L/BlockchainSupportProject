@@ -333,17 +333,7 @@ router.post('/recommendation', async function(req, res){
         sess = req.session;
         var age = req.body.age;
         var job = req.body.job;
-        //console.log("선택한 age는", age);
-       /* var length = age.length;
-        // 한 가지 선택할 경우
-        if (length == 6){ 
-            age = age[0]+age[1]+age[2]+age[3]+age[4]+age[5];
-            console.log('age[0]', age);
-        } else{
-            for (var i =0; i< length; i++){
-                console.log('age['+i+'] : ' + age[i]);
-            }
-        }*/
+        
         if(sess.auth!=0){
             res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');
         }else{

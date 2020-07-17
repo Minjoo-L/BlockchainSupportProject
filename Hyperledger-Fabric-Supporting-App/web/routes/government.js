@@ -15,7 +15,7 @@ router.get('/QueryVoucherUsageGov', async function(req, res){
         });
     }
 })
-router.post('/voucherUsage', async function(req, res){//바우처 내역 조회
+router.post('/voucherUsage', async function(req, res){//바우처 내역 조회(블록)
     sess = req.session;
     if(sess.auth!=2){
         res.send('<script type="text/javascript">alert("권한이 없습니다.");location.href="/";</script>');

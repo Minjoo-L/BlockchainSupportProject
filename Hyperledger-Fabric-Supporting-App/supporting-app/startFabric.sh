@@ -22,7 +22,6 @@ cd ../basic-network/
 ./start.sh
 
 # Now launch the CLI container in order to install, instantiate chaincode
-# and prime the ledger with our 10 tuna catches
 docker ps
 
 echo 4개조직 모두 참여 채널
