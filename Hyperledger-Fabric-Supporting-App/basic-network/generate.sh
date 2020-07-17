@@ -107,7 +107,7 @@ if [ "$?" -ne 0 ]; then
   echo "Failed to generate anchor peer update for GovernmentOrgMSP..."
   exit 1
 fi
-# generate anchor peer transaction - SupporterOrg
+# generate anchor peer transaction - RecipientOrg
 ./bin/configtxgen -profile GovernmentRecipientOrgChannel -outputAnchorPeersUpdate ./config/RecipientOrgMSPanchors"$CHANNEL_NO3".tx -channelID $CHANNEL_NAME3 -asOrg RecipientOrgMSP
 if [ "$?" -ne 0 ]; then
   echo "Failed to generate anchor peer update for GovernmentOrgMSP..."
@@ -131,7 +131,7 @@ if [ "$?" -ne 0 ]; then
   echo "Failed to generate anchor peer update for GovernmentOrgMSP..."
   exit 1
 fi
-# generate anchor peer transaction - SupporterOrg
+# generate anchor peer transaction - SupportingEnterpriseOrg
 ./bin/configtxgen -profile GovernmentSupportingEnterpriseOrgChannel -outputAnchorPeersUpdate ./config/SupportingEnterpriseOrgMSPanchors"$CHANNEL_NO4".tx -channelID $CHANNEL_NAME4 -asOrg SupportingEnterpriseOrgMSP
 if [ "$?" -ne 0 ]; then
   echo "Failed to generate anchor peer update for GovernmentOrgMSP..."

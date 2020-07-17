@@ -151,7 +151,7 @@ docker exec -e "CORE_PEER_LOCALMSPID=GovernmentOrgMSP" -e "CORE_PEER_MSPCONFIGPA
 #fetch
 docker exec -e "CORE_PEER_LOCALMSPID=RecipientOrgMSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@RecipientOrg.example.com/msp" peer0.RecipientOrg.example.com peer channel fetch 0 "$CHANNEL_NAME3".block --channelID "$CHANNEL_NAME3" --orderer orderer.example.com:7050
 
-# Join peer0.SupporterOrg.example.com to the channel.
+# Join peer0.RecipientOrg.example.com to the channel.
 docker exec -e "CORE_PEER_LOCALMSPID=RecipientOrgMSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@RecipientOrg.example.com/msp" peer0.RecipientOrg.example.com peer channel join -b "$CHANNEL_NAME3".block
 
 # update  mychannel
@@ -160,7 +160,7 @@ docker exec  -e "CORE_PEER_LOCALMSPID=RecipientOrgMSP" -e "CORE_PEER_MSPCONFIGPA
 #fetch
 docker exec -e "CORE_PEER_LOCALMSPID=RecipientOrgMSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@RecipientOrg.example.com/msp" peer1.RecipientOrg.example.com peer channel fetch 0 "$CHANNEL_NAME3".block --channelID "$CHANNEL_NAME3" --orderer orderer.example.com:7050
 
-# Join peer1.SupporterOrg.example.com to the channel.
+# Join peer1.RecipientOrg.example.com to the channel.
 docker exec -e "CORE_PEER_LOCALMSPID=RecipientOrgMSP" -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@RecipientOrg.example.com/msp" peer1.RecipientOrg.example.com peer channel join -b "$CHANNEL_NAME3".block
 
 #===============================================================================
