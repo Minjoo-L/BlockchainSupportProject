@@ -1,5 +1,5 @@
 {
-  "name": "Fabric-tuna-app",
+  "name": "Fabric-supporting-app",
   "version": "1.0.0",
   "description": "Hyperledger Fabric MOOC Sample Application",
   "main": "server.js",
@@ -20,9 +20,7 @@
   "keywords": [
     "Hyperledger",
     "Fabric",
-    "Oceans",
-    "Tuna",
-    "Fishing",
+    "Supporting",
     "Sample",
     "Application"
   ]

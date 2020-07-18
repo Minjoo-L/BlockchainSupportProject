@@ -26,7 +26,7 @@ services:
       - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/d8e55d57dce9f7b5bccb5a760dce3bf71dd93faf9f418d600c032434005fa5d1_sk
     ports:
       - "17054:7054"
-      #-d
+      #-d 수정
     command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
     volumes:
       - ./crypto-config/peerOrganizations/GovernmentOrg.example.com/ca/:/etc/hyperledger/fabric-ca-server-config
