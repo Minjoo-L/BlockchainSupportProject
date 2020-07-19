@@ -200,4 +200,4 @@ configtxgen 바이너리를 사용해 fabric 블록체인 네트워크에 기본
   
 ********************************************************************************
   
-#### 구현되어 있는 기능 목록은 Wiki 참조
+구현되어 있는 기능 목록은 [Wiki] (https://github.com/Minjoo-L/BlockchainSupportProject/wiki) 참조
