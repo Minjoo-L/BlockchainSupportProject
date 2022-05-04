@@ -4,7 +4,7 @@
     "description": "Hyperledger Fabric MOOC Sample Application",
     "main": "server.js",
     "dependencies": {
-        "angular": "^1.7.9",
+        "angular": "^1.8.3",
         "body-parser": "latest",
         "ejs": "latest",
         "express": "latest",
